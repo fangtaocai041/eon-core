@@ -15,3 +15,4 @@ Layers:
 
 __version__ = "7.0.0"
 __code__ = "TaijiTetrahedron-Samsara-v7.0"
+__project__ = "eon-core"
