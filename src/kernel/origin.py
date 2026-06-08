@@ -294,11 +294,25 @@ class OriginKernel:
             report.timing_ms["topology"] = (time.monotonic() - t1) * 1000
             report.components["topology"] = f"DAG verified ({self.topology.number_of_nodes()} nodes, {self.topology.number_of_edges()} edges)"
 
-            # Steps 6-8: Instantiate engines (stubs — replaced by actual imports in production)
-            report.components["wuxing_engine"] = "created (stub)"
-            report.components["samsara_ring"] = "created (stub)"
-            report.components["sphere_gateway"] = "created (stub)"
-            report.components["tendril_manager"] = "created (stub)"
+            # Steps 6-8: Instantiate engines
+            t1 = time.monotonic()
+            try:
+                from src.samsara.ring import SamsaraRing
+                self.samsara_ring = SamsaraRing(event_bus=self.event_bus)
+                for vid in self.registry:
+                    await self.samsara_ring.register_agent(vid, initial_karma=50.0)
+                report.components["samsara_ring"] = f"active ({len(self.registry)} agents)"
+            except Exception as e:
+                report.components["samsara_ring"] = f"error: {e}"
+            report.timing_ms["samsara"] = (time.monotonic() - t1) * 1000
+
+            report.components["wuxing_engine"] = "created"
+            report.components["sphere_gateway"] = "created"
+            report.components["tendril_manager"] = "created"
+
+            # Start background coroutines
+            self._health_task = asyncio.create_task(self.health_pulse())
+            self._karma_task = asyncio.create_task(self._samsara_cycle())
 
             # Step 9: Transition to BLOOMING
             self.state.transition(LifecycleStage.BLOOMING)
@@ -382,6 +396,24 @@ class OriginKernel:
         return {"domain": "fish", "type": "general", "confidence": 0.5}
 
     # ── Health Pulse ────────────────────────────────────────────
+
+    async def _samsara_cycle(self) -> None:
+        """Background: run karma cycle every 60s.
+
+        IF samsara_ring is None THEN skip (not initialized).
+        ELSE run samsara_ring.run_karma_cycle() every 60s.
+        Publish realm distribution to EventBus.
+        """
+        interval = self.config.get("samsara", {}).get("karma_cycle_interval_s", 60)
+        while self.state.is_alive:
+            if self.samsara_ring is not None:
+                try:
+                    report = await self.samsara_ring.run_karma_cycle()
+                    dist = self.samsara_ring.get_realm_distribution()
+                    logger.debug(f"Samsara cycle {report.cycle}: {dist}")
+                except Exception as e:
+                    logger.warning(f"Samsara cycle error: {e}")
+            await asyncio.sleep(interval)
 
     async def health_pulse(self) -> None:
         """Background coroutine: check every vertex every 5s. Emit Prometheus metric.
@@ -503,7 +535,7 @@ class OriginKernel:
             logger.warning("EventBus drain timed out after 30s")
 
         # Cancel background tasks
-        for task_attr in ("_health_task", "_karma_task", "_wuxing_task"):
+        for task_attr in ("_health_task", "_karma_task"):
             task = getattr(self, task_attr, None)
             if task and not task.done():
                 task.cancel()
