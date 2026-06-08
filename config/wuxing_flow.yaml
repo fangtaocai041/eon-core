@@ -1,0 +1,49 @@
+# config/wuxing_flow.yaml — 五行相生相克流转配置
+# =====================================================
+# Defines the 5-element generation (sheng) and restriction (ke)
+# cycles. Sheng flows clockwise; Ke flows pentagram-star.
+# Evaluated every 15 seconds by WuXingFlowEngine.run_cycle().
+
+sheng_flow:
+  - { from: "WOOD",  to: "FIRE",  meaning: "graph_growth_rate → drive_throughput" }
+  - { from: "FIRE",  to: "EARTH", meaning: "drive_throughput → supply_quality" }
+  - { from: "EARTH", to: "METAL", meaning: "supply_quality → convergence_stability" }
+  - { from: "METAL", to: "WATER", meaning: "convergence_stability → adaptation_signal" }
+  - { from: "WATER", to: "WOOD",  meaning: "adaptation_signal → growth_trigger" }
+
+ke_restriction:
+  - from: "WOOD"
+    to: "EARTH"
+    signal: "ADVISORY"
+    condition: "graph_growth > 2.0 * baseline_growth"
+    meaning: "growth_surge → warn EARTH of information overload"
+  - from: "EARTH"
+    to: "WATER"
+    signal: "ADVISORY"
+    condition: "supply_duplication_pct > 60"
+    meaning: "knowledge_duplication → slow WATER adaptation"
+  - from: "WATER"
+    to: "FIRE"
+    signal: "COOLING"
+    condition: "external_change_frequency > config.threshold"
+    meaning: "external_changes_surge → cool FIRE drive throughput"
+  - from: "FIRE"
+    to: "METAL"
+    signal: "ADVISORY"
+    condition: "throughput_utilization > 0.9"
+    meaning: "throughput_near_capacity → warn METAL to reduce convergence load"
+  - from: "METAL"
+    to: "WOOD"
+    signal: "PRUNING"
+    condition: "false_positive_rate > 0.15"
+    meaning: "high_false_positives → suggest WOOD prune knowledge graph"
+
+# Severity escalation: when ke_signal is rejected 3 consecutive
+# times without target metric improvement, escalate ADVISORY→MANDATORY.
+override:
+  max_rejections_before_escalation: 3
+  signal_levels:
+    - "INFO"
+    - "ADVISORY"
+    - "WARNING"
+    - "MANDATORY"

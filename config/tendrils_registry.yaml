@@ -1,0 +1,103 @@
+# config/tendrils_registry.yaml — 触须探针注册表
+# =================================================
+# 12 external probes managed by TendrilManager.
+# Each tendril has a target source, protocol, parent vertex,
+# and health parameters.
+
+tendrils:
+  - id: "tendril_google_scholar"
+    target: "Google Scholar"
+    url: "https://scholar.google.com"
+    protocol: "Scraping"
+    vertex: "V0"
+    trigram: "qian"
+    rate_limit: { capacity: 10, refill_rate: 2 }
+    cache_ttl_s: 3600
+  - id: "tendril_pubmed"
+    target: "PubMed Entrez API"
+    url: "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
+    protocol: "REST"
+    vertex: "V0"
+    trigram: "qian"
+    rate_limit: { capacity: 3, refill_rate: 1 }
+    cache_ttl_s: 86400
+  - id: "tendril_crossref"
+    target: "CrossRef REST API"
+    url: "https://api.crossref.org"
+    protocol: "REST"
+    vertex: "V0"
+    trigram: "qian"
+    rate_limit: { capacity: 50, refill_rate: 10 }
+    cache_ttl_s: 86400
+  - id: "tendril_openalex"
+    target: "OpenAlex REST API"
+    url: "https://api.openalex.org"
+    protocol: "REST"
+    vertex: "V0"
+    trigram: "qian"
+    rate_limit: { capacity: 100, refill_rate: 10 }
+    cache_ttl_s: 86400
+  - id: "tendril_cnki"
+    target: "CNKI 中国知网"
+    url: "https://kns.cnki.net"
+    protocol: "Scraping"
+    vertex: "V0"
+    trigram: "dui"
+    rate_limit: { capacity: 5, refill_rate: 1 }
+    cache_ttl_s: 7200
+  - id: "tendril_cscd"
+    target: "CSCD 引文数据库"
+    url: "http://sciencechina.cn"
+    protocol: "REST"
+    vertex: "V0"
+    trigram: "dui"
+    rate_limit: { capacity: 10, refill_rate: 2 }
+    cache_ttl_s: 7200
+  - id: "tendril_wanfang"
+    target: "万方数据"
+    url: "https://www.wanfangdata.com.cn"
+    protocol: "Scraping"
+    vertex: "V0"
+    trigram: "dui"
+    rate_limit: { capacity: 5, refill_rate: 1 }
+    cache_ttl_s: 7200
+  - id: "tendril_semantic_scholar"
+    target: "Semantic Scholar API"
+    url: "https://api.semanticscholar.org"
+    protocol: "REST"
+    vertex: "V1"
+    trigram: "li"
+    rate_limit: { capacity: 100, refill_rate: 10 }
+    cache_ttl_s: 86400
+  - id: "tendril_web_of_science"
+    target: "Web of Science API"
+    url: "https://api.clarivate.com/apis/wos"
+    protocol: "REST"
+    vertex: "V1"
+    trigram: "li"
+    rate_limit: { capacity: 10, refill_rate: 2 }
+    cache_ttl_s: 86400
+  - id: "tendril_hydro_acoustic"
+    target: "长江水文声学监测站"
+    url: "mqtt://hydro-acoustic.yrcc.gov.cn:1883"
+    protocol: "MQTT"
+    vertex: "V2"
+    trigram: "xun"
+    rate_limit: { capacity: 1000, refill_rate: 100 }
+    cache_ttl_s: 60
+  - id: "tendril_remote_sensing"
+    target: "Landsat/Sentinel API"
+    url: "https://api.nasa.gov/planetary/earth"
+    protocol: "REST"
+    vertex: "V2"
+    trigram: "kan"
+    rate_limit: { capacity: 50, refill_rate: 5 }
+    cache_ttl_s: 3600
+  - id: "tendril_fishery_stats"
+    target: "长江渔业统计数据库"
+    url: "https://fishery-stats.moa.gov.cn/api"
+    protocol: "REST"
+    vertex: "V3"
+    trigram: "kun"
+    rate_limit: { capacity: 20, refill_rate: 3 }
+    cache_ttl_s: 3600

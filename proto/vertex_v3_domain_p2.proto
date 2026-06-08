@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package taiji.v3;
+
+import "proto/event_bus.proto";
+
+service DomainVertexP2 {
+  rpc Analyze(DomainRequest) returns (DomainAnalysis);
+  rpc Specialize(SpeciesQuery) returns (ExpertReport);
+  rpc Health(taiji.event_bus.Empty) returns (taiji.event_bus.HealthReport);
+}
+
+message DomainRequest {
+  string query = 1;
+  string domain = 2;
+  repeated string subtasks = 3;
+  string trace_id = 4;
+}
+
+message DomainAnalysis {
+  string summary = 1;
+  OtolithAnalysis otolith = 2;
+  ResourceReport resource = 3;
+  float confidence = 4;
+}
+
+message OtolithAnalysis {
+  string sample_id = 1;
+  float sr_ca_ratio = 2;
+  repeated MigrationSegment migration_path = 3;
+  float estimated_age_years = 4;
+}
+
+message MigrationSegment {
+  string habitat_type = 1;
+  float duration_fraction = 2;
+  float mean_sr_ca = 3;
+}
+
+message ResourceReport {
+  string species_name = 1;
+  string region = 2;
+  float estimated_biomass_tonnes = 3;
+  string trend_direction = 4;
+  repeated string conservation_recommendations = 5;
+}
+
+message SpeciesQuery {
+  string species_name = 1;
+  string scientific_name = 2;
+  string region = 3;
+  string time_range = 4;
+}
+
+message ExpertReport {
+  string species_name = 1;
+  OtolithAnalysis otolith = 2;
+  ResourceReport resource = 3;
+  repeated string key_findings = 4;
+  repeated string references = 5;
+  float report_confidence = 6;
+}

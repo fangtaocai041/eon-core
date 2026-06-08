@@ -1,0 +1,185 @@
+# ═══════════════════════════════════════════════════════════════
+# config/taiji.yaml — TaijiTetrahedron-Samsara v7.0 主配置
+# ==============================================================
+# Single Source of Truth for the 10-layer concentric architecture.
+# All runtime components read from this file at bootstrap.
+# ═══════════════════════════════════════════════════════════════
+
+system:
+  name: "TaijiTetrahedron-Samsara"
+  version: "v7.0.0"
+  log_level: "INFO"  # enum: DEBUG | INFO | WARN | ERROR
+
+origin_kernel:
+  bootstrap_timeout_s: 120
+  health_pulse_interval_s: 5
+  event_bus_capacity: 10000
+  dead_letter_queue_capacity: 1000
+
+tetrahedron:
+  edges:
+    - { from: "V0", to: "V1", weight: 0.8, direction: "UNIDIRECTIONAL", latency_ms: 50, capacity: 100 }
+    - { from: "V0", to: "V2", weight: 0.7, direction: "UNIDIRECTIONAL", latency_ms: 50, capacity: 100 }
+    - { from: "V2", to: "V1", weight: 0.6, direction: "UNIDIRECTIONAL", latency_ms: 30, capacity: 80 }
+    - { from: "V0", to: "V3", weight: 0.5, direction: "UNIDIRECTIONAL", latency_ms: 50, capacity: 80 }
+    - { from: "V3", to: "V1", weight: 0.4, direction: "UNIDIRECTIONAL", latency_ms: 30, capacity: 60 }
+    - { from: "V2", to: "V3", weight: 0.3, direction: "BIDIRECTIONAL", latency_ms: 20, capacity: 50 }
+  baseline_spectral_gap: 0.15
+  chaos_disturb_interval: 100   # queries
+  chaos_factor: 0.02
+
+vertices:
+  V0:
+    id: "V0"
+    name: "SupplyVertex"
+    symbol: "☀️ 太阳·老阳"
+    coordinates: [1.0, 1.0, 1.0]
+    polarity: "YANG_PRIMARY"
+    gRPC_port: 50051
+    wuxing_element: "EARTH"
+    trigrams: ["qian_meta_search", "dui_chinese_gateway"]
+    d_level: 2
+  V1:
+    id: "V1"
+    name: "VerifyVertex"
+    symbol: "🌙 太阴·老阴"
+    coordinates: [1.0, -1.0, -1.0]
+    polarity: "YIN_PRIMARY"
+    gRPC_port: 50052
+    wuxing_element: "WOOD"
+    trigrams: ["li_graph_traversal", "zhen_debate"]
+    d_level: 3
+  V2:
+    id: "V2"
+    name: "DomainVertexP1"
+    symbol: "🌤️ 少阴"
+    coordinates: [-1.0, 1.0, -1.0]
+    polarity: "YANG_PRIMARY_YIN_SECONDARY"
+    gRPC_port: 50053
+    wuxing_element: "METAL"
+    trigrams: ["xun_acoustic", "kan_population"]
+    d_level: 2
+  V3:
+    id: "V3"
+    name: "DomainVertexP2"
+    symbol: "🌦️ 少阳"
+    coordinates: [-1.0, -1.0, 1.0]
+    polarity: "YIN_PRIMARY_YANG_SECONDARY"
+    gRPC_port: 50054
+    wuxing_element: "WATER"
+    trigrams: ["gen_otolith", "kun_resource"]
+    d_level: 2
+
+wuxing:
+  cycle_interval_s: 15
+  rotation_speed_rad_s: 0.01
+  override_threshold: 3
+  agents:
+    WOOD:  { element: "WOOD",  symbol: "🪵",  attached_to: "V1", class: "GrowthMonitor",      file: "src/wuxing/mu_wood.py" }
+    FIRE:  { element: "FIRE",  symbol: "🔥",  attached_to: "Origin", class: "DriveCoordinator",   file: "src/wuxing/huo_fire.py" }
+    EARTH: { element: "EARTH", symbol: "🪨",  attached_to: "V0", class: "NourishmentMonitor",  file: "src/wuxing/tu_earth.py" }
+    METAL: { element: "METAL", symbol: "⚔️",  attached_to: "V2", class: "ConvergenceMonitor",  file: "src/wuxing/jin_metal.py" }
+    WATER: { element: "WATER", symbol: "💧",  attached_to: "V3", class: "FlowAdaptor",         file: "src/wuxing/shui_water.py" }
+
+samsara:
+  karma_cycle_interval_s: 60
+  rotation_speed_rad_s: 0.005
+  nirvana_min_cycles: 3
+  nirvana_min_lifetime_karma: 200
+  cooldown_after_reincarnation_s: 10
+  realms:
+    DEVA:
+      karma_threshold: 85
+      enter_condition: "karma >= 85 AND bad_deeds_count == 0 for 3 cycles"
+      token_budget_multiplier: 1.5
+      gpu_priority: "HIGH"
+      search_depth: "UNLIMITED"
+      max_stay_cycles: 10
+      bad_deed_penalty_multiplier: 3.0
+      confidence_modifier: 1.1
+      initial_karma: 85
+    HUMAN:
+      karma_threshold: 40
+      enter_condition: "karma >= 40 AND karma < 85 OR deva_demotion OR naraka_rebirth"
+      token_budget_multiplier: 1.0
+      gpu_priority: "MEDIUM"
+      search_depth: "STANDARD"
+      max_stay_cycles: -1  # unlimited
+      bad_deed_penalty_multiplier: 1.0
+      confidence_modifier: 1.0
+      initial_karma: 50
+    ASURA:
+      karma_threshold: 60
+      enter_condition: "karma >= 60 AND karma < 90 AND contradiction_rate > 0.15"
+      token_budget_multiplier: 1.2
+      gpu_priority: "MEDIUM_HIGH"
+      search_depth: "DEEP_BUT_CONFLICTING"
+      max_stay_cycles: 5
+      special_rule: "deconfliction_pass_required"
+      confidence_modifier: 0.9
+      initial_karma: 60
+    ANIMAL:
+      karma_threshold: 20
+      enter_condition: "karma >= 20 AND karma < 40 OR search_exhaustion_5_cycles"
+      token_budget_multiplier: 0.5
+      gpu_priority: "LOW"
+      search_depth: 1
+      max_stay_cycles: 8
+      special_rule: "llm_disabled_cache_only"
+      confidence_modifier: 0.7
+      initial_karma: 30
+    PRETA:
+      karma_threshold: 10
+      enter_condition: "karma >= 10 AND karma < 20 OR rate_limit_hit_3_consecutive"
+      token_budget_multiplier: 0.25
+      gpu_priority: "LOWEST"
+      search_depth: 1
+      max_stay_cycles: 12
+      special_rule: "rate_limiter_tokens_normal_times_0_25"
+      confidence_modifier: 0.5
+      initial_karma: 15
+    NARAKA:
+      karma_threshold: 0
+      enter_condition: "karma < 10 OR circuit_breaker_triggered_5_failures"
+      token_budget_multiplier: 0.0
+      gpu_priority: "NONE"
+      search_depth: 0
+      max_stay_cycles: 5
+      special_rule: "isolated_self_check_cooldown_max_30s_or_severity_times_60s"
+      confidence_modifier: null
+      initial_karma: 5
+
+sphere:
+  ports:
+    rest: 8080
+    grpc: 9090
+  rate_limit:
+    capacity: 100
+    refill_rate: 10  # per second
+  middleware:
+    - { name: "AuthMiddleware",        file: "src/sphere/auth.py",             order: 1 }
+    - { name: "RateLimitMiddleware",   file: "src/sphere/rate_limiter.py",     order: 2 }
+    - { name: "ProtocolAdapter",       file: "src/sphere/protocol_adapter.py", order: 3 }
+    - { name: "RouterMiddleware",      file: "src/sphere/router.py",           order: 4 }
+    - { name: "AuditLogMiddleware",    file: "src/sphere/audit.py",            order: 5 }
+    - { name: "ResponseMiddleware",    file: "src/sphere/response.py",         order: 6 }
+
+tendrils:
+  health_cycle_interval_s: 30
+  max_consecutive_failures: 3
+  unstable_threshold_per_hour: 5
+  cooldown_after_retract_s: 30
+
+evolution:
+  pareto_objectives:
+    - "recall"
+    - "token_efficiency"
+    - "contradiction_resolution_rate"
+  rollback_window_h: 24
+  max_parameter_delta_pct: 20
+  chaos_seed_strategy: "hash(query_id + date)"
+
+observability:
+  otel_endpoint: "http://jaeger:4317"
+  prometheus_port: 9091
+  jaeger_endpoint: "http://jaeger:16686"

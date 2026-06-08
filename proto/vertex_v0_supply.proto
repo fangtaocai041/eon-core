@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package taiji.v0;
+
+import "proto/event_bus.proto";
+
+service SupplyVertex {
+  rpc Search(SearchRequest) returns (CandidateSet);
+  rpc Expand(ExpandRequest) returns (KnowledgeGraph);
+  rpc Supply(SupplyRequest) returns (KnowledgePayload);
+  rpc Health(taiji.event_bus.Empty) returns (taiji.event_bus.HealthReport);
+}
+
+message SearchRequest {
+  string query = 1;
+  repeated EngineSpec engines = 2;
+  int32 max_results = 3;
+  string trace_id = 4;
+}
+
+message EngineSpec {
+  string name = 1;
+  string endpoint = 2;
+  float weight = 3;
+}
+
+message CandidateSet {
+  repeated CandidateItem items = 1;
+  int32 total_found = 2;
+  bool exhausted = 3;
+  float confidence = 4;
+  string merged_by = 5;
+}
+
+message CandidateItem {
+  string title = 1;
+  string doi = 2;
+  string pmid = 3;
+  string pmcid = 4;
+  int32 year = 5;
+  string journal = 6;
+  repeated string authors = 7;
+  string abstract = 8;
+  float relevance_score = 9;
+  string source_engine = 10;
+  float credibility_score = 11;
+}
+
+message ExpandRequest {
+  CandidateSet seeds = 1;
+  int32 depth = 2;
+  string strategy = 3;
+}
+
+message KnowledgeGraph {
+  repeated KnowledgeNode nodes = 1;
+  repeated KnowledgeEdge edges = 2;
+}
+
+message KnowledgeNode {
+  string id = 1;
+  CandidateItem paper = 2;
+  repeated string labels = 3;
+}
+
+message KnowledgeEdge {
+  string source_id = 1;
+  string target_id = 2;
+  string relation = 3;
+}
+
+message SupplyRequest {
+  string query = 1;
+  string requester_id = 2;
+  float min_source_diversity = 3;
+}
+
+message KnowledgePayload {
+  CandidateSet results = 1;
+  float source_diversity = 2;
+  int32 unique_sources = 3;
+}

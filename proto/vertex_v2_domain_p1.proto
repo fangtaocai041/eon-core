@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package taiji.v2;
+
+import "proto/event_bus.proto";
+
+service DomainVertexP1 {
+  rpc Analyze(DomainRequest) returns (DomainAnalysis);
+  rpc Specialize(SpeciesQuery) returns (ExpertReport);
+  rpc Health(taiji.event_bus.Empty) returns (taiji.event_bus.HealthReport);
+}
+
+message DomainRequest {
+  string query = 1;
+  string domain = 2;
+  repeated string subtasks = 3;
+  string trace_id = 4;
+}
+
+message DomainAnalysis {
+  string summary = 1;
+  AcousticAnalysis acoustic = 2;
+  PopulationReport population = 3;
+  float confidence = 4;
+}
+
+message AcousticAnalysis {
+  repeated ClickEvent detected_clicks = 1;
+  float avg_click_rate_hz = 2;
+  float frequency_band_khz = 3;
+  string classification = 4;
+}
+
+message ClickEvent {
+  double timestamp_s = 1;
+  float peak_frequency_khz = 2;
+  float duration_ms = 3;
+  float rms_amplitude = 4;
+}
+
+message PopulationReport {
+  float estimated_population = 1;
+  float confidence_interval_low = 2;
+  float confidence_interval_high = 3;
+  string trend_direction = 4;
+  string methodology = 5;
+}
+
+message SpeciesQuery {
+  string species_name = 1;
+  string scientific_name = 2;
+  string region = 3;
+  string time_range = 4;
+}
+
+message ExpertReport {
+  string species_name = 1;
+  PopulationReport population = 2;
+  repeated string key_findings = 3;
+  repeated string references = 4;
+  float report_confidence = 5;
+}

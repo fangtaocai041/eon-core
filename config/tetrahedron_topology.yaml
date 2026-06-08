@@ -1,0 +1,50 @@
+# config/tetrahedron_topology.yaml — 三角体网格拓扑配置
+# ==========================================================
+# Defines vertex positions, edge weights, and spectral
+# analysis parameters. Validated as DAG at bootstrap.
+
+vertices:
+  V0:
+    id: "V0"
+    position: [1.0, 1.0, 1.0]
+    label: "SupplyVertex"
+    symbol: "☀️ 太阳·老阳"
+  V1:
+    id: "V1"
+    position: [1.0, -1.0, -1.0]
+    label: "VerifyVertex"
+    symbol: "🌙 太阴·老阴"
+  V2:
+    id: "V2"
+    position: [-1.0, 1.0, -1.0]
+    label: "DomainVertexP1"
+    symbol: "🌤️ 少阴"
+  V3:
+    id: "V3"
+    position: [-1.0, -1.0, 1.0]
+    label: "DomainVertexP2"
+    symbol: "🌦️ 少阳"
+
+edges:
+  - { from: "V0", to: "V1", weight: 0.80, direction: "UNIDIRECTIONAL" }
+  - { from: "V0", to: "V2", weight: 0.70, direction: "UNIDIRECTIONAL" }
+  - { from: "V0", to: "V3", weight: 0.50, direction: "UNIDIRECTIONAL" }
+  - { from: "V2", to: "V1", weight: 0.60, direction: "UNIDIRECTIONAL" }
+  - { from: "V3", to: "V1", weight: 0.40, direction: "UNIDIRECTIONAL" }
+  - { from: "V2", to: "V3", weight: 0.30, direction: "BIDIRECTIONAL" }
+
+faces:
+  - { id: "F012", vertices: ["V0", "V1", "V2"], label: "S-T-V 知识三角" }
+  - { id: "F013", vertices: ["V0", "V1", "V3"], label: "S-V-P2 验证三角" }
+  - { id: "F023", vertices: ["V0", "V2", "V3"], label: "S-P1-P2 领域三角" }
+  - { id: "F123", vertices: ["V1", "V2", "V3"], label: "V-P1-P2 精炼三角" }
+
+spectral:
+  baseline_lambda2: 0.15
+  health_multiplier: 0.1
+  health_check: "lambda2 >= baseline_lambda2 * health_multiplier"
+
+expansion:
+  max_vertices: 8
+  new_edge_default_weight: 0.5
+  warmup_state: "WARMING"

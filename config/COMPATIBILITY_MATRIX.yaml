@@ -1,0 +1,45 @@
+# config/COMPATIBILITY_MATRIX.yaml — 接口兼容性矩阵
+# ========================================================
+# Cross-vertex gRPC interface compatibility.
+# Rows = caller, Cols = callee.
+# ✅ = compatible, ⚠️ = version-aware (DimensionAdapter needed),
+# ❌ = forbidden (must go through EventBus).
+
+matrix:
+  V0_SupplyVertex:
+    V1_VerifyVertex:  ✅
+    V2_DomainP1:      ✅
+    V3_DomainP2:      ✅
+  V1_VerifyVertex:
+    V0_SupplyVertex:  ❌  # must use EventBus (Yin→Yang forbidden)
+    V2_DomainP1:      ✅
+    V3_DomainP2:      ✅
+  V2_DomainP1:
+    V0_SupplyVertex:  ✅
+    V1_VerifyVertex:  ✅
+    V3_DomainP2:      ✅
+  V3_DomainP2:
+    V0_SupplyVertex:  ✅
+    V1_VerifyVertex:  ✅
+    V2_DomainP1:      ✅
+  SphereGateway:
+    V0_SupplyVertex:  ✅
+    V1_VerifyVertex:  ✅
+    V2_DomainP1:      ✅
+    V3_DomainP2:      ✅
+
+# Dimension compatibility: messages auto-upgraded/downgraded
+# by DimensionAdapter at routing time based on d_level.
+dimension_mapping:
+  D1: "linear_search"
+  D2: "graph_traversal"
+  D3: "world_model_prediction"
+
+# Version lock: which proto version each vertex expects
+proto_versions:
+  vertex_v0_supply:  "v1.0.0"
+  vertex_v1_verify:  "v1.0.0"
+  vertex_v2_domain_p1: "v1.0.0"
+  vertex_v3_domain_p2: "v1.0.0"
+  sphere_gateway:    "v1.0.0"
+  event_bus:         "v1.0.0"

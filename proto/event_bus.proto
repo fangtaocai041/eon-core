@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package taiji.event_bus;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+message SystemEvent {
+  string event_id = 1;
+  string trace_id = 2;
+  google.protobuf.Timestamp timestamp = 3;
+  string source = 4;
+  string topic = 5;
+  google.protobuf.Struct payload = 6;
+  KarmaContext karma_context = 7;
+}
+
+message KarmaContext {
+  string agent_id = 1;
+  float expected_quality = 2;
+  google.protobuf.Timestamp deadline = 3;
+}
+
+enum SamsaraRealm {
+  SAMASARA_UNSPECIFIED = 0;
+  DEVA = 1;
+  HUMAN = 2;
+  ASURA = 3;
+  ANIMAL = 4;
+  PRETA = 5;
+  NARAKA = 6;
+}
+
+message HealthReport {
+  enum Status {
+    UNKNOWN = 0;
+    HEALTHY = 1;
+    DEGRADED = 2;
+    UNHEALTHY = 3;
+    UNREACHABLE = 4;
+    NIRVANA = 5;
+  }
+  Status status = 1;
+  string component_id = 2;
+  float latency_p99_ms = 3;
+  float error_rate = 4;
+  float karma_score = 5;
+  SamsaraRealm current_realm = 6;
+  int64 timestamp_unix_ms = 7;
+}
+
+message Empty {}

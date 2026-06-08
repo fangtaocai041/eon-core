@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package taiji.v1;
+
+import "proto/event_bus.proto";
+import "proto/vertex_v0_supply.proto";
+
+service VerifyVertex {
+  rpc Verify(VerifyRequest) returns (VerifiedSet);
+  rpc Debate(DebateRequest) returns (DebateVerdict);
+  rpc Contract(ContractRequest) returns (VerifiedSet);
+  rpc Health(taiji.event_bus.Empty) returns (taiji.event_bus.HealthReport);
+}
+
+message VerifyRequest {
+  taiji.v0.CandidateSet candidates = 1;
+  float precision_threshold = 2;
+  int32 traversal_depth = 3;
+}
+
+message VerifiedSet {
+  repeated VerifiedItem items = 1;
+  float precision = 2;
+  int32 original_count = 3;
+  int32 verified_count = 4;
+  float confidence = 5;
+}
+
+message VerifiedItem {
+  taiji.v0.CandidateItem paper = 1;
+  float verification_score = 2;
+  repeated string verified_by = 3;
+  repeated string contradiction_with = 4;
+}
+
+message DebateRequest {
+  repeated string claims = 1;
+  repeated LLMSpec models = 2;
+  repeated string sources = 3;
+}
+
+message LLMSpec {
+  string model_name = 1;
+  string provider = 2;
+  float temperature = 3;
+}
+
+message DebateVerdict {
+  float consensus_score = 1;
+  repeated ModelVote votes = 2;
+  repeated string accepted_claims = 3;
+  repeated string rejected_claims = 4;
+  repeated string disputed_claims = 5;
+}
+
+message ModelVote {
+  string model_name = 1;
+  string position = 2;
+  float confidence = 3;
+  string reasoning = 4;
+}
+
+message ContractRequest {
+  taiji.v0.CandidateSet candidates = 1;
+  float precision_threshold = 2;
+}
