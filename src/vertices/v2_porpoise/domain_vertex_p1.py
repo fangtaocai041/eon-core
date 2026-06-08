@@ -92,10 +92,16 @@ class DomainVertexP1(BaseVertex, YangPole, YinPole):
     # ── Internal ──
 
     async def _do_acoustic_analysis(self, query: str) -> Dict[str, Any]:
-        """NBHF click detection simulation.
-
-        Butterworth bandpass 110-150kHz, Random Forest classification.
-        """
+        """NBHF click detection via PorpoiseAdapter. Falls back to stub."""
+        try:
+            from scripts.project_loader import get_porpoise
+            por = get_porpoise()
+            if por is not None:
+                result = por.search(query, domain="acoustic")
+                if result.get("status") == "ok":
+                    return result.get("acoustic", result)
+        except Exception:
+            pass
         return {
             "detected_clicks": 42,
             "avg_click_rate_hz": 12.5,

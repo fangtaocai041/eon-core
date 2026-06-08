@@ -109,13 +109,21 @@ class VerifyVertex(BaseVertex, YinPole):
     async def _do_contract(self, candidates: Any) -> Dict[str, Any]:
         """Contract via graph traversal + debate.
 
-        Step 1: Traverse graph (li trigram) at depth=3.
-        Step 2: Multi-model debate (zhen trigram) on claims.
-        Step 3: Merge with consensus score.
-
-        IF precision >= 0.95 THEN record HIGH_PRECISION karma deed.
+        First tries project_loader → CognitiveSearchAdapter for real verification.
+        Falls back to stub if adapter unavailable.
         """
-        # Simulated traversal
+        try:
+            from scripts.project_loader import get_cognitive
+            cog = get_cognitive()
+            if cog is not None:
+                query = str(candidates.get("query", "")) if isinstance(candidates, dict) else ""
+                result = cog.search(query, mode="graph")
+                if result.get("status") == "ok":
+                    return result
+        except Exception:
+            pass
+
+        # Fallback: simulated traversal
         verified_items = []
         items = candidates.get("items", []) if isinstance(candidates, dict) else []
 

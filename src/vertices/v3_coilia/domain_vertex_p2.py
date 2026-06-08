@@ -102,12 +102,16 @@ class DomainVertexP2(BaseVertex, YinPole, YangPole):
     # ── Internal ──
 
     async def _do_otolith_analysis(self, query: str) -> Dict[str, Any]:
-        """Sr/Ca microchemistry analysis simulation.
-
-        WHEN Sr/Ca ratio > 3.0 THEN marine phase.
-        WHEN Sr/Ca ratio < 1.0 THEN freshwater phase.
-        ELSE estuarine phase.
-        """
+        """Sr/Ca microchemistry via CoiliaAdapter. Falls back to stub."""
+        try:
+            from scripts.project_loader import get_coilia
+            coi = get_coilia()
+            if coi is not None:
+                result = coi.search(query, domain="otolith")
+                if result.get("status") == "ok":
+                    return result.get("otolith", result)
+        except Exception:
+            pass
         return {
             "sample_id": "COILIA-2026-001",
             "sr_ca_ratio": 2.8,
