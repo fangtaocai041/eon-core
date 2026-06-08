@@ -36,7 +36,7 @@ Every agent (vertex & trigram) has an embedded **KarmaEngine** that tracks good/
 
 ```bash
 # Clone
-git clone https://github.com/nenuyo/eon-core.git
+git clone https://github.com/fangtaocai041/eon-core.git
 cd eon-core
 
 # Bootstrap the kernel
