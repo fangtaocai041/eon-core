@@ -12,7 +12,16 @@
 
 ## What is eon-core?
 
-The **unified kernel** coordinating 4 domain AI agents through a 10-layer concentric architecture:
+eon-core 有**双重身份**:
+
+1. **作为项目**: 与其他4个项目平级的代码仓库 (`D:\Reasonix\eon-core\`)
+2. **作为架构角色**: 「三」的协调内核 + 「万物」的基础设施载体
+
+它是唯一承载了**两层架构**的项目:
+- **三 (内核层)**: OriginKernel · EventBus · DAG路由 · 生命周期
+- **万物 (设施层)**: 四象顶点 · 八卦子模块 · 五行流转 · 六道轮回 · 进化引擎
+
+10层同心架构:
 
 | Layer | Name | Role |
 |:-----:|------|------|
