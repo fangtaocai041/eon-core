@@ -1,0 +1,18 @@
+name: Validate
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install pyyaml networkx numpy
+      - run: python -c "import yaml; yaml.safe_load(open('config/taiji.yaml')); print('✅ taiji.yaml valid')"
+      - run: python -c "from src.kernel.origin import OriginKernel; print('✅ OriginKernel importable')"
+      - run: |
+          layers=("kernel" "poles" "vertices" "trigrams" "mesh" "wuxing" "samsara" "sphere" "tendrils" "evolution")
+          count=0
+          for d in "${layers[@]}"; do [ -d "src/$d" ] && count=$((count+1)); done
+          echo "✅ $count/10 layers exist"
+          [ $count -ge 8 ]

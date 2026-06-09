@@ -9,8 +9,11 @@ system:
   name: "Eon-Taiji"
   version: "v7.4.0"
   architecture: "道→一→二→三→万物"
-  execution_flow: "道→一→二→三角体→四象→八卦→五行→六道→输出"
+  core: "一(IProjectAdapter) → 二(YinYang) → 三(fish+cognitive+eon-core)"
+  all_things: "四象·八卦·五行·六道·Pₙ — 从三演化"
   execution_flow_doc: "docs/EXECUTION_FLOW.md"
+  schema_version: "v7.4"
+  spec_ref: "docs/TAO_ONE_TWO_THREE.md"
   log_level: "INFO"  # enum: DEBUG | INFO | WARN | ERROR
 
 origin_kernel:
