@@ -83,14 +83,18 @@ python src/main.py --config config/taiji.yaml route "长江江豚种群恢复趋
 python src/main.py --config config/taiji.yaml bootstrap
 ```
 
-## Workspace — 5 Projects
+## Workspace — 5 Projects (S-T-V-P₁-P₂)
 
-| Vertex | Project | Role | Adapter |
-|:------:|---------|------|---------|
-| V0 | [fish-ecology-assistant](https://github.com/fangtaocai041/fish-ecology-assistant) | Knowledge supply | `FishEcologyAdapter` |
-| V1 | [cognitive-search-engine](https://github.com/fangtaocai041/cognitive-search-engine) | Verification engine | `CognitiveSearchAdapter` |
-| V2 | [porpoise-agent](https://github.com/fangtaocai041/porpoise-agent) | Porpoise domain (P₁) | `PorpoiseAdapter` |
-| V3 | [coilia-agent](https://github.com/fangtaocai041/coilia-agent) | Coilia domain (P₂) | `CoiliaAdapter` |
+> eon-core is the unified kernel that replaced the deprecated **meso-cosmos-agent** (deleted v7.1).
+> The 4 vertices map to the S-T-V-P₁-P₂ architecture:
+> **S/V0** = fish · **V/V1** = cognitive · **P₁/V2** = porpoise · **P₂/V3** = coilia
+
+| Vertex | S-T-V Role | Project | Role | Adapter |
+|:------:|:----------:|---------|------|---------|
+| V0 | **S** (State) | [fish-ecology-assistant](https://github.com/fangtaocai041/fish-ecology-assistant) | Knowledge supply | `FishEcologyAdapter` |
+| V1 | **V** (Validation) | [cognitive-search-engine](https://github.com/fangtaocai041/cognitive-search-engine) | Verification engine | `CognitiveSearchAdapter` |
+| V2 | **P₁** (Porpoise) | [porpoise-agent](https://github.com/fangtaocai041/porpoise-agent) | Porpoise domain | `PorpoiseAdapter` |
+| V3 | **P₂** (Coilia) | [coilia-agent](https://github.com/fangtaocai041/coilia-agent) | Coilia domain | `CoiliaAdapter` |
 
 All coordinated via `scripts/project_loader.py` — unified DirectLoader.
 

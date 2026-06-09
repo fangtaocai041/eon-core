@@ -56,14 +56,18 @@ python src/main.py --config config/taiji.yaml route "长江江豚种群恢复趋
 python src/main.py --config config/taiji.yaml bootstrap
 ```
 
-## 工作区 — 五项目协同
+## 工作区 — 五项目协同 (S-T-V-P₁-P₂)
 
-| 顶点 | 项目 | 角色 | 适配器 |
-|:----:|------|------|--------|
-| V0 | fish-ecology-assistant | 知识供给 | FishEcologyAdapter |
-| V1 | cognitive-search-engine | 验证引擎 | CognitiveSearchAdapter |
-| V2 | porpoise-agent | 江豚专研 (P₁) | PorpoiseAdapter |
-| V3 | coilia-agent | 刀鲚专研 (P₂) | CoiliaAdapter |
+> eon-core 是替代已删除的 **meso-cosmos-agent** (v7.1) 的统一内核。
+> 四顶点与 S-T-V-P₁-P₂ 架构映射：
+> **S/V0** = fish · **V/V1** = cognitive · **P₁/V2** = porpoise · **P₂/V3** = coilia
+
+| 顶点 | S-T-V 角色 | 项目 | 角色 | 适配器 |
+|:----:|:----------:|------|------|--------|
+| V0 | **S** (State) | fish-ecology-assistant | 知识供给 | FishEcologyAdapter |
+| V1 | **V** (Validation) | cognitive-search-engine | 验证引擎 | CognitiveSearchAdapter |
+| V2 | **P₁** (Porpoise) | porpoise-agent | 江豚专研 | PorpoiseAdapter |
+| V3 | **P₂** (Coilia) | coilia-agent | 刀鲚专研 | CoiliaAdapter |
 
 全部通过 `scripts/project_loader.py` 统一加载——单一直联入口。
 
