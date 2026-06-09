@@ -1,5 +1,8 @@
 """
 Chaos-Enhanced Agent Engine — 混沌增强智能体核心
+⚠️ EXPERIMENTAL (v7.1): Full implementation exists but NOT wired to production pipeline.
+   Wired via: not yet. Planned integration: eon-core/src/kernel/origin.py L9 Evolution.
+   KEPT for future D₃ 混沌探索层 — Rössler perturbation + Logistic wildcard exploration.
 
 理论映射 (5篇基础文献):
   Langton (1990):     "Edge of Chaos" — 临界态具有最优信息处理能力
@@ -9,7 +12,7 @@ Chaos-Enhanced Agent Engine — 混沌增强智能体核心
   Takahashi (2018):   混沌探索RL — 混沌噪声注入策略空间
 
 五项目映射:
-  Rössler Attractor    → meso-cosmos 路由扰动 (非重复探索)
+  Rössler Attractor    → 路由扰动 (非重复探索)
   Logistic Map (μ=4)   → search_optimizer 方向选择 (遍历性搜索)
   Chaos-Edge Coupling  → S-T-V-P₁-P₂ 协同矩阵 (临界态涌现)
   EntropyGuard         → 安全边界 (防止发散)

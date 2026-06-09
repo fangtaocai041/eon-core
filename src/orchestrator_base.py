@@ -24,32 +24,13 @@ from typing import Any, Dict, List, Optional
 
 
 # ═══════════════════════════════════════════════════════════════
-# Enums — shared across all domain projects
+# Enums — imported from shared_types (canonical source, v7.1 de-dup)
 # ═══════════════════════════════════════════════════════════════
 
+from scripts.shared_types import VerificationStatus, ContradictionType
 
-class VerificationStatus(str, Enum):
-    """声明验证状态 — 控制输出门控。
-
-    verified:     ≥2 独立来源 → 允许输出
-    pending:      仅逻辑推断 → 允许带警告输出
-    hypothesis:   有合理性但缺直接证据 → 允许带标记输出
-    unverifiable: 无来源或验证路径 → 阻塞输出
-    """
-    VERIFIED = "verified"
-    PENDING = "pending"
-    HYPOTHESIS = "hypothesis"
-    UNVERIFIABLE = "unverifiable"
-
-
-class ContradictionType(str, Enum):
-    """矛盾类型 — 决定处理策略。
-
-    ANTAGONISTIC:     对抗性 — 必须解决, 输出阻塞
-    NON_ANTAGONISTIC: 非对抗性 — 标注并存
-    """
-    ANTAGONISTIC = "antagonistic"
-    NON_ANTAGONISTIC = "non_antagonistic"
+# Backward-compat re-export for existing eon-core code
+__all__ = ["VerificationStatus", "ContradictionType"]
 
 
 # ═══════════════════════════════════════════════════════════════
