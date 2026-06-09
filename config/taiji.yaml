@@ -6,8 +6,9 @@
 # ═══════════════════════════════════════════════════════════════
 
 system:
-  name: "TaijiTetrahedron-Samsara"
-  version: "v7.0.0"
+  name: "Eon-Taiji"
+  version: "v7.4.0"
+  architecture: "道→一→二→三→万物"
   log_level: "INFO"  # enum: DEBUG | INFO | WARN | ERROR
 
 origin_kernel:
@@ -18,54 +19,72 @@ origin_kernel:
 
 tetrahedron:
   edges:
-    - { from: "V0", to: "V1", weight: 0.8, direction: "UNIDIRECTIONAL", latency_ms: 50, capacity: 100 }
-    - { from: "V0", to: "V2", weight: 0.7, direction: "UNIDIRECTIONAL", latency_ms: 50, capacity: 100 }
-    - { from: "V2", to: "V1", weight: 0.6, direction: "UNIDIRECTIONAL", latency_ms: 30, capacity: 80 }
-    - { from: "V0", to: "V3", weight: 0.5, direction: "UNIDIRECTIONAL", latency_ms: 50, capacity: 80 }
-    - { from: "V3", to: "V1", weight: 0.4, direction: "UNIDIRECTIONAL", latency_ms: 30, capacity: 60 }
-    - { from: "V2", to: "V3", weight: 0.3, direction: "BIDIRECTIONAL", latency_ms: 20, capacity: 50 }
+    # ═══ 三角形核心边 (道→一→二→三) ═══
+    - { from: "V0", to: "V1", weight: 0.9, pathway: "P1", name: "fish→cognitive", direction: "UNIDIRECTIONAL" }
+    - { from: "V1", to: "V0", weight: 0.7, pathway: "P2", name: "cognitive→fish", direction: "UNIDIRECTIONAL" }
+    # ═══ 派生赋能边 (万物) ═══
+    - { from: "V0", to: "V2", weight: 0.6, pathway: "P3", name: "fish→P₁(江豚)", direction: "UNIDIRECTIONAL" }
+    - { from: "V2", to: "V1", weight: 0.5, pathway: "P3", name: "P₁→cognitive", direction: "UNIDIRECTIONAL" }
+    - { from: "V0", to: "V3", weight: 0.5, pathway: "P3", name: "fish→P₂(刀鲚)", direction: "UNIDIRECTIONAL" }
+    - { from: "V3", to: "V1", weight: 0.4, pathway: "P3", name: "P₂→cognitive", direction: "UNIDIRECTIONAL" }
+    # ═══ P₁/P₂ 同级模板互联 ═══
+    - { from: "V2", to: "V3", weight: 0.3, pathway: "P3", name: "P₁↔P₂", direction: "BIDIRECTIONAL" }
   baseline_spectral_gap: 0.15
-  chaos_disturb_interval: 100   # queries
+  chaos_disturb_interval: 100
   chaos_factor: 0.02
 
 vertices:
   V0:
     id: "V0"
     name: "SupplyVertex"
+    stv_role: "S (State)"
+    project: "fish-ecology-assistant"
+    core_function: "lookup_species(name) → SpeciesProfile"
     symbol: "☀️ 太阳·老阳"
     coordinates: [1.0, 1.0, 1.0]
+    pathways: ["P1(fish→cognitive)", "P2(cognitive→fish)"]
     polarity: "YANG_PRIMARY"
-    gRPC_port: 50051
     wuxing_element: "EARTH"
     trigrams: ["qian_meta_search", "dui_chinese_gateway"]
     d_level: 2
   V1:
     id: "V1"
     name: "VerifyVertex"
+    stv_role: "V (Validation)"
+    project: "cognitive-search-engine"
+    core_function: "search_species(genus, species) → SearchResult"
     symbol: "🌙 太阴·老阴"
     coordinates: [1.0, -1.0, -1.0]
+    pathways: ["P1(fish→cognitive)", "P2(cognitive→fish)", "P3(cognitive→P₁/P₂)"]
     polarity: "YIN_PRIMARY"
-    gRPC_port: 50052
     wuxing_element: "WOOD"
     trigrams: ["li_graph_traversal", "zhen_debate"]
     d_level: 3
   V2:
     id: "V2"
     name: "DomainVertexP1"
+    stv_role: "P₁ (Porpoise)"
+    project: "porpoise-agent"
+    core_function: "analyze_contradiction(question) → Route"
     symbol: "🌤️ 少阴"
     coordinates: [-1.0, 1.0, -1.0]
+    pathways: ["P3(cognitive→P₁)"]
+    note: "三角派生模板 (可复制为 Pₙ)"
     polarity: "YANG_PRIMARY_YIN_SECONDARY"
-    gRPC_port: 50053
     wuxing_element: "METAL"
     trigrams: ["xun_acoustic", "kan_population"]
     d_level: 2
   V3:
     id: "V3"
     name: "DomainVertexP2"
+    stv_role: "P₂ (Coilia)"
+    project: "coilia-agent"
+    core_function: "assess_species(species, context) → Assessment"
     symbol: "🌦️ 少阳"
     coordinates: [-1.0, -1.0, 1.0]
+    pathways: ["P3(cognitive→P₂)"]
+    note: "三角派生模板 (可复制为 Pₙ)"
     polarity: "YIN_PRIMARY_YANG_SECONDARY"
-    gRPC_port: 50054
     wuxing_element: "WATER"
     trigrams: ["gen_otolith", "kun_resource"]
     d_level: 2
