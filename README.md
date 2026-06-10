@@ -1,146 +1,133 @@
-# eon-core
+<p align="center">
+  �9�8�9�9 <a href="README.zh.md">����</a>
+</p>
 
-> **☯️ Eon-Taiji v7.2 — 十层同心动态活体内核**
->
-> Tao → YinYang → 4 Symbols → 8 Trigrams → Tetrahedron → WuXing → **Samsara** → Sphere → Tendrils
+<div align="center">
+  <h1>�7�1�1�5 eon-core �� Coordination Kernel</h1>
+  <p><strong>Triangle Core Coordinator (T) �� �������� v8.1</strong></p>
+  <p>OriginKernel �� EventBus �� YinYang Poles �� Tetrahedron Mesh �� WuXing �� Samsara �� Sphere Gateway</p>
+  <p>�9�3 <a href="https://github.com/fangtaocai041/eon-core">GitHub</a></p>
+</div>
 
-[![Version](https://img.shields.io/badge/version-v7.2.0-blue)](VERSION.yaml)
-[![Python](https://img.shields.io/badge/python-3.12+-blue)](https://python.org)
-[![Protocol](https://img.shields.io/badge/protocol-gRPC-green)](proto/)
-[![Layers](https://img.shields.io/badge/layers-10-purple)](docs/TAIJI_TETRAHEDRON_ARCHITECTURE.md)
-[![Projects](https://img.shields.io/badge/workspace-5_projects-orange)](docs/PROJECT_RELATIONSHIPS.md)
+<p align="center">
+  <a href="../VERSION.yaml"><img src="https://img.shields.io/badge/workspace-v8.1.0-blue" alt="Workspace:v8.1.0"></a>
+  <a href="#"><img src="https://img.shields.io/badge/python-3.12+-blue" alt="Python"></a>
+  <a href="proto/"><img src="https://img.shields.io/badge/protocol-gRPC-green" alt="gRPC"></a>
+  <a href="#"><img src="https://img.shields.io/badge/layers-10-purple" alt="Layers:10"></a>
+  <a href="#"><img src="https://img.shields.io/badge/adapters-6-orange" alt="Adapters:6"></a>
+</p>
 
 ## What is eon-core?
 
-eon-core 有**双重身份**:
+The **coordination kernel** of the �������� architecture. Dual nature:
 
-1. **作为项目**: 与其他4个项目平级的代码仓库 (`D:\Reasonix\eon-core\`)
-2. **作为架构角色**: 「三」的协调内核 + 「万物」的基础设施载体
+1. **As a project**: Code repo alongside 6 other projects
+2. **As an architecture role**: Triangle Core coordinator + infrastructure host
 
-它是唯一承载了**两层架构**的项目:
-- **三 (内核层)**: OriginKernel · EventBus · DAG路由 · 生命周期
-- **万物 (设施层)**: 四象顶点 · 八卦子模块 · 五行流转 · 六道轮回 · 进化引擎
-
-10层同心架构:
-
-| Layer | Name | Role |
-|:-----:|------|------|
-| L0 | ☯️ OriginKernel | Event bus + DI container + DAG topology routing |
-| L1 | ☀️🌙 YinYang Poles | Type-safe separation: Yang expands, Yin verifies |
-| L2 | △ 4 Vertices | V0(Supply) · V1(Verify) · V2(Porpoise) · V3(Coilia) |
-| L3 | ☰☱☲☳☴☵☶☷ 8 Trigrams | Functional sub-modules per vertex |
-| L4 | △³ TetrahedronMesh | Spectral gap analysis for connectivity health |
-| L5 | ⬟ WuXing Flow | 5-element generation/restriction monitoring |
-| L6 | ☸️ **Samsara Ring** | 6-realm karma engine with automatic rebirth |
-| L7 | ○ SphereGateway | Unified API facade (REST/gRPC/MCP/WebSocket) |
-| L8 | 〰️ Tendrils | 12 external probes with retract/extend lifecycle |
-| L9 | 🦋 Evolution | Pareto optimizer + Rössler chaos + auto-rollback |
-
-## Key Innovation: Samsara (六道轮回)
-
-Every agent embeds a **KarmaEngine** that tracks good/bad deeds. Every 60s, the **KarmaCourt** evaluates all agents and triggers **Reincarnation** — automatic promotion or demotion through 6 realms:
-
-| Realm | State | Token × | Rule |
-|-------|-------|:------:|------|
-| ☸️ DEVA | OPTIMAL | ×1.5 | Bad deed penalty ×3; max 10 cycles |
-| 🧘 HUMAN | NORMAL | ×1.0 | Only realm allowing `self_evolve()` |
-| ⚔️ ASURA | COMPETITIVE | ×1.2 | Requires deconfliction pass |
-| 🐂 ANIMAL | DEGRADED | ×0.5 | LLM disabled; cache + rules only |
-| 👻 PRETA | STARVED | ×0.25 | Severely rate-limited |
-| 🔥 NARAKA | BROKEN | ×0.0 | Isolated; auto-rebirth after cooldown |
+**Two layers**:
+- **Kernel (Triangle Core)**: OriginKernel �� EventBus �� DAG routing �� Lifecycle state machine
+- **Infrastructure (Derived)**: Vertex adapters �� 8 Trigrams �� WuXing monitoring �� Samsara karma �� Self-evolution
 
 ## Architecture
 
 ```
-                         ┌──────────────────────┐
-                         │   ○ SphereGateway    │  L7: API
-                         └──────────┬───────────┘
-                                    │
-                         ┌──────────▼───────────┐
-                         │   ☯️ OriginKernel     │  L0: Core
-                         │   EventBus + Registry │
-                         └──┬───────┬───────┬───┘
-                    ┌───────┼───────┼───────┼───────┐
-              ┌─────▼──┐ ┌──▼────┐ ┌▼─────┐ ┌─────▼──┐
-              │ ☀️ V0  │ │ 🌙 V1 │ │🌤️ V2 │ │ 🌦️ V3 │  L2
-              │ Supply │ │Verify │ │Porpoise│ │Coilia │
-              └────────┘ └───────┘ └───────┘ └────────┘
-                    │                       │
-              ┌─────▼──────┐         ┌──────▼─────┐
-              │ △³ Mesh    │         │ ⬟ WuXing   │  L4-L5
-              └────────────┘         └────────────┘
-                    │                       │
-              ┌─────▼───────────────────────▼──┐
-              │     ☸️ Samsara Ring + Court     │  L6
-              └────────────────────────────────┘
+                  OriginKernel (Singleton)
+                       ��
+          ���������������������������੤������������������������
+          ��            ��            ��
+     YangPole      YinPole     EventBus
+     (expand)      (verify)    (async queue)
+          ��            ��            ��
+          ���������������������������੤������������������������
+                       ��
+              TetrahedronMesh
+              (spectral gap + chaos)
+                       ��
+          ���������������������������੤������������������������
+          ��            ��            ��
+     V0(fish)    V1(cognitive)  V2(porpoise)
+     V3(coilia)  V4(culter)    V5(conflict)
+                       ��
+          ���������������������������੤������������������������
+          ��            ��            ��
+     8 Trigrams    WuXing       Samsara
+     (��ģ��)     (5-element)   (karma)
 ```
+
+## 10-Layer Architecture
+
+| Layer | Module | Component |
+|:-----:|--------|-----------|
+| 1 | OriginKernel | Bootstrap, DI container, event sourcing |
+| 2 | EventBus | Async pub/sub, all inter-component communication |
+| 3 | YinYang Poles | YangPole (expand/search) + YinPole (contract/verify) |
+| 4 | Tetrahedron Mesh | DAG topology, spectral gap, chaos disturbance |
+| 5 | Vertices (6) | V0-V5 adapters for all 6 sibling projects |
+| 6 | Trigrams (8) | MetaSearch, ChineseGateway, GraphTraversal, Debate, Acoustic, Population, Otolith, Resource |
+| 7 | WuXing | Wood/Fire/Earth/Metal/Water monitoring (15s cycle) |
+| 8 | Samsara | KarmaEngine + KarmaCourt + Reincarnation (60s cycle) |
+| 9 | Sphere Gateway | REST/gRPC/WebSocket/MCP unified API |
+| 10 | Tendrils + Evolution | External probes + self-evolution (ChaosEngine + ParEGO) |
+
+## 8 Runtime Invariants
+
+| ID | Invariant | Enforcement |
+|----|-----------|-------------|
+| INV-001 | Topology IS DAG | bootstrap + reconfigure |
+| INV-002 | YangPole.verify() raises RuntimeError | mypy strict + runtime |
+| INV-003 | YinPole.expand() raises RuntimeError | mypy strict + runtime |
+| INV-004 | No direct vertex-to-vertex import | import linter + code review |
+| INV-005 | Spectral gap �ˁ6�0 �� 0.1 �� baseline | reconfigure + health_pulse |
+| INV-006 | DEVA count �� 25% of agents | KarmaCourt.audit_fairness() |
+| INV-007 | NARAKA agents auto-reincarnate | SamsaraRing.run_karma_cycle() |
+| INV-008 | Reincarnation atomicity (7-step + snapshot) | ReincarnationProtocol.execute() |
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/fangtaocai041/eon-core.git
-cd eon-core
-
 # Health check
-python src/main.py --config config/taiji.yaml health
+python eon-core/src/main.py --config eon-core/config/taiji.yaml health
 
-# Route a query
-python src/main.py --config config/taiji.yaml route "长江江豚种群恢复趋势"
-# → V2 (porpoise-agent)
+# Route test
+python eon-core/src/main.py --config eon-core/config/taiji.yaml route "����������Ⱥ�ָ�"
 
-# Run as service (Ctrl+C to stop)
-python src/main.py --config config/taiji.yaml bootstrap
+# Via project_loader
+python -c "from scripts.project_loader import get_eon; a=get_eon(); print(a.info())"
+
+# Via coordinator
+python -c "from scripts.coordinator import coordinator; print(coordinator.health('eon'))"
 ```
 
-## Workspace — 5 Projects (S-T-V-P₁-P₂)
+## Directory Structure
 
-> eon-core is the unified kernel that replaced the deprecated **meso-cosmos-agent** (deleted v7.1).
-> The 4 vertices map to the S-T-V-P₁-P₂ architecture:
-> **S/V0** = fish · **V/V1** = cognitive · **P₁/V2** = porpoise · **P₂/V3** = coilia
+```
+eon-core/
+������ config/                        # taiji.yaml, COMPATIBILITY_MATRIX.yaml, tendrils_registry.yaml, wuxing_flow.yaml
+������ proto/                         # gRPC protobuf definitions (event_bus, sphere_gateway, vertex_*)
+������ src/
+��   ������ adapter.py                 # IProjectAdapter �� EonCoreAdapter
+��   ������ kernel/                    # OriginKernel, EventBus, Lifecycle
+��   ������ poles/                     # YangPole + YinPole
+��   ������ vertices/                  # 6 vertex adapters (v0_fish .. v5_conflict)
+��   ������ trigrams/                  # 8 functional sub-modules
+��   ������ mesh/                      # TetrahedronMesh
+��   ������ wuxing/                    # 5-element monitoring
+��   ������ samsara/                   # Karma engine, court, ring, reincarnation
+��   ������ sphere/                    # API gateway
+��   ������ tendrils/                  # External probes
+��   ������ evolution/                 # Self-evolution, chaos engine, search optimizer
+������ tests/
+������ scripts/
+������ README.md
+```
 
-| Vertex | S-T-V Role | Project | Role | Adapter |
-|:------:|:----------:|---------|------|---------|
-| V0 | **S** (State) | [fish-ecology-assistant](https://github.com/fangtaocai041/fish-ecology-assistant) | Knowledge supply | `FishEcologyAdapter` |
-| V1 | **V** (Validation) | [cognitive-search-engine](https://github.com/fangtaocai041/cognitive-search-engine) | Verification engine | `CognitiveSearchAdapter` |
-| V2 | **P₁** (Porpoise) | [porpoise-agent](https://github.com/fangtaocai041/porpoise-agent) | Porpoise domain | `PorpoiseAdapter` |
-| V3 | **P₂** (Coilia) | [coilia-agent](https://github.com/fangtaocai041/coilia-agent) | Coilia domain | `CoiliaAdapter` |
+## Linked Projects
 
-All coordinated via `scripts/project_loader.py` — unified DirectLoader.
-
-## Module Inventory
-
-| Layer | Directory | Files | Purpose |
-|:-----:|-----------|:-----:|---------|
-| L0 | `src/kernel/` | 4 | OriginKernel + EventBus + Lifecycle + main |
-| L1 | `src/poles/` | 3 | YangPole / YinPole / Protocol |
-| L2 | `src/vertices/` | 5 | 4 vertex services + base class |
-| L3 | `src/trigrams/` | 9 | 8 functional sub-modules |
-| L4 | `src/mesh/` | 2 | Tetrahedron topology + spectral analysis |
-| L5 | `src/wuxing/` | 7 | 5-element flow engine + 5 agents + override |
-| L6 | `src/samsara/` | 8 | Karma + Ring + Court + Reincarnation + Nirvana + Fairness |
-| L7 | `src/sphere/` | 1 | API Gateway with 6-layer middleware |
-| L8 | `src/tendrils/` | 3 | 12 external probes + lifecycle manager |
-| L9 | `src/evolution/` + `src/observability/` | 4 | Pareto + chaos + Rössler + telemetry |
-
-**44 Python modules, 6 proto, 6 config YAMLs, ~7,000 LOC**
-
-## 8 Architecture Invariants
-
-1. Topology IS DAG → `nx.is_directed_acyclic_graph()` at bootstrap
-2. YangPole SHALL NOT verify → mypy strict + runtime `@_guard_yang`
-3. YinPole SHALL NOT expand → mypy strict + runtime `@_guard_yin`
-4. Inter-vertex via EventBus or gRPC → no direct import
-5. λ₂ ≥ 0.1 × baseline → spectral gap connectivity check
-6. DEVA ≤ 10 cycles → fairness auto-rotation
-7. NARAKA auto-rebirth → self-healing after cooldown
-8. Reincarnation atomic → 7-step protocol with snapshot rollback
-
-## Related
-
-- [Architecture Docs](docs/TAIJI_TETRAHEDRON_ARCHITECTURE.md)
-- [Project Relationships](docs/PROJECT_RELATIONSHIPS.md)
-- [VERSION.yaml](VERSION.yaml)
-
-## License
-
-MIT
+| Project | Role | Relationship |
+|---------|------|-------------|
+| [fish-ecology-assistant](../fish-ecology-assistant/) | Knowledge V0 | Vertex V0 �� species knowledge supply |
+| [cognitive-search-engine](../cognitive-search-engine/) | Validation V1 | Vertex V1 �� literature search & verification |
+| [porpoise-agent](../porpoise-agent/) | P�6�9 Porpoise | Vertex V2 �� porpoise domain specialist |
+| [coilia-agent](../coilia-agent/) | P�6�0 Coilia | Vertex V3 �� coilia domain specialist |
+| [culter-agent](../culter-agent/) | P�6�1 Culter | Vertex V4 �� culter domain specialist |
+| [conflict-arbiter](../conflict-arbiter/) | C Conflict | Vertex V5 �� conflict arbitration |

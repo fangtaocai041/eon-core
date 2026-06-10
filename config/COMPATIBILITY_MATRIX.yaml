@@ -6,27 +6,27 @@
 # ❌ = forbidden (must go through EventBus).
 
 matrix:
-  V0_SupplyVertex:
-    V1_VerifyVertex:  ✅
-    V2_DomainP1:      ✅
-    V3_DomainP2:      ✅
-  V1_VerifyVertex:
-    V0_SupplyVertex:  ❌  # must use EventBus (Yin→Yang forbidden)
-    V2_DomainP1:      ✅
-    V3_DomainP2:      ✅
-  V2_DomainP1:
-    V0_SupplyVertex:  ✅
-    V1_VerifyVertex:  ✅
-    V3_DomainP2:      ✅
-  V3_DomainP2:
-    V0_SupplyVertex:  ✅
-    V1_VerifyVertex:  ✅
-    V2_DomainP1:      ✅
+    fish:             # 三角核心·知识供给
+      cognitive:        # 三角核心·搜索验证  ✅
+          porpoise:         # 万物衍生·江豚      ✅
+          coilia:           # 万物衍生·刀鲚      ✅
+    cognitive:        # 三角核心·搜索验证
+      fish:             # 三角核心·知识供给  ❌  # must use EventBus (Yin→Yang forbidden)
+          porpoise:         # 万物衍生·江豚      ✅
+          coilia:           # 万物衍生·刀鲚      ✅
+        porpoise:         # 万物衍生·江豚
+      fish:             # 三角核心·知识供给  ✅
+      cognitive:        # 三角核心·搜索验证  ✅
+          coilia:           # 万物衍生·刀鲚      ✅
+        coilia:           # 万物衍生·刀鲚
+      fish:             # 三角核心·知识供给  ✅
+      cognitive:        # 三角核心·搜索验证  ✅
+          porpoise:         # 万物衍生·江豚      ✅
   SphereGateway:
-    V0_SupplyVertex:  ✅
-    V1_VerifyVertex:  ✅
-    V2_DomainP1:      ✅
-    V3_DomainP2:      ✅
+      fish:             # 三角核心·知识供给  ✅
+      cognitive:        # 三角核心·搜索验证  ✅
+          porpoise:         # 万物衍生·江豚      ✅
+          coilia:           # 万物衍生·刀鲚      ✅
 
 # Dimension compatibility: messages auto-upgraded/downgraded
 # by DimensionAdapter at routing time based on d_level.

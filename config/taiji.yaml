@@ -1,20 +1,15 @@
-# ═══════════════════════════════════════════════════════════════
-# config/taiji.yaml — TaijiTetrahedron-Samsara v7.0 主配置
+# config/taiji.yaml — TaijiTetrahedron-Samsara v7.4
 # ==============================================================
 # Single Source of Truth for the 10-layer concentric architecture.
 # All runtime components read from this file at bootstrap.
-# ═══════════════════════════════════════════════════════════════
 
 system:
-  name: "Eon-Taiji"
+  name: "SanShengWanWu"
   version: "v7.4.0"
-  architecture: "道→一→二→三→万物"
-  core: "一(IProjectAdapter) → 二(YinYang) → 三(fish+cognitive+eon-core)"
-  all_things: "四象·八卦·五行·六道·Pₙ — 从三演化"
-  execution_flow_doc: "docs/EXECUTION_FLOW.md"
+  architecture: "sealed_set(3): TriangleCore | open_set(N): DerivedProjects"
+  core: "IProjectAdapter -> YinYang -> TriangleCore[fish+cognitive+eon-core]"
   schema_version: "v7.4"
-  spec_ref: "docs/TAO_ONE_TWO_THREE.md"
-  log_level: "INFO"  # enum: DEBUG | INFO | WARN | ERROR
+  log_level: "INFO"
 
 origin_kernel:
   bootstrap_timeout_s: 120
@@ -24,16 +19,12 @@ origin_kernel:
 
 tetrahedron:
   edges:
-    # ═══ 三角形核心边 (道→一→二→三) ═══
-    - { from: "V0", to: "V1", weight: 0.9, pathway: "P1", name: "fish→cognitive", direction: "UNIDIRECTIONAL" }
-    - { from: "V1", to: "V0", weight: 0.7, pathway: "P2", name: "cognitive→fish", direction: "UNIDIRECTIONAL" }
-    # ═══ 派生赋能边 (万物) ═══
-    - { from: "V0", to: "V2", weight: 0.6, pathway: "P3", name: "fish→P₁(江豚)", direction: "UNIDIRECTIONAL" }
-    - { from: "V2", to: "V1", weight: 0.5, pathway: "P3", name: "P₁→cognitive", direction: "UNIDIRECTIONAL" }
-    - { from: "V0", to: "V3", weight: 0.5, pathway: "P3", name: "fish→P₂(刀鲚)", direction: "UNIDIRECTIONAL" }
-    - { from: "V3", to: "V1", weight: 0.4, pathway: "P3", name: "P₂→cognitive", direction: "UNIDIRECTIONAL" }
-    # ═══ P₁/P₂ 同级模板互联 ═══
-    - { from: "V2", to: "V3", weight: 0.3, pathway: "P3", name: "P₁↔P₂", direction: "BIDIRECTIONAL" }
+    # DAG topology (strictly acyclic)
+    # origin->V0/V1/V2/V3/V4 auto-added by bootstrap
+    - { from: "V0", to: "V1", weight: 0.9, pathway: "P1", name: "fish->cognitive", direction: "UNIDIRECTIONAL" }
+    - { from: "V1", to: "V2", weight: 0.6, pathway: "P3", name: "cognitive->P1(porpoise)", direction: "UNIDIRECTIONAL" }
+    - { from: "V1", to: "V3", weight: 0.5, pathway: "P3", name: "cognitive->P2(coilia)", direction: "UNIDIRECTIONAL" }
+    - { from: "V1", to: "V4", weight: 0.4, pathway: "P3", name: "cognitive->P3(culter)", direction: "UNIDIRECTIONAL" }
   baseline_spectral_gap: 0.15
   chaos_disturb_interval: 100
   chaos_factor: 0.02
@@ -44,10 +35,10 @@ vertices:
     name: "SupplyVertex"
     stv_role: "S (State)"
     project: "fish-ecology-assistant"
-    core_function: "lookup_species(name) → SpeciesProfile"
-    symbol: "☀️ 太阳·老阳"
+    core_function: "lookup_species(name) -> SpeciesProfile"
+    symbol: "TaiYang"
     coordinates: [1.0, 1.0, 1.0]
-    pathways: ["P1(fish→cognitive)", "P2(cognitive→fish)"]
+    pathways: ["P1(fish->cognitive)", "P2(cognitive->fish)"]
     polarity: "YANG_PRIMARY"
     wuxing_element: "EARTH"
     trigrams: ["qian_meta_search", "dui_chinese_gateway"]
@@ -57,10 +48,10 @@ vertices:
     name: "VerifyVertex"
     stv_role: "V (Validation)"
     project: "cognitive-search-engine"
-    core_function: "search_species(genus, species) → SearchResult"
-    symbol: "🌙 太阴·老阴"
+    core_function: "search_species(genus, species) -> SearchResult"
+    symbol: "TaiYin"
     coordinates: [1.0, -1.0, -1.0]
-    pathways: ["P1(fish→cognitive)", "P2(cognitive→fish)", "P3(cognitive→P₁/P₂)"]
+    pathways: ["P1(fish->cognitive)", "P2(cognitive->fish)", "P3(cognitive->P1)", "P3(cognitive->P2)", "P3(cognitive->P3)"]
     polarity: "YIN_PRIMARY"
     wuxing_element: "WOOD"
     trigrams: ["li_graph_traversal", "zhen_debate"]
@@ -68,13 +59,13 @@ vertices:
   V2:
     id: "V2"
     name: "DomainVertexP1"
-    stv_role: "P₁ (Porpoise)"
+    stv_role: "P1(Porpoise)"
     project: "porpoise-agent"
-    core_function: "analyze_contradiction(question) → Route"
-    symbol: "🌤️ 少阴"
+    core_function: "analyze_contradiction(question) -> Route"
+    symbol: "ShaoYin"
     coordinates: [-1.0, 1.0, -1.0]
-    pathways: ["P3(cognitive→P₁)"]
-    note: "三角派生模板 (可复制为 Pₙ)"
+    pathways: ["P3(cognitive->P1)"]
+    note: "Derived species template (replicable as Pn)"
     polarity: "YANG_PRIMARY_YIN_SECONDARY"
     wuxing_element: "METAL"
     trigrams: ["xun_acoustic", "kan_population"]
@@ -82,16 +73,30 @@ vertices:
   V3:
     id: "V3"
     name: "DomainVertexP2"
-    stv_role: "P₂ (Coilia)"
+    stv_role: "P2(Coilia)"
     project: "coilia-agent"
-    core_function: "assess_species(species, context) → Assessment"
-    symbol: "🌦️ 少阳"
+    core_function: "assess_species(species, context) -> Assessment"
+    symbol: "ShaoYang"
     coordinates: [-1.0, -1.0, 1.0]
-    pathways: ["P3(cognitive→P₂)"]
-    note: "三角派生模板 (可复制为 Pₙ)"
+    pathways: ["P3(cognitive->P2)"]
+    note: "Derived species template (replicable as Pn)"
     polarity: "YIN_PRIMARY_YANG_SECONDARY"
     wuxing_element: "WATER"
     trigrams: ["gen_otolith", "kun_resource"]
+    d_level: 2
+  V4:
+    id: "V4"
+    name: "DomainVertexP3"
+    stv_role: "P3(Culter)"
+    project: "culter-agent"
+    core_function: "assess_culter_species(species, context) -> SpeciesAssessment"
+    symbol: "Fire"
+    coordinates: [-1.0, 1.0, 1.0]
+    pathways: ["P3(cognitive->P3)"]
+    note: "Culter domain research (growth/genomics/trophic/resource)"
+    polarity: "YIN_PRIMARY_YANG_SECONDARY"
+    wuxing_element: "FIRE"
+    trigrams: ["zhen_growth", "kun_resource"]
     d_level: 2
 
 wuxing:
@@ -99,11 +104,11 @@ wuxing:
   rotation_speed_rad_s: 0.01
   override_threshold: 3
   agents:
-    WOOD:  { element: "WOOD",  symbol: "🪵",  attached_to: "V1", class: "GrowthMonitor",      file: "src/wuxing/mu_wood.py" }
-    FIRE:  { element: "FIRE",  symbol: "🔥",  attached_to: "Origin", class: "DriveCoordinator",   file: "src/wuxing/huo_fire.py" }
-    EARTH: { element: "EARTH", symbol: "🪨",  attached_to: "V0", class: "NourishmentMonitor",  file: "src/wuxing/tu_earth.py" }
-    METAL: { element: "METAL", symbol: "⚔️",  attached_to: "V2", class: "ConvergenceMonitor",  file: "src/wuxing/jin_metal.py" }
-    WATER: { element: "WATER", symbol: "💧",  attached_to: "V3", class: "FlowAdaptor",         file: "src/wuxing/shui_water.py" }
+    WOOD:  { element: "WOOD",  symbol: "Mu",   attached_to: "V1", class: "GrowthMonitor",      file: "src/wuxing/mu_wood.py" }
+    FIRE:  { element: "FIRE",  symbol: "Huo",  attached_to: "V4", class: "DriveCoordinator",   file: "src/wuxing/huo_fire.py" }
+    EARTH: { element: "EARTH", symbol: "Tu",   attached_to: "V0", class: "NourishmentMonitor",  file: "src/wuxing/tu_earth.py" }
+    METAL: { element: "METAL", symbol: "Jin",  attached_to: "V2", class: "ConvergenceMonitor",  file: "src/wuxing/jin_metal.py" }
+    WATER: { element: "WATER", symbol: "Shui", attached_to: "V3", class: "FlowAdaptor",         file: "src/wuxing/shui_water.py" }
 
 samsara:
   karma_cycle_interval_s: 60
@@ -114,7 +119,6 @@ samsara:
   realms:
     DEVA:
       karma_threshold: 85
-      enter_condition: "karma >= 85 AND bad_deeds_count == 0 for 3 cycles"
       token_budget_multiplier: 1.5
       gpu_priority: "HIGH"
       search_depth: "UNLIMITED"
@@ -124,53 +128,43 @@ samsara:
       initial_karma: 85
     HUMAN:
       karma_threshold: 40
-      enter_condition: "karma >= 40 AND karma < 85 OR deva_demotion OR naraka_rebirth"
       token_budget_multiplier: 1.0
       gpu_priority: "MEDIUM"
       search_depth: "STANDARD"
-      max_stay_cycles: -1  # unlimited
+      max_stay_cycles: -1
       bad_deed_penalty_multiplier: 1.0
       confidence_modifier: 1.0
       initial_karma: 50
     ASURA:
       karma_threshold: 60
-      enter_condition: "karma >= 60 AND karma < 90 AND contradiction_rate > 0.15"
       token_budget_multiplier: 1.2
       gpu_priority: "MEDIUM_HIGH"
-      search_depth: "DEEP_BUT_CONFLICTING"
+      search_depth: "DEEP"
       max_stay_cycles: 5
-      special_rule: "deconfliction_pass_required"
       confidence_modifier: 0.9
       initial_karma: 60
     ANIMAL:
       karma_threshold: 20
-      enter_condition: "karma >= 20 AND karma < 40 OR search_exhaustion_5_cycles"
       token_budget_multiplier: 0.5
       gpu_priority: "LOW"
       search_depth: 1
       max_stay_cycles: 8
-      special_rule: "llm_disabled_cache_only"
       confidence_modifier: 0.7
       initial_karma: 30
     PRETA:
       karma_threshold: 10
-      enter_condition: "karma >= 10 AND karma < 20 OR rate_limit_hit_3_consecutive"
       token_budget_multiplier: 0.25
       gpu_priority: "LOWEST"
       search_depth: 1
       max_stay_cycles: 12
-      special_rule: "rate_limiter_tokens_normal_times_0_25"
       confidence_modifier: 0.5
       initial_karma: 15
     NARAKA:
       karma_threshold: 0
-      enter_condition: "karma < 10 OR circuit_breaker_triggered_5_failures"
       token_budget_multiplier: 0.0
       gpu_priority: "NONE"
       search_depth: 0
       max_stay_cycles: 5
-      special_rule: "isolated_self_check_cooldown_max_30s_or_severity_times_60s"
-      confidence_modifier: null
       initial_karma: 5
 
 sphere:
@@ -179,14 +173,14 @@ sphere:
     grpc: 9090
   rate_limit:
     capacity: 100
-    refill_rate: 10  # per second
+    refill_rate: 10
   middleware:
-    - { name: "AuthMiddleware",        file: "src/sphere/auth.py",             order: 1 }
-    - { name: "RateLimitMiddleware",   file: "src/sphere/rate_limiter.py",     order: 2 }
-    - { name: "ProtocolAdapter",       file: "src/sphere/protocol_adapter.py", order: 3 }
-    - { name: "RouterMiddleware",      file: "src/sphere/router.py",           order: 4 }
-    - { name: "AuditLogMiddleware",    file: "src/sphere/audit.py",            order: 5 }
-    - { name: "ResponseMiddleware",    file: "src/sphere/response.py",         order: 6 }
+    - { name: "AuthMiddleware",        order: 1 }
+    - { name: "RateLimitMiddleware",   order: 2 }
+    - { name: "ProtocolAdapter",       order: 3 }
+    - { name: "RouterMiddleware",      order: 4 }
+    - { name: "AuditLogMiddleware",    order: 5 }
+    - { name: "ResponseMiddleware",    order: 6 }
 
 tendrils:
   health_cycle_interval_s: 30
