@@ -337,7 +337,8 @@ _conflict = None
 def get_conflict():
     """Get conflict-arbiter for multi-source conservation arbitration.
 
-    Uses ConflictArbiterAdapter.search() with get_adapter() factory.
+    已合并到 cognitive-search-engine (T验证层).
+    Uses cognitive-search-engine/src/conflict_adapter.py.
     """
     global _conflict
     if _conflict is not None:
@@ -345,7 +346,7 @@ def get_conflict():
 
     try:
         ConflictArbiterAdapter = _import_from_project(
-            "conflict-arbiter", "src.adapter", "ConflictArbiterAdapter"
+            "cognitive-search-engine", "src.conflict_adapter", "ConflictArbiterAdapter"
         )
 
         def _conflict_search(species_name: str, **kwargs) -> Dict[str, Any]:
