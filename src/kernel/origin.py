@@ -1,7 +1,8 @@
-"""OriginKernel — 统一协调内核.
+"""OriginKernel — 协调内核 (道).
 
-三生万物架构中的「道」:
-  道 (eon-core) → 一 (workspace) → 二 (project_loader) → 三 (S-T-V 三角) → 万物 (P₁-P₃ + conflict)
+三生万物架构:
+  道 (eon-core) → S(fish-ecology-assistant 知识) + T(cognitive-search-engine 搜索验证)
+  → 万物: P₁(porpoise 江豚) + P₂(coilia 刀鲚) + P₃(culter 鲌类) + C(conflict 仲裁)
 
 职责:
   1. 读取 coordination.yaml 配置

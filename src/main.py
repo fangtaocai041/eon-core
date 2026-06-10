@@ -1,13 +1,8 @@
-"""eon-core — 统一协调内核 (三生万物·道)
+"""eon-core — 协调内核 (道)
 
-三角结构:
-  S = fish-ecology-assistant (知识供给)
-  T = porpoise-agent (过渡执行)
-  V = cognitive-search-engine (搜索验证)
-
-万物衍生:
-  P₁ porpoise (江豚), P₂ coilia (刀鲚), P₃ culter (鲌类)
-  conflict-arbiter (冲突仲裁)
+架构:
+  道 (eon-core) → S(fish-ecology-assistant 知识) + T(cognitive-search-engine 验证)
+  → 万物: P₁(porpoise 江豚) + P₂(coilia 刀鲚) + P₃(culter 鲌类) + C(conflict 仲裁)
 
 用法:
     python -m eon_core bootstrap          # 启动内核
