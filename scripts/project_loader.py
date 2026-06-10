@@ -42,8 +42,8 @@ def _import_from_project(project_name: str, module_path: str, attr_name: str) ->
         if k == "src" or k.startswith("src."):
             del sys.modules[k]
 
-    # Set sys.path: this project first, then eon-core (for scripts/shared_types fallback), then others
-    sys.path = [project_root, _EON_ROOT] + [p for p in old_path if not p.startswith(_WORKSPACE)]
+    # Set sys.path: this project first, then workspace root (for scripts/ redirects), then eon-core
+    sys.path = [project_root, _EON_ROOT, _WORKSPACE] + [p for p in old_path if not p.startswith(_WORKSPACE)]
 
     try:
         mod = __import__(module_path, fromlist=[attr_name])
