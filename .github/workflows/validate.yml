@@ -11,7 +11,7 @@ jobs:
       - run: python -c "import yaml; yaml.safe_load(open('config/taiji.yaml')); print('✅ taiji.yaml valid')"
       - run: python -c "from src.kernel.origin import OriginKernel; print('✅ OriginKernel importable')"
       - run: |
-          layers=("kernel" "poles" "vertices" "trigrams" "mesh" "wuxing" "samsara" "sphere" "tendrils" "evolution")
+          layers=("kernel" "poles" "vertices" "trigrams" "mesh" "samsara" "sphere" "tendrils" "evolution")
           count=0
           for d in "${layers[@]}"; do [ -d "src/$d" ] && count=$((count+1)); done
           echo "✅ $count/10 layers exist"

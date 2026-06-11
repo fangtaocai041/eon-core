@@ -37,17 +37,30 @@ def _import_from_project(project_name: str, module_path: str, attr_name: str) ->
     old_path = list(sys.path)
     old_modules = dict(sys.modules)
 
-    # Clear cached src.* from other projects
+    # Clear cached src.* + scripts.* from other projects
+    # scripts.* 也必须清理: eon-core/scripts/__init__.py（正规包）在首次加载
+    # 后被缓存，会导致其他项目的 `from scripts.adapter_protocol import ...` 找不到。
     for k in list(sys.modules):
         if k == "src" or k.startswith("src."):
             del sys.modules[k]
+        if k == "scripts" or k.startswith("scripts."):
+            del sys.modules[k]
 
-    # Set sys.path: this project first, then workspace root (for scripts/ redirects), then eon-core
-    sys.path = [project_root, _EON_ROOT, _WORKSPACE] + [p for p in old_path if not p.startswith(_WORKSPACE)]
+    # Set sys.path: this project first, then workspace root (for scripts/ redirects)
+    # NOTE: _EON_ROOT 不加入 path — 否则 eon-core/scripts/__init__.py（正规包）会
+    # 遮蔽 D:/Reasonix/scripts/（namespace 包），导致 coilia-agent 等项目的
+    # `from scripts.adapter_protocol import IProjectAdapter` 找不到模块。
+    # 过滤时必须 normpath 统一正反斜杠，否则 D:/Reasonix/eon-core（正斜杠版）会漏过
+    _norm_ws = os.path.normpath(_WORKSPACE)
+    sys.path = [project_root, _WORKSPACE] + [
+        p for p in old_path if not os.path.normpath(p).startswith(_norm_ws)
+    ]
 
     try:
         mod = __import__(module_path, fromlist=[attr_name])
         return getattr(mod, attr_name)
+    except Exception:
+        raise
     finally:
         sys.path = old_path
 
@@ -89,6 +102,25 @@ class _ProjectWrapper:
         except Exception as exc:
             logger.warning(f"{self._name}.search() failed: {exc}")
             return {"status": "error", "error": str(exc), "items": []}
+
+    def health(self) -> Dict[str, Any]:
+        """Return health status from the wrapped project adapter.
+
+        Delegates to adapter.health() if the wrapped object has it,
+        otherwise returns basic wrapper-level status.
+        """
+        try:
+            # If the wrapped _search is bound to an adapter with health(), call it
+            import types
+            if hasattr(self._search, '__self__'):
+                adapter = self._search.__self__
+                if hasattr(adapter, 'health'):
+                    result = adapter.health()
+                    if isinstance(result, dict):
+                        return result
+            return {"status": "ok", "project": self._name, "wrapper": True}
+        except Exception as exc:
+            return {"status": "error", "error": str(exc), "project": self._name}
 
 
 # ── Fish Ecology Assistant (V0 — knowledge supply) ──

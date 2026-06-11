@@ -1,12 +1,12 @@
 <p align="center">
-  ”9”2”9“7 <a href="README.md">English</a>
+  ðŸ‡¬ðŸ‡§ <a href="README.md">English</a>
 </p>
 
 <div align="center">
-  <h1>7§1„1‚5 eon-core ¡ª Ð­µ÷ÄÚºË</h1>
-  <p><strong>Èý½ÇºËÐÄÐ­µ÷Æ÷ (T) ¡¤ ÈýÉúÍòÎï v8.1</strong></p>
-  <p>OriginKernel ¡¤ EventBus ¡¤ ÒõÑôÁ½¼« ¡¤ ËÄÃæÌåÍø¸ñ ¡¤ ÎåÐÐ ¡¤ ÁùµÀ ¡¤ Sphere Íø¹Ø</p>
-  <p>”9å3 <a href="https://github.com/fangtaocai041/eon-core">GitHub</a></p>
+  <h1>â˜¯ï¸ eon-core â€” åè°ƒå†…æ ¸</h1>
+  <p><strong>ä¸‰è§’æ ¸å¿ƒåè°ƒå™¨ (T) Â· ä¸‰ç”Ÿä¸‡ç‰© v8.1</strong></p>
+  <p>OriginKernel Â· EventBus Â· é˜´é˜³ä¸¤æž Â· å››é¢ä½“ç½‘æ ¼ Â· ç›‘æŽ§ Â· å…­é“ Â· Sphere ç½‘å…³</p>
+  <p>ðŸ”— <a href="https://github.com/fangtaocai041/eon-core">GitHub</a></p>
 </div>
 
 <p align="center">
@@ -17,91 +17,91 @@
   <a href="#"><img src="https://img.shields.io/badge/adapters-6-orange" alt="Adapters:6"></a>
 </p>
 
-## Ê²Ã´ÊÇ eon-core£¿
+## ä»€ä¹ˆæ˜¯ eon-coreï¼Ÿ
 
-ÈýÉúÍòÎï¼Ü¹¹µÄ**Ð­µ÷ÄÚºË**¡£Ë«ÖØÉí·Ý£º
+ä¸‰ç”Ÿä¸‡ç‰©æž¶æž„çš„**åè°ƒå†…æ ¸**ã€‚åŒé‡èº«ä»½ï¼š
 
-1. **×÷ÎªÏîÄ¿**: Óë 6 ¸öÍ¬¼¶ÏîÄ¿²¢ÁÐµÄ´úÂë²Ö¿â
-2. **×÷Îª¼Ü¹¹½ÇÉ«**: Èý½ÇºËÐÄÐ­µ÷Æ÷ + ÍòÎï»ù´¡ÉèÊ©ËÞÖ÷
+1. **ä½œä¸ºé¡¹ç›®**: ä¸Ž 6 ä¸ªåŒçº§é¡¹ç›®å¹¶åˆ—çš„ä»£ç ä»“åº“
+2. **ä½œä¸ºæž¶æž„è§’è‰²**: ä¸‰è§’æ ¸å¿ƒåè°ƒå™¨ + ä¸‡ç‰©åŸºç¡€è®¾æ–½å®¿ä¸»
 
-**Á½²ã½á¹¹**:
-- **ÄÚºË (Èý½ÇºËÐÄ)**: OriginKernel ¡¤ EventBus ¡¤ DAG Â·ÓÉ ¡¤ ÉúÃüÖÜÆÚ×´Ì¬»ú
-- **»ù´¡ÉèÊ© (ÍòÎï)**: ¶¥µãÊÊÅäÆ÷ ¡¤ 8 ØÔ×ÓÄ£¿é ¡¤ ÎåÐÐ¼à¿Ø ¡¤ ÁùµÀÒµÁ¦ ¡¤ ×Ô½ø»¯
+**ä¸¤å±‚ç»“æž„**:
+- **å†…æ ¸ (ä¸‰è§’æ ¸å¿ƒ)**: OriginKernel Â· EventBus Â· DAG è·¯ç”± Â· ç”Ÿå‘½å‘¨æœŸçŠ¶æ€æœº
+- **åŸºç¡€è®¾æ–½ (ä¸‡ç‰©)**: é¡¶ç‚¹é€‚é…å™¨ Â· 8 å¦å­æ¨¡å— Â· å¥åº·ç›‘æŽ§ Â· å…­é“ä¸šåŠ› Â· è‡ªè¿›åŒ–
 
-## Ê®²ã¼Ü¹¹
+## åå±‚æž¶æž„
 
-| ²ã | Ä£¿é | ×é¼þ |
+| å±‚ | æ¨¡å— | ç»„ä»¶ |
 |:--:|------|------|
-| 1 | OriginKernel | Æô¶¯Òýµ¼¡¢ÒÀÀµ×¢Èë¡¢ÊÂ¼þËÝÔ´ |
-| 2 | EventBus | Òì²½·¢²¼/¶©ÔÄ£¬ËùÓÐ×é¼þ¼äÍ¨ÐÅ |
-| 3 | ÒõÑôÁ½¼« | YangPole (À©ÕÅ/ËÑË÷) + YinPole (ÊÕÁ²/ÑéÖ¤) |
-| 4 | ËÄÃæÌåÍø¸ñ | DAG ÍØÆË¡¢Æ×¼äÏ¶¡¢»ìãçÈÅ¶¯ |
-| 5 | ¶¥µã (6¸ö) | V0-V5 ÊÊÅäÆ÷£¬´úÀíÈ«²¿ 6 ¸öÍ¬¼¶ÏîÄ¿ |
-| 6 | °ËØÔ (8¸ö) | ÔªËÑË÷¡¢ÖÐÎÄÍø¹Ø¡¢Í¼Æ×±éÀú¡¢±çÂÛ¡¢ÉùÑ§¡¢ÖÖÈº¡¢¶úÊ¯¡¢×ÊÔ´ |
-| 7 | ÎåÐÐ | Ä¾»ðÍÁ½ðË®¼à¿Ø (15s ÖÜÆÚ) |
-| 8 | ÁùµÀ | KarmaEngine + KarmaCourt + ×ªÉú (60s ÖÜÆÚ) |
-| 9 | Sphere Íø¹Ø | REST/gRPC/WebSocket/MCP Í³Ò» API |
-| 10 | Ì½Õë + ½ø»¯ | Íâ²¿·þÎñÌ½Õë + ×Ô½ø»¯ (ChaosEngine + ParEGO) |
+| 1 | OriginKernel | å¯åŠ¨å¼•å¯¼ã€ä¾èµ–æ³¨å…¥ã€äº‹ä»¶æº¯æº |
+| 2 | EventBus | å¼‚æ­¥å‘å¸ƒ/è®¢é˜…ï¼Œæ‰€æœ‰ç»„ä»¶é—´é€šä¿¡ |
+| 3 | é˜´é˜³ä¸¤æž | YangPole (æ‰©å¼ /æœç´¢) + YinPole (æ”¶æ•›/éªŒè¯) |
+| 4 | å››é¢ä½“ç½‘æ ¼ | DAG æ‹“æ‰‘ã€è°±é—´éš™ã€æ··æ²Œæ‰°åŠ¨ |
+| 5 | é¡¶ç‚¹ (6ä¸ª) | V0-V5 é€‚é…å™¨ï¼Œä»£ç†å…¨éƒ¨ 6 ä¸ªåŒçº§é¡¹ç›® |
+| 6 | å…«å¦ (8ä¸ª) | å…ƒæœç´¢ã€ä¸­æ–‡ç½‘å…³ã€å›¾è°±éåŽ†ã€è¾©è®ºã€å£°å­¦ã€ç§ç¾¤ã€è€³çŸ³ã€èµ„æº |
+| 7 | ç›‘æŽ§ | å¥åº·æŒ‡æ ‡æ”¶é›† (15s å‘¨æœŸ) |
+| 8 | å…­é“ | KarmaEngine + KarmaCourt + è½¬ç”Ÿ (60s å‘¨æœŸ) |
+| 9 | Sphere ç½‘å…³ | REST/gRPC/WebSocket/MCP ç»Ÿä¸€ API |
+| 10 | æŽ¢é’ˆ + è¿›åŒ– | å¤–éƒ¨æœåŠ¡æŽ¢é’ˆ + è‡ªè¿›åŒ– (ChaosEngine + ParEGO) |
 
-## 8 ÌõÔËÐÐÊ±²»±äÊ½
+## 8 æ¡è¿è¡Œæ—¶ä¸å˜å¼
 
-| ID | ²»±äÊ½ | Ö´ÐÐµã |
+| ID | ä¸å˜å¼ | æ‰§è¡Œç‚¹ |
 |----|--------|--------|
-| INV-001 | ÍØÆË±ØÐëÊÇ DAG | bootstrap + reconfigure |
-| INV-002 | YangPole.verify() ±ØÐëÅ×³ö RuntimeError | mypy strict + runtime |
-| INV-003 | YinPole.expand() ±ØÐëÅ×³ö RuntimeError | mypy strict + runtime |
-| INV-004 | ½ûÖ¹¶¥µã¼äÖ±½Ó import | import linter + code review |
-| INV-005 | Æ×¼äÏ¶ ¦Ë6¯0 ¡Ý 0.1 ¡Á baseline | reconfigure + health_pulse |
-| INV-006 | DEVA ÊýÁ¿ ¡Ü 25% | KarmaCourt.audit_fairness() |
-| INV-007 | NARAKA ×Ô¶¯×ªÉú | SamsaraRing.run_karma_cycle() |
-| INV-008 | ×ªÉúÔ­×ÓÐÔ (7 ²½Ð­Òé + ¿ìÕÕ) | ReincarnationProtocol.execute() |
+| INV-001 | æ‹“æ‰‘å¿…é¡»æ˜¯ DAG | bootstrap + reconfigure |
+| INV-002 | YangPole.verify() å¿…é¡»æŠ›å‡º RuntimeError | mypy strict + runtime |
+| INV-003 | YinPole.expand() å¿…é¡»æŠ›å‡º RuntimeError | mypy strict + runtime |
+| INV-004 | ç¦æ­¢é¡¶ç‚¹é—´ç›´æŽ¥ import | import linter + code review |
+| INV-005 | è°±é—´éš™ Î»â‚‚ â‰¥ 0.1 Ã— baseline | reconfigure + health_pulse |
+| INV-006 | DEVA æ•°é‡ â‰¤ 25% | KarmaCourt.audit_fairness() |
+| INV-007 | NARAKA è‡ªåŠ¨è½¬ç”Ÿ | SamsaraRing.run_karma_cycle() |
+| INV-008 | è½¬ç”ŸåŽŸå­æ€§ (7 æ­¥åè®® + å¿«ç…§) | ReincarnationProtocol.execute() |
 
-## ¿ìËÙ¿ªÊ¼
+## å¿«é€Ÿå¼€å§‹
 
 ```bash
-# ½¡¿µ¼ì²é
+# å¥åº·æ£€æŸ¥
 python eon-core/src/main.py --config eon-core/config/taiji.yaml health
 
-# Â·ÓÉ²âÊÔ
-python eon-core/src/main.py --config eon-core/config/taiji.yaml route "³¤½­½­ëàÖÖÈº»Ö¸´"
+# è·¯ç”±æµ‹è¯•
+python eon-core/src/main.py --config eon-core/config/taiji.yaml route "é•¿æ±Ÿæ±Ÿè±šç§ç¾¤æ¢å¤"
 
-# Í¨¹ý project_loader
+# é€šè¿‡ project_loader
 python -c "from scripts.project_loader import get_eon; a=get_eon(); print(a.info())"
 
-# Í¨¹ý coordinator
+# é€šè¿‡ coordinator
 python -c "from scripts.coordinator import coordinator; print(coordinator.health('eon'))"
 ```
 
-## Ä¿Â¼½á¹¹
+## ç›®å½•ç»“æž„
 
 ```
 eon-core/
-©À©¤©¤ config/                        # taiji.yaml, COMPATIBILITY_MATRIX.yaml µÈ
-©À©¤©¤ proto/                         # gRPC protobuf ¶¨Òå
-©À©¤©¤ src/
-©¦   ©À©¤©¤ adapter.py                 # IProjectAdapter ¡ú EonCoreAdapter
-©¦   ©À©¤©¤ kernel/                    # OriginKernel, EventBus, Lifecycle
-©¦   ©À©¤©¤ poles/                     # YangPole + YinPole
-©¦   ©À©¤©¤ vertices/                  # 6 ¸ö¶¥µãÊÊÅäÆ÷ (v0_fish .. v5_conflict)
-©¦   ©À©¤©¤ trigrams/                  # 8 ¸ö¹¦ÄÜ×ÓÄ£¿é
-©¦   ©À©¤©¤ mesh/                      # TetrahedronMesh
-©¦   ©À©¤©¤ wuxing/                    # ÎåÐÐ¼à¿Ø
-©¦   ©À©¤©¤ samsara/                   # ÁùµÀÒµÁ¦
-©¦   ©À©¤©¤ sphere/                    # API Íø¹Ø
-©¦   ©À©¤©¤ tendrils/                  # Íâ²¿Ì½Õë
-©¦   ©¸©¤©¤ evolution/                 # ×Ô½ø»¯ÒýÇæ
-©À©¤©¤ tests/
-©À©¤©¤ scripts/
-©¸©¤©¤ README.md
+â”œâ”€â”€ config/                        # taiji.yaml, COMPATIBILITY_MATRIX.yaml ç­‰
+â”œâ”€â”€ proto/                         # gRPC protobuf å®šä¹‰
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ adapter.py                 # IProjectAdapter â†’ EonCoreAdapter
+â”‚   â”œâ”€â”€ kernel/                    # OriginKernel, EventBus, Lifecycle
+â”‚   â”œâ”€â”€ poles/                     # YangPole + YinPole
+â”‚   â”œâ”€â”€ vertices/                  # 6 ä¸ªé¡¶ç‚¹é€‚é…å™¨ (v0_fish .. v5_conflict)
+â”‚   â”œâ”€â”€ trigrams/                  # 8 ä¸ªåŠŸèƒ½å­æ¨¡å—
+â”‚   â”œâ”€â”€ mesh/                      # TetrahedronMesh
+â”‚   â”œâ”€â”€ monitoring/                    # å¥åº·ç›‘æŽ§
+â”‚   â”œâ”€â”€ samsara/                   # å…­é“ä¸šåŠ›
+â”‚   â”œâ”€â”€ sphere/                    # API ç½‘å…³
+â”‚   â”œâ”€â”€ tendrils/                  # å¤–éƒ¨æŽ¢é’ˆ
+â”‚   â””â”€â”€ evolution/                 # è‡ªè¿›åŒ–å¼•æ“Ž
+â”œâ”€â”€ tests/
+â”œâ”€â”€ scripts/
+â””â”€â”€ README.md
 ```
 
-## ¹ØÁªÏîÄ¿
+## å…³è”é¡¹ç›®
 
-| ÏîÄ¿ | ½ÇÉ« | ¹ØÏµ |
+| é¡¹ç›® | è§’è‰² | å…³ç³» |
 |------|------|------|
-| [fish-ecology-assistant](../fish-ecology-assistant/) | ÖªÊ¶¹©¸ø V0 | ¶¥µã V0 ¡ª ÎïÖÖÖªÊ¶¹©¸ø |
-| [cognitive-search-engine](../cognitive-search-engine/) | ËÑË÷ÑéÖ¤ V1 | ¶¥µã V1 ¡ª ÎÄÏ×ËÑË÷ÓëÑéÖ¤ |
-| [porpoise-agent](../porpoise-agent/) | P6®9 ½­ëà | ¶¥µã V2 ¡ª ½­ëàÁìÓò×¨ÑÐ |
-| [coilia-agent](../coilia-agent/) | P6¯0 µ¶öÝ | ¶¥µã V3 ¡ª µ¶öÝÁìÓò×¨ÑÐ |
-| [culter-agent](../culter-agent/) | P6¯1 ÷ˆÀà | ¶¥µã V4 ¡ª ÷ˆÀàÁìÓò×¨ÑÐ |
-| [conflict-arbiter](../conflict-arbiter/) | C ³åÍ»ÖÙ²Ã | ¶¥µã V5 ¡ª ³åÍ»ÖÙ²Ã |
+| [fish-ecology-assistant](../fish-ecology-assistant/) | çŸ¥è¯†ä¾›ç»™ V0 | é¡¶ç‚¹ V0 â€” ç‰©ç§çŸ¥è¯†ä¾›ç»™ |
+| [cognitive-search-engine](../cognitive-search-engine/) | æœç´¢éªŒè¯ V1 | é¡¶ç‚¹ V1 â€” æ–‡çŒ®æœç´¢ä¸ŽéªŒè¯ |
+| [porpoise-agent](../porpoise-agent/) | Pâ‚ æ±Ÿè±š | é¡¶ç‚¹ V2 â€” æ±Ÿè±šé¢†åŸŸä¸“ç ” |
+| [coilia-agent](../coilia-agent/) | Pâ‚‚ åˆ€é²š | é¡¶ç‚¹ V3 â€” åˆ€é²šé¢†åŸŸä¸“ç ” |
+| [culter-agent](../culter-agent/) | Pâ‚ƒ é²Œç±» | é¡¶ç‚¹ V4 â€” é²Œç±»é¢†åŸŸä¸“ç ” |
+| [conflict-arbiter](../conflict-arbiter/) | C å†²çªä»²è£ | é¡¶ç‚¹ V5 â€” å†²çªä»²è£ |

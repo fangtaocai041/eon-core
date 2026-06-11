@@ -6,7 +6,7 @@ Layers:
   L2: 四象顶点 (4 gRPC Vertex services)
   L3: 八卦子模块 (8 Trigrams)
   L4: 三角体网格 (TetrahedronMesh spectral analysis)
-  L5: 五行五角体 (WuXing sheng/ke flow)
+  L5: 监控与评估 (Monitoring & Karma)
   L6: 六道轮回环 (Samsara karma/reincarnation)
   L7: 圆球体网关 (SphereGateway API facade)
   L8: 触须探针 (12 external probes)

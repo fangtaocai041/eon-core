@@ -92,7 +92,7 @@ class EonCoreAdapter(IProjectAdapter):
             "project": self.project_name,
             "version": "v7.3.0",
             "role": "三角核心·协调内核",
-            "architecture": "OriginKernel + EventBus + YinYangPoles + SamsaraRing + WuXing + TetrahedronMesh",
+            "architecture": "OriginKernel + EventBus + YinYangPoles + SamsaraRing + TetrahedronMesh",
         }
         if self._kernel and hasattr(self._kernel, 'health_pulse'):
             try:
@@ -120,7 +120,6 @@ class EonCoreAdapter(IProjectAdapter):
                 "yin_yang_poles — YangPole(扩张·搜索) + YinPole(收敛·验证)",
                 "tetrahedron_mesh — 四面体拓扑 + 谱间隙计算 + 混沌扰动",
                 "vertex_routing — DAG拓扑路由到 V0(fish)/V1(cognitive)/V2(porpoise)/V3(coilia)",
-                "wuxing_monitoring — 五行后台健康监控 (木火土金水)",
                 "samsara_karma — 六道业力评估 + KarmaCourt + Reincarnation",
                 "sphere_gateway — REST/gRPC/WebSocket/MCP 统一API网关",
                 "tendril_probes — 外部服务连接管理",
@@ -161,7 +160,6 @@ class EonCoreAdapter(IProjectAdapter):
                 "P5": "V5(conflict) → user",
             },
             "mesh": "TetrahedronMesh — 谱间隙 λ₂ ≥ 0.1 × baseline, 混沌扰动 100 queries/step",
-            "wuxing": "木→火→土→金→水 相生相克 (15s cycle)",
             "samsara": "KarmaCourt 60s cycle — DEVA/HUMAN/ASURA/ANIMAL/PRETA/NARAKA",
         }
 

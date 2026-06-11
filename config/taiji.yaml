@@ -40,7 +40,6 @@ vertices:
     coordinates: [1.0, 1.0, 1.0]
     pathways: ["P1(fish->cognitive)", "P2(cognitive->fish)"]
     polarity: "YANG_PRIMARY"
-    wuxing_element: "EARTH"
     trigrams: ["qian_meta_search", "dui_chinese_gateway"]
     d_level: 2
   V1:
@@ -53,7 +52,6 @@ vertices:
     coordinates: [1.0, -1.0, -1.0]
     pathways: ["P1(fish->cognitive)", "P2(cognitive->fish)", "P3(cognitive->P1)", "P3(cognitive->P2)", "P3(cognitive->P3)"]
     polarity: "YIN_PRIMARY"
-    wuxing_element: "WOOD"
     trigrams: ["li_graph_traversal", "zhen_debate"]
     d_level: 3
   V2:
@@ -67,7 +65,6 @@ vertices:
     pathways: ["P3(cognitive->P1)"]
     note: "Derived species template (replicable as Pn)"
     polarity: "YANG_PRIMARY_YIN_SECONDARY"
-    wuxing_element: "METAL"
     trigrams: ["xun_acoustic", "kan_population"]
     d_level: 2
   V3:
@@ -81,7 +78,6 @@ vertices:
     pathways: ["P3(cognitive->P2)"]
     note: "Derived species template (replicable as Pn)"
     polarity: "YIN_PRIMARY_YANG_SECONDARY"
-    wuxing_element: "WATER"
     trigrams: ["gen_otolith", "kun_resource"]
     d_level: 2
   V4:
@@ -95,109 +91,5 @@ vertices:
     pathways: ["P3(cognitive->P3)"]
     note: "Culter domain research (growth/genomics/trophic/resource)"
     polarity: "YIN_PRIMARY_YANG_SECONDARY"
-    wuxing_element: "FIRE"
     trigrams: ["zhen_growth", "kun_resource"]
     d_level: 2
-
-wuxing:
-  cycle_interval_s: 15
-  rotation_speed_rad_s: 0.01
-  override_threshold: 3
-  agents:
-    WOOD:  { element: "WOOD",  symbol: "Mu",   attached_to: "V1", class: "GrowthMonitor",      file: "src/wuxing/mu_wood.py" }
-    FIRE:  { element: "FIRE",  symbol: "Huo",  attached_to: "V4", class: "DriveCoordinator",   file: "src/wuxing/huo_fire.py" }
-    EARTH: { element: "EARTH", symbol: "Tu",   attached_to: "V0", class: "NourishmentMonitor",  file: "src/wuxing/tu_earth.py" }
-    METAL: { element: "METAL", symbol: "Jin",  attached_to: "V2", class: "ConvergenceMonitor",  file: "src/wuxing/jin_metal.py" }
-    WATER: { element: "WATER", symbol: "Shui", attached_to: "V3", class: "FlowAdaptor",         file: "src/wuxing/shui_water.py" }
-
-samsara:
-  karma_cycle_interval_s: 60
-  rotation_speed_rad_s: 0.005
-  nirvana_min_cycles: 3
-  nirvana_min_lifetime_karma: 200
-  cooldown_after_reincarnation_s: 10
-  realms:
-    DEVA:
-      karma_threshold: 85
-      token_budget_multiplier: 1.5
-      gpu_priority: "HIGH"
-      search_depth: "UNLIMITED"
-      max_stay_cycles: 10
-      bad_deed_penalty_multiplier: 3.0
-      confidence_modifier: 1.1
-      initial_karma: 85
-    HUMAN:
-      karma_threshold: 40
-      token_budget_multiplier: 1.0
-      gpu_priority: "MEDIUM"
-      search_depth: "STANDARD"
-      max_stay_cycles: -1
-      bad_deed_penalty_multiplier: 1.0
-      confidence_modifier: 1.0
-      initial_karma: 50
-    ASURA:
-      karma_threshold: 60
-      token_budget_multiplier: 1.2
-      gpu_priority: "MEDIUM_HIGH"
-      search_depth: "DEEP"
-      max_stay_cycles: 5
-      confidence_modifier: 0.9
-      initial_karma: 60
-    ANIMAL:
-      karma_threshold: 20
-      token_budget_multiplier: 0.5
-      gpu_priority: "LOW"
-      search_depth: 1
-      max_stay_cycles: 8
-      confidence_modifier: 0.7
-      initial_karma: 30
-    PRETA:
-      karma_threshold: 10
-      token_budget_multiplier: 0.25
-      gpu_priority: "LOWEST"
-      search_depth: 1
-      max_stay_cycles: 12
-      confidence_modifier: 0.5
-      initial_karma: 15
-    NARAKA:
-      karma_threshold: 0
-      token_budget_multiplier: 0.0
-      gpu_priority: "NONE"
-      search_depth: 0
-      max_stay_cycles: 5
-      initial_karma: 5
-
-sphere:
-  ports:
-    rest: 8080
-    grpc: 9090
-  rate_limit:
-    capacity: 100
-    refill_rate: 10
-  middleware:
-    - { name: "AuthMiddleware",        order: 1 }
-    - { name: "RateLimitMiddleware",   order: 2 }
-    - { name: "ProtocolAdapter",       order: 3 }
-    - { name: "RouterMiddleware",      order: 4 }
-    - { name: "AuditLogMiddleware",    order: 5 }
-    - { name: "ResponseMiddleware",    order: 6 }
-
-tendrils:
-  health_cycle_interval_s: 30
-  max_consecutive_failures: 3
-  unstable_threshold_per_hour: 5
-  cooldown_after_retract_s: 30
-
-evolution:
-  pareto_objectives:
-    - "recall"
-    - "token_efficiency"
-    - "contradiction_resolution_rate"
-  rollback_window_h: 24
-  max_parameter_delta_pct: 20
-  chaos_seed_strategy: "hash(query_id + date)"
-
-observability:
-  otel_endpoint: "http://jaeger:4317"
-  prometheus_port: 9091
-  jaeger_endpoint: "http://jaeger:16686"
