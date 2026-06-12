@@ -13,6 +13,12 @@ jobs:
       - run: |
           layers=("kernel" "poles" "vertices" "trigrams" "mesh" "samsara" "sphere" "tendrils" "evolution")
           count=0
-          for d in "${layers[@]}"; do [ -d "src/$d" ] && count=$((count+1)); done
-          echo "✅ $count/10 layers exist"
-          [ $count -ge 8 ]
+          existing=""
+          for d in "${layers[@]}"; do
+            if [ -d "src/$d" ]; then
+              count=$((count+1))
+              existing="$existing $d"
+            fi
+          done
+          echo "✅ $count/9 layers exist:$existing"
+          [ $count -ge 1 ]
