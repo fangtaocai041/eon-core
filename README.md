@@ -1,12 +1,12 @@
 <p align="center">
-  ”9“8”9”9 <a href="README.zh.md">ÖÐÎÄ</a>
+  ðŸ‡¨ðŸ‡³ <a href="README.zh.md">ä¸­æ–‡</a>
 </p>
 
 <div align="center">
-  <h1>7§1„1‚5 eon-core ¡ª Coordination Kernel</h1>
-  <p><strong>Triangle Core Coordinator (T) ¡¤ ÈýÉúÍòÎï v8.1</strong></p>
-  <p>OriginKernel ¡¤ EventBus ¡¤ YinYang Poles ¡¤ Tetrahedron Mesh ¡¤ Health Mon. ¡¤ Samsara ¡¤ Sphere Gateway</p>
-  <p>”9å3 <a href="https://github.com/fangtaocai041/eon-core">GitHub</a></p>
+  <h1>â˜¯ï¸ eon-core â€” Coordination Kernel</h1>
+  <p><strong>Triangle Core Coordinator (T) Â· ä¸‰ç”Ÿä¸‡ç‰© v8.1</strong></p>
+  <p>OriginKernel Â· EventBus Â· YinYang Poles Â· Tetrahedron Mesh Â· Health Mon. Â· Samsara Â· Sphere Gateway</p>
+  <p>ðŸ”— <a href="https://github.com/fangtaocai041/eon-core">GitHub</a></p>
 </div>
 
 <p align="center">
@@ -19,39 +19,39 @@
 
 ## What is eon-core?
 
-The **coordination kernel** of the ÈýÉúÍòÎï architecture. Dual nature:
+The **coordination kernel** of the ä¸‰ç”Ÿä¸‡ç‰© architecture. Dual nature:
 
 1. **As a project**: Code repo alongside 6 other projects
 2. **As an architecture role**: Triangle Core coordinator + infrastructure host
 
 **Two layers**:
-- **Kernel (Triangle Core)**: OriginKernel ¡¤ EventBus ¡¤ DAG routing ¡¤ Lifecycle state machine
-- **Infrastructure (Derived)**: Vertex adapters ¡¤ 8 Trigrams ¡¤ Health monitoring ¡¤ Samsara karma ¡¤ Self-evolution
+- **Kernel (Triangle Core)**: OriginKernel Â· EventBus Â· DAG routing Â· Lifecycle state machine
+- **Infrastructure (Derived)**: Vertex adapters Â· 8 Trigrams Â· Health monitoring Â· Samsara karma Â· Self-evolution
 
 ## Architecture
 
 ```
                   OriginKernel (Singleton)
-                       ©¦
-          ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©à©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-          ©¦            ©¦            ©¦
+                       â”‚
+          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+          â”‚            â”‚            â”‚
      YangPole      YinPole     EventBus
      (expand)      (verify)    (async queue)
-          ©¦            ©¦            ©¦
-          ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©à©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-                       ©¦
+          â”‚            â”‚            â”‚
+          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                       â”‚
               TetrahedronMesh
               (spectral gap + chaos)
-                       ©¦
-          ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©à©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-          ©¦            ©¦            ©¦
+                       â”‚
+          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+          â”‚            â”‚            â”‚
      V0(fish)    V1(cognitive)  V2(porpoise)
      V3(coilia)  V4(culter)    V5(conflict)
-                       ©¦
-          ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©à©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-          ©¦            ©¦            ©¦
+                       â”‚
+          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+          â”‚            â”‚            â”‚
      8 Trigrams    Monitoring   Samsara
-     (×ÓÄ£¿é)     (5-element)   (karma)
+     (å­æ¨¡å—)     (5-element)   (karma)
 ```
 
 ## 10-Layer Architecture
@@ -77,8 +77,8 @@ The **coordination kernel** of the ÈýÉúÍòÎï architecture. Dual nature:
 | INV-002 | YangPole.verify() raises RuntimeError | mypy strict + runtime |
 | INV-003 | YinPole.expand() raises RuntimeError | mypy strict + runtime |
 | INV-004 | No direct vertex-to-vertex import | import linter + code review |
-| INV-005 | Spectral gap ¦Ë6¯0 ¡Ý 0.1 ¡Á baseline | reconfigure + health_pulse |
-| INV-006 | DEVA count ¡Ü 25% of agents | KarmaCourt.audit_fairness() |
+| INV-005 | Spectral gap Î»â‚‚ â‰¥ 0.1 Ã— baseline | reconfigure + health_pulse |
+| INV-006 | DEVA count â‰¤ 25% of agents | KarmaCourt.audit_fairness() |
 | INV-007 | NARAKA agents auto-reincarnate | SamsaraRing.run_karma_cycle() |
 | INV-008 | Reincarnation atomicity (7-step + snapshot) | ReincarnationProtocol.execute() |
 
@@ -89,7 +89,7 @@ The **coordination kernel** of the ÈýÉúÍòÎï architecture. Dual nature:
 python eon-core/src/main.py --config eon-core/config/taiji.yaml health
 
 # Route test
-python eon-core/src/main.py --config eon-core/config/taiji.yaml route "³¤½­½­ëàÖÖÈº»Ö¸´"
+python eon-core/src/main.py --config eon-core/config/taiji.yaml route "é•¿æ±Ÿæ±Ÿè±šç§ç¾¤æ¢å¤"
 
 # Via project_loader
 python -c "from scripts.project_loader import get_eon; a=get_eon(); print(a.info())"
@@ -102,68 +102,68 @@ python -c "from scripts.coordinator import coordinator; print(coordinator.health
 
 ```
 eon-core/
-©À©¤©¤ config/                        # taiji.yaml, COMPATIBILITY_MATRIX.yaml, tendrils_registry.yaml
-©À©¤©¤ proto/                         # gRPC protobuf definitions (event_bus, sphere_gateway, vertex_*)
-©À©¤©¤ src/
-©¦   ©À©¤©¤ adapter.py                 # IProjectAdapter ¡ú EonCoreAdapter
-©¦   ©À©¤©¤ kernel/                    # OriginKernel, EventBus, Lifecycle
-©¦   ©À©¤©¤ poles/                     # YangPole + YinPole
-©¦   ©À©¤©¤ vertices/                  # 6 vertex adapters (v0_fish .. v5_conflict)
-©¦   ©À©¤©¤ trigrams/                  # 8 functional sub-modules
-©¦   ©À©¤©¤ mesh/                      # TetrahedronMesh
-©¦   ©À©¤©¤ monitoring/                # health monitoring
-©¦   ©À©¤©¤ samsara/                   # Karma engine, court, ring, reincarnation
-©¦   ©À©¤©¤ sphere/                    # API gateway
-©¦   ©À©¤©¤ tendrils/                  # External probes
-©¦   ©¸©¤©¤ evolution/                 # Self-evolution, chaos engine, search optimizer
-©À©¤©¤ tests/
-©À©¤©¤ scripts/
-©¸©¤©¤ README.md
+â”œâ”€â”€ config/                        # taiji.yaml, COMPATIBILITY_MATRIX.yaml, tendrils_registry.yaml
+â”œâ”€â”€ proto/                         # gRPC protobuf definitions (event_bus, sphere_gateway, vertex_*)
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ adapter.py                 # IProjectAdapter â†’ EonCoreAdapter
+â”‚   â”œâ”€â”€ kernel/                    # OriginKernel, EventBus, Lifecycle
+â”‚   â”œâ”€â”€ poles/                     # YangPole + YinPole
+â”‚   â”œâ”€â”€ vertices/                  # 6 vertex adapters (v0_fish .. v5_conflict)
+â”‚   â”œâ”€â”€ trigrams/                  # 8 functional sub-modules
+â”‚   â”œâ”€â”€ mesh/                      # TetrahedronMesh
+â”‚   â”œâ”€â”€ monitoring/                # health monitoring
+â”‚   â”œâ”€â”€ samsara/                   # Karma engine, court, ring, reincarnation
+â”‚   â”œâ”€â”€ sphere/                    # API gateway
+â”‚   â”œâ”€â”€ tendrils/                  # External probes
+â”‚   â””â”€â”€ evolution/                 # Self-evolution, chaos engine, search optimizer
+â”œâ”€â”€ tests/
+â”œâ”€â”€ scripts/
+â””â”€â”€ README.md
 ```
 
 ## Linked Projects
 
 | Project | Role | Relationship |
 |---------|------|-------------|
-| [fish-ecology-assistant](../fish-ecology-assistant/) | Knowledge V0 | Vertex V0 ¡ª species knowledge supply |
-| [cognitive-search-engine](../cognitive-search-engine/) | Validation V1 | Vertex V1 ¡ª literature search & verification |
-| [porpoise-agent](../porpoise-agent/) | P6®9 Porpoise | Vertex V2 ¡ª porpoise domain specialist |
-| [coilia-agent](../coilia-agent/) | P6¯0 Coilia | Vertex V3 ¡ª coilia domain specialist |
-| [culter-agent](../culter-agent/) | P6¯1 Culter | Vertex V4 ¡ª culter domain specialist |
-| [conflict-arbiter](../conflict-arbiter/) | C Conflict | Vertex V5 ¡ª conflict arbitration |
+| [fish-ecology-assistant](../fish-ecology-assistant/) | Knowledge V0 | Vertex V0 â€” species knowledge supply |
+| [cognitive-search-engine](../cognitive-search-engine/) | Validation V1 | Vertex V1 â€” literature search & verification |
+| [porpoise-agent](../porpoise-agent/) | Pâ‚ Porpoise | Vertex V2 â€” porpoise domain specialist |
+| [coilia-agent](../coilia-agent/) | Pâ‚‚ Coilia | Vertex V3 â€” coilia domain specialist |
+| [culter-agent](../culter-agent/) | Pâ‚ƒ Culter | Vertex V4 â€” culter domain specialist |
+| [conflict-arbiter](../conflict-arbiter/) | C Conflict | Vertex V5 â€” conflict arbitration |
 
-## ”9Ý6 Self-Assessment
+## ðŸ“Š Self-Assessment
 
 | Dimension | Rating | Notes |
 |-----------|:-----:|-------|
-| ”9å3 Coordination | 8¬28¬28¬28¬28¬2 | EventBus async pub/sub, DAG topology routing, TetrahedronMesh spectral analysis |
-| •0•1„1‚5 Runtime Safety | 8¬28¬28¬28¬28¬2 | 8 invariants enforced (mypy strict + import linter + runtime checks) |
-| ”9ã4 Self-Evolution | 8¬28¬28¬28¬2¡î | ParEGO optimizer + ChaosEngine + Samsara karma feedback loop |
-| ”9±4 Cross-Project | 8¬28¬28¬28¬28¬2 | 6 vertex adapters (V0-V5) + Sphere Gateway (REST/gRPC/WebSocket/MCP) |
-| •0ñ2 Health Monitoring | 8¬28¬28¬28¬2¡î | 15s health pulse cycle + KarmaCourt fairness audit |
-| •0â8 Test Coverage | 8¬28¬28¬2¡î¡î | Core invariants tested; vertex integration tests expanding |
+| ðŸ”— Coordination | â­â­â­â­â­ | EventBus async pub/sub, DAG topology routing, TetrahedronMesh spectral analysis |
+| ðŸ›¡ï¸ Runtime Safety | â­â­â­â­â­ | 8 invariants enforced (mypy strict + import linter + runtime checks) |
+| ðŸ”„ Self-Evolution | â­â­â­â­â˜† | ParEGO optimizer + ChaosEngine + Samsara karma feedback loop |
+| ðŸŒ Cross-Project | â­â­â­â­â­ | 6 vertex adapters (V0-V5) + Sphere Gateway (REST/gRPC/WebSocket/MCP) |
+| ðŸ©º Health Monitoring | â­â­â­â­â˜† | 15s health pulse cycle + KarmaCourt fairness audit |
+| ðŸ§ª Test Coverage | â­â­â­â˜†â˜† | Core invariants tested; vertex integration tests expanding |
 
-## ”9Ý7 Version History
+## ðŸ“‹ Version History
 
 | Version | Date | Changes |
 |---------|------|---------|
-| **v8.1.0** | 2026-06-11 | •0÷2 ¾«¼ò½©Ê¬´úÂë ¡ª ÖØ½¨ÇáÁ¿Ð­µ÷ÄÚºË ¡¤ WuXing¡úMonitoring È¥ÉñÃØ»¯ ¡¤ É¾³ý wuxing_flow.yaml |
-| **v8.0.0** | 2026-06-10 | ”9ã4 ¼Ü¹¹ÐÞÕý ¡ª µÀ¡úS(fish)+T(cognitive)¡úÍòÎï(P6®9P6¯0P6¯1C) ¡¤ project_loader sys.path ÖØ¶¨Ïò |
-| **v7.4.0** | 2026-06-09 | 7±5„1‚5 CI validate.yml + taiji schema_version v7.4 + execution_flow ×Ö¶Î |
-| **v7.1.0** | 2026-06-08 | ”9æ9 VerificationStatus/ContradictionType ¡ú shared_types + chaos_engine ±ê¼Ç |
-| **v7.0.0** | 2026-06-07 | ”9Å7„1‚5 Ê®²ãÍ¬ÐÄ¼Ü¹¹ ¡ª TaijiTetrahedron-Samsara v7.0 ³õÊ¼·¢²¼ |
+| **v8.1.0** | 2026-06-11 | ðŸª¶ ç²¾ç®€åƒµå°¸ä»£ç  â€” é‡å»ºè½»é‡åè°ƒå†…æ ¸ Â· WuXingâ†’Monitoring åŽ»ç¥žç§˜åŒ– Â· åˆ é™¤ wuxing_flow.yaml |
+| **v8.0.0** | 2026-06-10 | ðŸ”„ æž¶æž„ä¿®æ­£ â€” é“â†’S(fish)+T(cognitive)â†’ä¸‡ç‰©(Pâ‚Pâ‚‚Pâ‚ƒC) Â· project_loader sys.path é‡å®šå‘ |
+| **v7.4.0** | 2026-06-09 | âš™ï¸ CI validate.yml + taiji schema_version v7.4 + execution_flow å­—æ®µ |
+| **v7.1.0** | 2026-06-08 | ðŸ”§ VerificationStatus/ContradictionType â†’ shared_types + chaos_engine æ ‡è®° |
+| **v7.0.0** | 2026-06-07 | ðŸ›ï¸ åå±‚åŒå¿ƒæž¶æž„ â€” TaijiTetrahedron-Samsara v7.0 åˆå§‹å‘å¸ƒ |
 
-> **Latest**: v8.1.0 ¡¤ 2026-06-11
+> **Latest**: v8.1.0 Â· 2026-06-11
 
-## ”9Ý7 README Changelog
+## ðŸ“‹ README Changelog
 
 | Version | Date | Theme | What Changed |
 |:--------|:-----|:------|:-------------|
-| **v8.1** | 2026-06-11 | De-mystification | WuXing¡úMonitoring ÖØÃüÃû, É¾³ý wuxing_flow.yaml, + Self-Assessment + Version History + Changelog |
-| **v8.0** | 2026-06-10 | Architecture Fix | µÀ¡úS+T¡úÍòÎï ¼Ü¹¹ÐÞÕý, Ë«ÖØÉí·Ý³ÎÇå |
+| **v8.1** | 2026-06-11 | De-mystification | WuXingâ†’Monitoring é‡å‘½å, åˆ é™¤ wuxing_flow.yaml, + Self-Assessment + Version History + Changelog |
+| **v8.0** | 2026-06-10 | Architecture Fix | é“â†’S+Tâ†’ä¸‡ç‰© æž¶æž„ä¿®æ­£, åŒé‡èº«ä»½æ¾„æ¸… |
 | **v7.4** | 2026-06-09 | CI Foundation | + validate.yml, + execution_flow, taiji v7.4 |
-| **v7.0** | 2026-06-07 | Initial | Ê®²ãÍ¬ÐÄ¶¯Ì¬»îÌå¼Ü¹¹, 8 Runtime Invariants |
+| **v7.0** | 2026-06-07 | Initial | åå±‚åŒå¿ƒåŠ¨æ€æ´»ä½“æž¶æž„, 8 Runtime Invariants |
 
-## ”9ß4 License
+## ðŸ“œ License
 
-MIT License 0„8 2026 fangtaocai041
+MIT License Â© 2026 fangtaocai041
