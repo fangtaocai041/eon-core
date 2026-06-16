@@ -30,6 +30,7 @@
   Coord eon-core                  → 协调内核（太极点） ← 你在这里
 ```
 ```
+
 ---
 ```
 ## 🧩 这个项目是什么
@@ -44,6 +45,7 @@
 >
 > 我们说：系统也不该两次犯同一个错误。
 ```
+
 ---
 ```
 ## ⚡ 快速上手
@@ -58,6 +60,7 @@ print(kernel.health())      # 全系统健康
 result = kernel.search("长江江豚")   # 统一搜索
 ```
 ```
+
 ---
 ```
 ## 🚀 核心能力
@@ -72,6 +75,7 @@ result = kernel.search("长江江豚")   # 统一搜索
 | **Tetrahedron Mesh** | 四面体网格拓扑 |
 | **6 Adapters** | fish / cognitive / porpoise / coilia / culter / conflict |
 ```
+
 ---
 ```
 ## 📁 项目架构
@@ -101,6 +105,7 @@ eon-core/
 | [culter-agent](../culter-agent/) | P₃ | 🐟 鲌类专研 |
 | [conflict-arbiter](../conflict-arbiter/) | C | 🔥 冲突仲裁 |
 ```
+
 ---
 ---
 
@@ -123,6 +128,7 @@ eon-core/
   🐟 culter-agent      → 鲌类专研 (P₃)
   🔥 conflict-arbiter  → 冲突仲裁 (C)
 ```
+
 > 🌊 万物皆变 · Panta Rhei
 >
 > 🏛️ 赫拉克利特说：人不能两次踏进同一条河流。
