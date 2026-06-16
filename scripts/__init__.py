@@ -1,1 +1,1 @@
-"""Shared scripts/types for cross-project imports (eon-core ↔ porpoise-agent ↔ coilia-agent)."""
+﻿"""eon-core scripts — canonical shared types for the SanShengWanWu ecosystem."""
