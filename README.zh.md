@@ -205,21 +205,21 @@ eon-core/
 ---
 
 ## 🔗 DAG 拓扑
-`
+```
 定义在 `config/taiji.yaml（v7.4）`：
-`
+```
 ```
 V0 (fish-ecology-assistant) ──→ V1 (cognitive-search-engine) ──→ V2 (porpoise-agent)
                                                               ──→ V3 (coilia-agent)
                                                               ──→ V4 (culter-agent)
 ```
-`
+```
 顶点兼容性在 `COMPATIBILITY_MATRIX.yaml` 中定义。
-`
+```
 ---
-`
+```
 ## 🔗 关联项目
-`
+```
 | 🏗️ 项目 | 🔗 顶点 | 🎯 角色 |
 |:---------|:--------:|:--------|
 | fish-ecology-assistant | V0 | 知识供给 — `lookup_species() → SpeciesProfile` |
@@ -228,9 +228,9 @@ V0 (fish-ecology-assistant) ──→ V1 (cognitive-search-engine) ──→ V2 
 | coilia-agent | V3 | 刀鲚专研 — `assess_species() → Assessment` |
 | culter-agent | V4 | 鲌类专研 — `assess_culter_species() → SpeciesAssessment` |
 | conflict-arbiter | C | 冲突仲裁 — 保护级别冲突检测 |
-`
+```
 ## 📜 许可证
-`
+```
 MIT---------|:--------:|:--------|
 | [fish-ecology-assistant](../fish-ecology-assistant/) | V0 | 📦 知识供给 |
 | [cognitive-search-engine](../cognitive-search-engine/) | V1 | 🔍 搜索验证 |
@@ -239,29 +239,29 @@ MIT---------|:--------:|:--------|
 | [coilia-agent](../coilia-agent/) | P₂ | 🐟 刀鲚专研 |
 | [culter-agent](../culter-agent/) | P₃ | 🐟 鲌类专研 |
 | [conflict-arbiter](../conflict-arbiter/) | C | 🔥 冲突仲裁 |
-`
+```
 ---
 ---
 
-`
+```
 ## 🔗 生态体系
-`
+```
 > 🔥 和则无穷力量，分则顶尖专家引擎。
-`
+```
 本项目是「三生万物」生态的 Coord。
-`
-`
+```
+```
 三角核心 (sealed 3):
   📦 fish-ecology-assistant    → 知识供给 (V0)
   🔍 cognitive-search-engine   → 搜索验证 (V1)
   ⚙️ eon-core                  → 协调内核 (Coord)
-`
+```
 万物衍生 (open N):
   🐬 porpoise-agent    → 江豚专研 (P₁)
   🐟 coilia-agent      → 刀鲚专研 (P₂)
   🐟 culter-agent      → 鲌类专研 (P₃)
   🔥 conflict-arbiter  → 冲突仲裁 (C)
-`
+```
 > 🌊 万物皆变 · Panta Rhei
 >
 > 🏛️ 赫拉克利特说：人不能两次踏进同一条河流。
