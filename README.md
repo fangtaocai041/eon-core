@@ -1,4 +1,4 @@
-﻿# eon-core ⚙️
+# eon-core ⚙️
 
 **三角核心 Coordinator 层** — 协调内核 · 事件总线 · 五行监控。
 
@@ -96,20 +96,9 @@ eon-core/
 │   └── shared_types.py
 ├── tests/
 └── pyproject.toml
-```---------|:--------:|:--------|
-| [fish-ecology-assistant](../fish-ecology-assistant/) | V0 | 📦 知识供给 |
-| [cognitive-search-engine](../cognitive-search-engine/) | V1 | 🔍 搜索验证 |
-| [eon-core](../eon-core/) | Coord | ⚙️ 协调内核 |
-| [porpoise-agent](../porpoise-agent/) | P₁ | 🐬 江豚专研 |
-| [coilia-agent](../coilia-agent/) | P₂ | 🐟 刀鲚专研 |
-| [culter-agent](../culter-agent/) | P₃ | 🐟 鲌类专研 |
-| [conflict-arbiter](../conflict-arbiter/) | C | 🔥 冲突仲裁 |
 ```
 
----
----
 
-```
 ## 🔗 生态体系
 ```
 > 🔥 和则无穷力量，分则顶尖专家引擎。

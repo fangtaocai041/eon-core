@@ -1,4 +1,4 @@
-﻿# eon-core ⚙️
+# eon-core ⚙️
 
 **三角核心 Coordinator 层** — 协调内核 · 事件总线 · 五行监控。
 
