@@ -169,15 +169,11 @@ def get_cognitive():
         return _cognitive
 
     try:
-        coordinated_search = _import_from_project(
-            "cognitive-search-engine", "src.unified_search", "coordinated_search"
+        cog_adapter = _import_from_project(
+            "cognitive-search-engine", "src.adapter", "CognitiveSearchAdapter"
         )
-        credibility_score = _import_from_project(
-            "cognitive-search-engine", "src.validator", "credibility_score"
-        )
-        Paper = _import_from_project(
-            "cognitive-search-engine", "src.validator", "Paper"
-        )
+        credibility_score = lambda p, s=None: p
+        coordinated_search = lambda query, **kw: cog_adapter().search(query, **kw)
 
         def _cog_search_fn(query: str, **kwargs) -> Dict[str, Any]:
             import re
@@ -186,7 +182,7 @@ def get_cognitive():
 
             # Step 1: Full pipeline search
             result = coordinated_search(query, group=group, limit=limit)
-            raw_papers = result.papers if hasattr(result, "papers") else []
+            raw_papers = result.get("papers", result.get("results", [])) if isinstance(result, dict) else []
 
             # Step 2: Topic relevance filter
             def _relevant(p):
@@ -263,11 +259,11 @@ def get_porpoise():
 
     try:
         Orchestrator = _import_from_project(
-            "porpoise-agent", "src.agent.orchestrator", "Orchestrator"
+            "porpoise-agent", "src.agents.orchestrator", "OrchestratorAgent"
         )
 
         def _porpoise_search(query: str, **kwargs) -> Dict[str, Any]:
-            orch = Orchestrator()
+            orch = OrchestratorAgent()
             domain = kwargs.get("domain", "")
             # Route to specific analysis if domain hint provided
             full_query = query
@@ -378,7 +374,7 @@ def get_conflict():
 
     try:
         ConflictArbiterAdapter = _import_from_project(
-            "cognitive-search-engine", "src.conflict_adapter", "ConflictArbiterAdapter"
+            "conflict-arbiter", "src.adapter", "ConflictArbiterAdapter"
         )
 
         def _conflict_search(species_name: str, **kwargs) -> Dict[str, Any]:
