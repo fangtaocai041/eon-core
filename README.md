@@ -1,4 +1,4 @@
-# eon-core ⚙️
+﻿# eon-core ⚙️
 
 **三角核心 Coordinator 层** — 协调内核 · 事件总线 · 五行监控。
 
@@ -22,46 +22,46 @@
 这是三角之 **Coordinator（协调者）**。S（知识）和 V（验证）的阴阳对立，由它统一为三。它不生产知识，也不验证知识——它确保系统作为一个整体运转。
 
 ### 🔗 在三角中的角色
-
+`
 ```
 三生万物架构：
   S/V0  fish-ecology-assistant    → 知识供给（阴·静）
   V/V1  cognitive-search-engine   → 搜索验证（阳·动）
   Coord eon-core                  → 协调内核（太极点） ← 你在这里
 ```
-
+`
 ---
-
+`
 ## 🧩 这个项目是什么
-
+`
 它是整个三角核心的神经系统。负责：
 - **DAG 拓扑路由** — 任务在 S ↔ V 之间的流动路径，定义于 `config/taiji.yaml`
 - **EventBus** — 跨项目事件发布/订阅（带死信队列）
 - **WuXing 健康监控** — 五行（金木水火土）映射到系统组件健康
 - **Samsara 业力引擎** — 6 道轮回：任务失败 → 分析原因 → 重生重试
-
+`
 > 赫拉克利特说：人不能两次踏进同一条河流。
 >
 > 我们说：系统也不该两次犯同一个错误。
-
+`
 ---
-
+`
 ## ⚡ 快速上手
-
+`
 ```python
 from eon_core.src.kernel.origin import OriginKernel
 import asyncio
-
+`
 kernel = OriginKernel()
 asyncio.run(kernel.bootstrap())
 print(kernel.health())      # 全系统健康
 result = kernel.search("长江江豚")   # 统一搜索
 ```
-
+`
 ---
-
+`
 ## 🚀 核心能力
-
+`
 | 🚀 能力 | 📝 说明 |
 |:---------|:--------|
 | **10 层同心架构** | OriginKernel → YinYang → Vertices → ... → Sphere |
@@ -71,11 +71,11 @@ result = kernel.search("长江江豚")   # 统一搜索
 | **Samsara 引擎** | 6 道轮回（失败→重生→重试）|
 | **Tetrahedron Mesh** | 四面体网格拓扑 |
 | **6 Adapters** | fish / cognitive / porpoise / coilia / culter / conflict |
-
+`
 ---
-
+`
 ## 📁 项目架构
-
+`
 ```
 eon-core/
 ├── src/kernel/
@@ -92,16 +92,43 @@ eon-core/
 │   └── shared_types.py
 ├── tests/
 └── pyproject.toml
-```
-
+```---------|:--------:|:--------|
+| [fish-ecology-assistant](../fish-ecology-assistant/) | V0 | 📦 知识供给 |
+| [cognitive-search-engine](../cognitive-search-engine/) | V1 | 🔍 搜索验证 |
+| [eon-core](../eon-core/) | Coord | ⚙️ 协调内核 |
+| [porpoise-agent](../porpoise-agent/) | P₁ | 🐬 江豚专研 |
+| [coilia-agent](../coilia-agent/) | P₂ | 🐟 刀鲚专研 |
+| [culter-agent](../culter-agent/) | P₃ | 🐟 鲌类专研 |
+| [conflict-arbiter](../conflict-arbiter/) | C | 🔥 冲突仲裁 |
+`
+---
 ---
 
+`
+## 🔗 生态体系
+`
+> 🔥 和则无穷力量，分则顶尖专家引擎。
+`
+本项目是「三生万物」生态的 Coord。
+`
+`
+三角核心 (sealed 3):
+  📦 fish-ecology-assistant    → 知识供给 (V0)
+  🔍 cognitive-search-engine   → 搜索验证 (V1)
+  ⚙️ eon-core                  → 协调内核 (Coord)
+`
+万物衍生 (open N):
+  🐬 porpoise-agent    → 江豚专研 (P₁)
+  🐟 coilia-agent      → 刀鲚专研 (P₂)
+  🐟 culter-agent      → 鲌类专研 (P₃)
+  🔥 conflict-arbiter  → 冲突仲裁 (C)
+`
 > 🌊 万物皆变 · Panta Rhei
 >
 > 🏛️ 赫拉克利特说：人不能两次踏进同一条河流。
 >
 > 💻 我们说：系统也不该两次犯同一个错误。
 >
-> **📅 最后更新: 2026-06-21 · 🖥️ Reasonix Code · ⚡ DeepSeek 驱动**
+> **📅 最后更新: 2026-06-17 · 🖥️ Reasonix Code · ⚡ DeepSeek 驱动**
 
 [⬆ 回到顶部](#)
