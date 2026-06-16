@@ -1,169 +1,73 @@
-<p align="center">
-  🇨🇳 <a href="README.zh.md">中文</a>
-</p>
+# eon-core ☯️
 
-<div align="center">
-  <h1>☯️ eon-core — Coordination Kernel</h1>
-  <p><strong>Triangle Core Coordinator (T) · 三生万物 v8.1</strong></p>
-  <p>OriginKernel · EventBus · YinYang Poles · Tetrahedron Mesh · Health Mon. · Samsara · Sphere Gateway</p>
-  <p>🔗 <a href="https://github.com/fangtaocai041/eon-core">GitHub</a></p>
-</div>
+**三角核心 Coordinator 层** — 协调内核 · 事件总线 · 五行监控。
 
-<p align="center">
-  <a href="../VERSION.yaml"><img src="https://img.shields.io/badge/workspace-v8.1.0-blue" alt="Workspace:v8.1.0"></a>
-  <a href="#"><img src="https://img.shields.io/badge/python-3.12+-blue" alt="Python"></a>
-  <a href="proto/"><img src="https://img.shields.io/badge/protocol-gRPC-green" alt="gRPC"></a>
-  <a href="#"><img src="https://img.shields.io/badge/layers-10-purple" alt="Layers:10"></a>
-  <a href="#"><img src="https://img.shields.io/badge/adapters-6-orange" alt="Adapters:6"></a>
-</p>
+> 万物皆变 · Panta Rhei
+>
+> 道生一，一生二，二生三，三生万物。
 
-## What is eon-core?
+[中文版](README.zh.md) · [更新日志](CHANGELOG.md)
 
-The **coordination kernel** of the 三生万物 architecture. Dual nature:
+---
 
-1. **As a project**: Code repo alongside 6 other projects
-2. **As an architecture role**: Triangle Core coordinator + infrastructure host
+## 核心哲学
 
-**Two layers**:
-- **Kernel (Triangle Core)**: OriginKernel · EventBus · DAG routing · Lifecycle state machine
-- **Infrastructure (Derived)**: Vertex adapters · 8 Trigrams · Health monitoring · Samsara karma · Self-evolution
+> 世界是动态的，知识是暂时的，涌现是常态。
 
-## Architecture
+这是三角之 **Coordinator（协调者）**。S（知识）和 V（验证）的阴阳对立，由它统一为三。它不生产知识，也不验证知识——它确保系统作为一个整体运转。
+
+### 在三角中的角色
 
 ```
-                  OriginKernel (Singleton)
-                       │
-          ┌────────────┼────────────┐
-          │            │            │
-     YangPole      YinPole     EventBus
-     (expand)      (verify)    (async queue)
-          │            │            │
-          └────────────┼────────────┘
-                       │
-              TetrahedronMesh
-              (spectral gap + chaos)
-                       │
-          ┌────────────┼────────────┐
-          │            │            │
-     V0(fish)    V1(cognitive)  V2(porpoise)
-     V3(coilia)  V4(culter)    V5(conflict)
-                       │
-          ┌────────────┼────────────┐
-          │            │            │
-     8 Trigrams    Monitoring   Samsara
-     (子模块)     (5-element)   (karma)
+三生万物架构：
+  S/V0  fish-ecology-assistant    → 知识供给（阴·静）
+  V/V1  cognitive-search-engine   → 搜索验证（阳·动）
+  Coord eon-core                  → 协调内核（太极点） ← 你在这里
 ```
 
-## 10-Layer Architecture
+---
 
-| Layer | Module | Component |
-|:-----:|--------|-----------|
-| 1 | OriginKernel | Bootstrap, DI container, event sourcing |
-| 2 | EventBus | Async pub/sub, all inter-component communication |
-| 3 | YinYang Poles | YangPole (expand/search) + YinPole (contract/verify) |
-| 4 | Tetrahedron Mesh | DAG topology, spectral gap, chaos disturbance |
-| 5 | Vertices (6) | V0-V5 adapters for all 6 sibling projects |
-| 6 | Trigrams (8) | MetaSearch, ChineseGateway, GraphTraversal, Debate, Acoustic, Population, Otolith, Resource |
-| 7 | Monitoring | Health metrics collection (15s cycle) |
-| 8 | Samsara | KarmaEngine + KarmaCourt + Reincarnation (60s cycle) |
-| 9 | Sphere Gateway | REST/gRPC/WebSocket/MCP unified API |
-| 10 | Tendrils + Evolution | External probes + self-evolution (ChaosEngine + ParEGO) |
+## 这个项目是什么
 
-## 8 Runtime Invariants
+它是整个三角核心的神经系统。负责：
+- **DAG 拓扑路由** — 任务在 S ↔ V 之间的流动路径
+- **EventBus** — 跨项目事件发布/订阅
+- **WuXing 健康监控** — 五行（金木水火土）映射到系统组件健康
+- **Samsara 业力引擎** — 6 道轮回：任务失败 → 分析原因 → 重生重试
 
-| ID | Invariant | Enforcement |
-|----|-----------|-------------|
-| INV-001 | Topology IS DAG | bootstrap + reconfigure |
-| INV-002 | YangPole.verify() raises RuntimeError | mypy strict + runtime |
-| INV-003 | YinPole.expand() raises RuntimeError | mypy strict + runtime |
-| INV-004 | No direct vertex-to-vertex import | import linter + code review |
-| INV-005 | Spectral gap λ₂ ≥ 0.1 × baseline | reconfigure + health_pulse |
-| INV-006 | DEVA count ≤ 25% of agents | KarmaCourt.audit_fairness() |
-| INV-007 | NARAKA agents auto-reincarnate | SamsaraRing.run_karma_cycle() |
-| INV-008 | Reincarnation atomicity (7-step + snapshot) | ReincarnationProtocol.execute() |
+> 赫拉克利特说：人不能两次踏进同一条河流。
+>
+> 我们说：系统也不该两次犯同一个错误。
 
-## Quick Start
+---
 
-```bash
-# Health check
-python eon-core/src/main.py --config eon-core/config/taiji.yaml health
+## 快速上手
 
-# Route test
-python eon-core/src/main.py --config eon-core/config/taiji.yaml route "长江江豚种群恢复"
+```python
+from src.origin_kernel import OriginKernel
 
-# Via project_loader
-python -c "from scripts.project_loader import get_eon; a=get_eon(); print(a.info())"
-
-# Via coordinator
-python -c "from scripts.coordinator import coordinator; print(coordinator.health('eon'))"
+kernel = OriginKernel()
+kernel.health()           # 全系统健康
+kernel.route("search")    # DAG 路由
 ```
 
-## Directory Structure
+---
 
-```
-eon-core/
-├── config/                        # taiji.yaml, COMPATIBILITY_MATRIX.yaml, tendrils_registry.yaml
-├── proto/                         # gRPC protobuf definitions (event_bus, sphere_gateway, vertex_*)
-├── src/
-│   ├── adapter.py                 # IProjectAdapter → EonCoreAdapter
-│   ├── kernel/                    # OriginKernel, EventBus, Lifecycle
-│   ├── poles/                     # YangPole + YinPole
-│   ├── vertices/                  # 6 vertex adapters (v0_fish .. v5_conflict)
-│   ├── trigrams/                  # 8 functional sub-modules
-│   ├── mesh/                      # TetrahedronMesh
-│   ├── monitoring/                # health monitoring
-│   ├── samsara/                   # Karma engine, court, ring, reincarnation
-│   ├── sphere/                    # API gateway
-│   ├── tendrils/                  # External probes
-│   └── evolution/                 # Self-evolution, chaos engine, search optimizer
-├── tests/
-├── scripts/
-└── README.md
-```
+## 核心能力
 
-## Linked Projects
+| 能力 | 说明 |
+|:-----|:------|
+| **10 层同心架构** | OriginKernel → YinYang → Vertices → ... → Sphere |
+| **DAG 路由** | 有向无环图，任务最优路径 |
+| **EventBus** | 跨项目事件通信 |
+| **WuXing 监控** | 五行映射系统健康 |
+| **Samsara 引擎** | 6 道轮回（失败→重生→重试）|
+| **Tetrahedron Mesh** | 四面体网格拓扑 |
+| **6 Adapters** | fish / cognitive / porpoise / coilia / conflict / culter |
 
-| Project | Role | Relationship |
-|---------|------|-------------|
-| [fish-ecology-assistant](../fish-ecology-assistant/) | Knowledge V0 | Vertex V0 — species knowledge supply |
-| [cognitive-search-engine](../cognitive-search-engine/) | Validation V1 | Vertex V1 — literature search & verification |
-| [porpoise-agent](../porpoise-agent/) | P₁ Porpoise | Vertex V2 — porpoise domain specialist |
-| [coilia-agent](../coilia-agent/) | P₂ Coilia | Vertex V3 — coilia domain specialist |
-| [culter-agent](../culter-agent/) | P₃ Culter | Vertex V4 — culter domain specialist |
-| [conflict-arbiter](../conflict-arbiter/) | C Conflict | Vertex V5 — conflict arbitration |
+---
 
-## 📊 Self-Assessment
-
-| Dimension | Rating | Notes |
-|-----------|:-----:|-------|
-| 🔗 Coordination | ⭐⭐⭐⭐⭐ | EventBus async pub/sub, DAG topology routing, TetrahedronMesh spectral analysis |
-| 🛡️ Runtime Safety | ⭐⭐⭐⭐⭐ | 8 invariants enforced (mypy strict + import linter + runtime checks) |
-| 🔄 Self-Evolution | ⭐⭐⭐⭐☆ | ParEGO optimizer + ChaosEngine + Samsara karma feedback loop |
-| 🌐 Cross-Project | ⭐⭐⭐⭐⭐ | 6 vertex adapters (V0-V5) + Sphere Gateway (REST/gRPC/WebSocket/MCP) |
-| 🩺 Health Monitoring | ⭐⭐⭐⭐☆ | 15s health pulse cycle + KarmaCourt fairness audit |
-| 🧪 Test Coverage | ⭐⭐⭐☆☆ | Core invariants tested; vertex integration tests expanding |
-
-## 📋 Version History
-
-| Version | Date | Changes |
-|---------|------|---------|
-| **v8.1.0** | 2026-06-11 | 🪶 精简僵尸代码 — 重建轻量协调内核 · WuXing→Monitoring 去神秘化 · 删除 wuxing_flow.yaml |
-| **v8.0.0** | 2026-06-10 | 🔄 架构修正 — 道→S(fish)+T(cognitive)→万物(P₁P₂P₃C) · project_loader sys.path 重定向 |
-| **v7.4.0** | 2026-06-09 | ⚙️ CI validate.yml + taiji schema_version v7.4 + execution_flow 字段 |
-| **v7.1.0** | 2026-06-08 | 🔧 VerificationStatus/ContradictionType → shared_types + chaos_engine 标记 |
-| **v7.0.0** | 2026-06-07 | 🏛️ 十层同心架构 — TaijiTetrahedron-Samsara v7.0 初始发布 |
-
-> **Latest**: v8.1.0 · 2026-06-11
-
-## 📋 README Changelog
-
-| Version | Date | Theme | What Changed |
-|:--------|:-----|:------|:-------------|
-| **v8.1** | 2026-06-11 | De-mystification | WuXing→Monitoring 重命名, 删除 wuxing_flow.yaml, + Self-Assessment + Version History + Changelog |
-| **v8.0** | 2026-06-10 | Architecture Fix | 道→S+T→万物 架构修正, 双重身份澄清 |
-| **v7.4** | 2026-06-09 | CI Foundation | + validate.yml, + execution_flow, taiji v7.4 |
-| **v7.0** | 2026-06-07 | Initial | 十层同心动态活体架构, 8 Runtime Invariants |
-
-## 📜 License
-
-MIT License © 2026 fangtaocai041
+> 鱼在水里，你在岸上，代码在中间。
+> 愿协调和河流一样自然流淌。
+>
+> **最后更新: 2026-06-21 · Reasonix Code · DeepSeek 驱动**
