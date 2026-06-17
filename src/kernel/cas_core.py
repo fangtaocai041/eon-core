@@ -182,6 +182,7 @@ class CASCore:
             success = "error" not in str(results.get(agent_name, {}))
             self._adapt_rules(agent_name, task_type, success)
 
+        self._update_lifecycle()
         self._log_event("task_complete", {"agents": len(selected), "emergence": len(signals)})
 
         return {
@@ -287,6 +288,23 @@ class CASCore:
         })
         if len(self._event_log) > 1000:
             self._event_log = self._event_log[-500:]  # Trim
+
+    
+    def _update_lifecycle(self):
+        """Update Lifecycle state based on agent health."""
+        from src.kernel.lifecycle import Lifecycle
+        if not hasattr(self, '_lifecycle'):
+            self._lifecycle = Lifecycle()
+        
+        healthy = len([a for a in self._agents.values() if a.health == "healthy"])
+        total = len(self._agents)
+        
+        if healthy == total and self._lifecycle.state.value in ("seeding", "sprouting"):
+            self._lifecycle.transition("sprouting" if self._lifecycle.state.value == "seeding" else "blooming")
+        elif healthy < total * 0.5:
+            self._lifecycle.transition("pruning")
+        elif healthy >= total * 0.8 and self._lifecycle.state.value == "sprouting":
+            self._lifecycle.transition("blooming")
 
     def health(self) -> Dict[str, Any]:
         return {
