@@ -1,25 +1,31 @@
 ﻿"""Tests for eon-core — Coordination Hub (Coord)."""
-import pytest
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+# Ensure eon-core's src is importable (before other projects' src)
+_eon_root = str(Path(__file__).resolve().parent.parent)
+if _eon_root not in sys.path:
+    sys.path.insert(0, _eon_root)
+
+import pytest
+
+from src.kernel.origin import OriginKernel
+from src.kernel.event_bus import AsyncEventBus
+from src.kernel.lifecycle import Lifecycle, LifecycleStage
+from src.adapter import EonCoreAdapter
 
 
 class TestOriginKernel:
     """Test the OriginKernel singleton coordinator."""
 
     def test_import(self):
-        from src.kernel.origin import OriginKernel
         assert OriginKernel is not None
 
     def test_creation(self):
-        from src.kernel.origin import OriginKernel
         kernel = OriginKernel()
         assert kernel is not None
 
-    def test_creation(self):
-        from src.kernel.origin import OriginKernel
+    def test_new_creation(self):
         kernel = OriginKernel.__new__(OriginKernel)
         assert kernel is not None
 
@@ -28,61 +34,63 @@ class TestAsyncEventBus:
     """Test the event bus."""
 
     def test_import(self):
-        from src.kernel.event_bus import AsyncEventBus
         assert AsyncEventBus is not None
 
     def test_creation(self):
-        from src.kernel.event_bus import AsyncEventBus
         bus = AsyncEventBus()
         assert bus is not None
+
+    def test_event_log(self):
+        bus = AsyncEventBus(log_size=50)
+        log = bus.event_log()
+        assert isinstance(log, list)
+        assert len(log) == 0
 
 
 class TestLifecycle:
     """Test lifecycle state machine."""
 
     def test_import(self):
-        from src.kernel.lifecycle import Lifecycle, LifecycleStage
         assert Lifecycle is not None
 
     def test_creation(self):
-        from src.kernel.lifecycle import Lifecycle
         lc = Lifecycle()
         assert lc is not None
-        # is_alive is likely a property
         alive = lc.is_alive() if callable(lc.is_alive) else lc.is_alive
         assert alive in (True, False)
 
     def test_summary(self):
-        from src.kernel.lifecycle import Lifecycle
         lc = Lifecycle()
         summary = lc.summary()
         assert isinstance(summary, dict)
+
+    def test_transitions(self):
+        lc = Lifecycle()
+        assert lc.stage == LifecycleStage.SEEDING
+        lc.transition(LifecycleStage.SPROUTING)
+        assert lc.stage == LifecycleStage.SPROUTING
+        lc.transition(LifecycleStage.BLOOMING)
+        assert lc.stage == LifecycleStage.BLOOMING
 
 
 class TestEonCoreAdapter:
     """Test the EonCoreAdapter cross-project interface."""
 
     def test_import(self):
-        from src.adapter import EonCoreAdapter
         assert EonCoreAdapter is not None
 
     def test_info(self):
-        from src.adapter import EonCoreAdapter
         adapter = EonCoreAdapter()
         info = adapter.info()
         assert info["project"] == "eon-core"
         assert "role" in info
 
     def test_health(self):
-        from src.adapter import EonCoreAdapter
         adapter = EonCoreAdapter()
         health = adapter.health()
         assert "status" in health
 
     def test_search(self):
-        from src.adapter import EonCoreAdapter
         adapter = EonCoreAdapter()
         result = adapter.search("test query")
         assert isinstance(result, dict)
-
-

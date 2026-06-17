@@ -1,13 +1,15 @@
 """project_loader — 统一项目加载器 (DirectLoader v7.4).
 
-Import bridge between eon-core and the 4 external projects:
+Import bridge between eon-core and the 6 external projects:
   fish-ecology-assistant → V0 (knowledge supply)
   cognitive-search-engine → V1 (literature verification)
   porpoise-agent → V2 (porpoise domain research)
   coilia-agent → V3 (coilia domain research)
+  culter-agent → V4 (culter domain research)
+  conflict-arbiter → V5 (conservation arbitration)
 
 Each loader returns a wrapper with a uniform .search(query, **kwargs) → dict interface.
-Uses import isolation to avoid module name collisions (all 4 projects use src.* namespace).
+Uses import isolation to avoid module name collisions (all projects use src.* namespace).
 """
 
 from __future__ import annotations
@@ -30,16 +32,47 @@ def _import_from_project(project_name: str, module_path: str, attr_name: str) ->
 
     Clears cached src.* modules between imports so different projects'
     src.adapter / src.orchestrator modules don't collide.
+    Restores sys.path AND sys.modules on exit to avoid corrupting
+    the calling module's import state.
     """
     project_root = os.path.join(_WORKSPACE, project_name)
 
-    # Save current state
+    # Pre-load workspace scripts.adapter_protocol using direct path
+    # to avoid CWD shadowing (eon-core/scripts/ vs workspace/scripts/).
+    _adapter_protocol_path = os.path.join(_WORKSPACE, "scripts", "adapter_protocol.py")
+    if os.path.isfile(_adapter_protocol_path) and "scripts.adapter_protocol" not in sys.modules:
+        try:
+            import importlib.util as _iu
+            _spec = _iu.spec_from_file_location(
+                "scripts.adapter_protocol", _adapter_protocol_path,
+                submodule_search_locations=[os.path.dirname(_adapter_protocol_path)]
+            )
+            if _spec and _spec.loader:
+                _mod = _iu.module_from_spec(_spec)
+                # Ensure parent package 'scripts' is in sys.modules
+                if "scripts" not in sys.modules:
+                    _scripts_path = os.path.join(_WORKSPACE, "scripts", "__init__.py")
+                    if os.path.isfile(_scripts_path):
+                        _scripts_spec = _iu.spec_from_file_location(
+                            "scripts", _scripts_path,
+                            submodule_search_locations=[os.path.dirname(_scripts_path)]
+                        )
+                        if _scripts_spec and _scripts_spec.loader:
+                            _scripts_mod = _iu.module_from_spec(_scripts_spec)
+                            sys.modules["scripts"] = _scripts_mod
+                            _scripts_spec.loader.exec_module(_scripts_mod)
+                sys.modules["scripts.adapter_protocol"] = _mod
+                _spec.loader.exec_module(_mod)
+        except Exception:
+            pass
+
+    # Save current state (after pre-load to include adapter_protocol in snapshot)
     old_path = list(sys.path)
     old_modules = dict(sys.modules)
 
     # Clear cached src.* + scripts.* from other projects
-    # scripts.* 也必须清理: eon-core/scripts/__init__.py（正规包）在首次加载
-    # 后被缓存，会导致其他项目的 `from scripts.adapter_protocol import ...` 找不到。
+    # scripts.* must also be cleared: eon-core/scripts/__init__.py (regular package) 
+    # caches scripts.* and would shadow workspace-level scripts/ namespace.
     for k in list(sys.modules):
         if k == "src" or k.startswith("src."):
             del sys.modules[k]
@@ -47,22 +80,41 @@ def _import_from_project(project_name: str, module_path: str, attr_name: str) ->
             del sys.modules[k]
 
     # Set sys.path: this project first, then workspace root (for scripts/ redirects)
-    # NOTE: _EON_ROOT 不加入 path — 否则 eon-core/scripts/__init__.py（正规包）会
-    # 遮蔽 D:/Reasonix/scripts/（namespace 包），导致 coilia-agent 等项目的
-    # `from scripts.adapter_protocol import IProjectAdapter` 找不到模块。
-    # 过滤时必须 normpath 统一正反斜杠，否则 D:/Reasonix/eon-core（正斜杠版）会漏过
+    # NOTE: _EON_ROOT is NOT added to path - otherwise eon-core/scripts/__init__.py
+    # (regular package) would shadow D:/Reasonix/scripts/ (namespace package).
+    # Empty strings ('') and relative paths ('.', '..') also cause shadowing — 
+    # resolve them to absolute before filtering.
     _norm_ws = os.path.normpath(_WORKSPACE)
-    sys.path = [project_root, _WORKSPACE] + [
-        p for p in old_path if not os.path.normpath(p).startswith(_norm_ws)
-    ]
+    _new_path = [project_root, _WORKSPACE]
+    for p in old_path:
+        # Resolve empty/relative paths to absolute for accurate filtering
+        if p == '':
+            # Empty string = CWD, which is typically under _WORKSPACE
+            continue
+        try:
+            abs_p = os.path.normpath(os.path.abspath(p))
+        except Exception:
+            abs_p = os.path.normpath(p)
+        if abs_p.startswith(_norm_ws):
+            continue
+        _new_path.append(p)
+    sys.path = _new_path
 
     try:
         mod = __import__(module_path, fromlist=[attr_name])
-        return getattr(mod, attr_name)
+        result = getattr(mod, attr_name)
+        return result
     except Exception:
         raise
     finally:
+        # Restore to pre-import state — fully revert sys.modules
+        # to avoid src package pollution across projects.
+        # The returned class/factory keeps a reference to its module
+        # so it won't be garbage-collected even after we remove it
+        # from sys.modules.
         sys.path = old_path
+        sys.modules.clear()
+        sys.modules.update(old_modules)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -80,6 +132,7 @@ class _ProjectWrapper:
 
     Provides .search(query, **kwargs) → dict interface
     regardless of the underlying project's API shape.
+    Also supports .arbitrate(context) for conflict-arbiter.
     """
 
     def __init__(self, name: str, search_fn: Callable) -> None:
@@ -102,6 +155,43 @@ class _ProjectWrapper:
         except Exception as exc:
             logger.warning(f"{self._name}.search() failed: {exc}")
             return {"status": "error", "error": str(exc), "items": []}
+
+    def arbitrate(self, context: Dict[str, Any] = None, **kwargs) -> Dict[str, Any]:
+        """Execute conflict arbitration.
+
+        For conflict-arbiter adapter: resolves multi-source conflicts.
+        Delegates to search() with action='arbitrate' so the underlying
+        adapter can route to the appropriate arbiter method.
+
+        Args:
+            context: Dict with prior_outputs, species, query, etc.
+        """
+        ctx = context or {}
+        species = ctx.get("species", ctx.get("query", ""))
+        prior_outputs = ctx.get("prior_outputs", {})
+
+        # Extract claims from prior stage outputs
+        sources = []
+        claims = []
+        for pid, data in prior_outputs.items():
+            if isinstance(data, dict):
+                items = data.get("items", data.get("knowledge_items", []))
+                for item in items if isinstance(items, list) else []:
+                    if isinstance(item, dict):
+                        src = item.get("source", item.get("type", pid))
+                        val = item.get("data", item)
+                        claims.append({
+                            "source": str(src)[:200],
+                            "claim": str(item.get("scientific", item.get("title", "")))[:200],
+                            "weight": item.get("credibility_score", 50),
+                            "value": 50,
+                        })
+
+        try:
+            return self._search(species, sources=sources, claims=claims, **kwargs)
+        except Exception as exc:
+            logger.warning(f"{self._name}.arbitrate() failed: {exc}")
+            return {"status": "error", "error": str(exc)}
 
     def health(self) -> Dict[str, Any]:
         """Return health status from the wrapped project adapter.
@@ -169,19 +259,27 @@ def get_cognitive():
         return _cognitive
 
     try:
-        cog_adapter = _import_from_project(
+        cog_adapter_cls = _import_from_project(
             "cognitive-search-engine", "src.adapter", "CognitiveSearchAdapter"
         )
-        credibility_score = lambda p, s=None: p
-        coordinated_search = lambda query, **kw: cog_adapter().search(query, **kw)
 
         def _cog_search_fn(query: str, **kwargs) -> Dict[str, Any]:
             import re
+            from dataclasses import dataclass
+
+            @dataclass
+            class _Paper:
+                doi: str = ""
+                title: str = ""
+                year: Any = None
+                journal: str = ""
+
             limit = kwargs.get("limit", 10)
             group = kwargs.get("group", "standard")
 
             # Step 1: Full pipeline search
-            result = coordinated_search(query, group=group, limit=limit)
+            adapter = cog_adapter_cls()
+            result = adapter.search(query, group=group, limit=limit)
             raw_papers = result.get("papers", result.get("results", [])) if isinstance(result, dict) else []
 
             # Step 2: Topic relevance filter
@@ -212,15 +310,38 @@ def get_cognitive():
             relevant = [p for p in raw_papers if _relevant(p)]
 
             # Step 3: Credibility scoring + sort
+            # Try to import real validator.credibility_score; fallback to heuristics
+            _credibility_score = None
+            try:
+                from cognitive_search_engine.src.validator import credibility_score as _real_cs
+                _credibility_score = _real_cs
+            except Exception:
+                pass
+
             scored = []
             for p in relevant:
-                pp = Paper(doi=p.get("doi", ""), title=p.get("title", ""),
-                           year=p.get("year"), journal=p.get("journal", ""))
-                try:
-                    cs = credibility_score(pp)
-                except Exception:
-                    cs = 50
-                p["credibility_score"] = cs
+                pp = _Paper(doi=p.get("doi", ""), title=p.get("title", ""),
+                            year=p.get("year"), journal=p.get("journal", ""))
+                cs = 50  # default
+                if _credibility_score is not None:
+                    try:
+                        cs = _credibility_score(pp)
+                    except Exception:
+                        pass
+                else:
+                    # Heuristic: journal presence + year freshness
+                    if p.get("journal"):
+                        cs += 20
+                    year_str = str(p.get("year", ""))[:4]
+                    if year_str.isdigit():
+                        yr = int(year_str)
+                        if yr >= 2020:
+                            cs += 15
+                        elif yr >= 2010:
+                            cs += 10
+                        elif yr >= 2000:
+                            cs += 5
+                p["credibility_score"] = min(cs, 100)
                 scored.append(p)
 
             scored.sort(key=lambda x: (
@@ -251,27 +372,21 @@ def get_cognitive():
 def get_porpoise():
     """Get porpoise-agent wrapper for acoustic + population analysis.
 
-    Uses Orchestrator.run(question).
+    Uses PorpoiseAdapter.search(query) — standard IProjectAdapter interface.
     """
     global _porpoise
     if _porpoise is not None:
         return _porpoise
 
     try:
-        Orchestrator = _import_from_project(
-            "porpoise-agent", "src.agents.orchestrator", "OrchestratorAgent"
+        PorpoiseAdapter = _import_from_project(
+            "porpoise-agent", "src.adapter", "PorpoiseAdapter"
         )
 
         def _porpoise_search(query: str, **kwargs) -> Dict[str, Any]:
-            orch = OrchestratorAgent()
+            adapter = PorpoiseAdapter()
             domain = kwargs.get("domain", "")
-            # Route to specific analysis if domain hint provided
-            full_query = query
-            if domain == "acoustic":
-                full_query = f"analyze acoustic data for {query}"
-            elif domain == "population":
-                full_query = f"estimate population abundance for {query}"
-            return orch.run(full_query)
+            return adapter.search(query, domain=domain)
 
         _porpoise = _ProjectWrapper("porpoise-agent", _porpoise_search)
         logger.info("porpoise-agent loaded via DirectLoader")

@@ -20,11 +20,15 @@ origin_kernel:
 tetrahedron:
   edges:
     # DAG topology (strictly acyclic)
-    # origin->V0/V1/V2/V3/V4 auto-added by bootstrap
+    # origin->V0/V1/V2/V3/V4/V5 auto-added by bootstrap
     - { from: "V0", to: "V1", weight: 0.9, pathway: "P1", name: "fish->cognitive", direction: "UNIDIRECTIONAL" }
     - { from: "V1", to: "V2", weight: 0.6, pathway: "P3", name: "cognitive->P1(porpoise)", direction: "UNIDIRECTIONAL" }
     - { from: "V1", to: "V3", weight: 0.5, pathway: "P3", name: "cognitive->P2(coilia)", direction: "UNIDIRECTIONAL" }
     - { from: "V1", to: "V4", weight: 0.4, pathway: "P3", name: "cognitive->P3(culter)", direction: "UNIDIRECTIONAL" }
+    - { from: "V2", to: "V5", weight: 0.3, pathway: "P5", name: "porpoise->conflict", direction: "UNIDIRECTIONAL" }
+    - { from: "V3", to: "V5", weight: 0.3, pathway: "P5", name: "coilia->conflict", direction: "UNIDIRECTIONAL" }
+    - { from: "V4", to: "V5", weight: 0.3, pathway: "P5", name: "culter->conflict", direction: "UNIDIRECTIONAL" }
+    - { from: "V1", to: "V5", weight: 0.5, pathway: "P5", name: "cognitive->conflict", direction: "UNIDIRECTIONAL" }
   baseline_spectral_gap: 0.15
   chaos_disturb_interval: 100
   chaos_factor: 0.02
@@ -92,4 +96,17 @@ vertices:
     note: "Culter domain research (growth/genomics/trophic/resource)"
     polarity: "YIN_PRIMARY_YANG_SECONDARY"
     trigrams: ["zhen_growth", "kun_resource"]
+    d_level: 2
+  V5:
+    id: "V5"
+    name: "ArbiterVertex"
+    stv_role: "C (Conflict Arbitration)"
+    project: "conflict-arbiter"
+    core_function: "assess_conflict(sources) -> ConflictReport"
+    symbol: "Fire"
+    coordinates: [0.0, 0.0, -1.0]
+    pathways: ["P5(any->conflict)", "P6(conflict->user)"]
+    note: "Multi-source conservation recommendation arbitration + circuit breaker"
+    polarity: "YANG_SECONDARY"
+    trigrams: ["li_fire", "zhen_judgment"]
     d_level: 2
