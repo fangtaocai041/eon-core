@@ -197,6 +197,9 @@ src/kernel/          10 模块
 
 这个项目不是一套固定的工具集——它是一个**活的系统**。
 
+
+> 🔧 Agent 约束: [AGENTS.md](../AGENTS.md) · [core-constitution.md](../.reasonix/core-constitution.md) · [research-first](../skills/research-first.md) · [retro-session](../skills/retro-session.md)
+
 *最后更新: 2026-06-18 | Reasonix Code · DeepSeek 驱动*
 
 ---

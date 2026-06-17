@@ -160,6 +160,10 @@ eon-core/
   ├── pipeline.py            DAG topology + stage executor
   ├── wuxing_monitor.py      WuXing health monitor
   └── cross_project.py       CrossProjectPipeline → 9 routing templates
+  src/                  → IMPLEMENTED (shared engines)
+  └── unified_emergence.py   统一涌现检测引擎 (融合 p/f/c 三项目)
+  docs/                 → IMPLEMENTED
+  └── emergence-engine-guide.md  涌现引擎数据投喂指南
   proto/                → IMPLEMENTED (6 proto files)
   ├── event_bus.proto
   ├── sphere_gateway.proto
@@ -205,6 +209,36 @@ eon-core/
 <p align="right"><a href="#-table-of-contents">↑ Back to top</a></p>
 
 ---
+
+---
+
+## 🧬 Unified Emergence Engine
+
+> **融合三项目涌现能力** — 实时 Z-score 监控 + 批次三层分析 + 自组织领域发现
+
+| Module | Source | Capability |
+|--------|:------:|------------|
+| `EmergenceMonitor` | p项目 (porpoise) | 实时 Z-score 异常检测 · D₀~D₃ 维度追踪 · D₂→D₃ 相变检测 |
+| `EmergenceEngine` | f项目 (fish) | 离线批次分析 · Layer 1 异常 · Layer 2 突变点(CUSUM) · Layer 3 6理论模式匹配 |
+| `emerge_domains()` | c项目 (cognitive) | 自组织领域发现 · 跨数据库共现聚类 |
+
+### Quick Usage
+
+```python
+from eon_core.unified_emergence import EmergenceMonitor, EmergenceEngine
+
+# 在线监控
+mon = EmergenceMonitor(emergence_threshold_sigma=3.0, min_sources=3)
+mon.record("recall", 0.85, DimensionalLevel.D1)
+signals = mon.check_emergence()
+
+# 离线分析
+engine = EmergenceEngine()
+results = engine.scan(data={"years": [2018,...,2025], "biomass": [100,...,260]})
+```
+
+> 📖 数据投喂指南: [docs/emergence-engine-guide.md](docs/emergence-engine-guide.md)
+
 
 ## 🗺️ 10-Layer Architecture Roadmap
 
@@ -350,6 +384,9 @@ S-T-V-P₁-P₂-P₃-C Architecture (coordinated by eon-core — this project):
 > We say: You cannot coordinate today's ecosystem with last month's architecture.
 
 This project is not a fixed toolset — it is a **living system**. Every component has built-in expiration mechanisms, version tracking, and emergence awareness. As your research deepens, packages update, and new methods emerge, it evolves with you.
+
+
+> 🔧 Agent constraints: [AGENTS.md](../AGENTS.md) · [core-constitution.md](../.reasonix/core-constitution.md) · [research-first](../skills/research-first.md) · [retro-session](../skills/retro-session.md)
 
 *Last updated: 2026-06-18 | Environment: Reasonix Code · DeepSeek Powered*
 

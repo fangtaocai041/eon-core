@@ -1,4 +1,4 @@
-"""TaijiTetrahedron-Samsara v7.0 — 十层同心动态活体架构.
+"""TaijiTetrahedron-Samsara v7.4 — 十层同心动态活体架构.
 
 Layers:
   L0: 太极起源点 (OriginKernel + EventBus)
@@ -11,8 +11,11 @@ Layers:
   L7: 圆球体网关 (SphereGateway API facade)
   L8: 触须探针 (12 external probes)
   L9: 进化引擎 + 可观测性 (Evolution + Observability)
+
+Shared Modules:
+  unified_emergence  — 统一涌现检测引擎 (融合 p/f/c 三项目)
 """
 
-__version__ = "7.0.0"
-__code__ = "TaijiTetrahedron-Samsara-v7.0"
+__version__ = "7.4.0"
+__code__ = "TaijiTetrahedron-Samsara-v7.4"
 __project__ = "eon-core"
