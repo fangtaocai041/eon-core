@@ -1,4 +1,7 @@
-﻿# ⚙️ eon-core
+<div align="center">
+  <h1>⚙️ eon-core</h1>
+  <p><em>Coordination Hub — Complex Adaptive System · MCP Protocol · Event Sourcing · CQRS</em></p>
+</div>
 
 <p align="center">
   ![Python 3.12+](https://img.shields.io/badge/Python%203.12%2B-3776AB?style=flat-square)
@@ -11,12 +14,6 @@
   ![6 projects](https://img.shields.io/badge/6%20projects-EC4899?style=flat-square)
   ![EventBus](https://img.shields.io/badge/EventBus-F59E0B?style=flat-square)
 </p>
-
-
-> 🔄 Coordination Hub — Complex Adaptive System with MCP protocol, Event Sourcing, and CQRS.
-> The center that holds the triangle together.
-
-[English](README.md) · [中文](README.zh.md) · [CHANGELOG](CHANGELOG.md)
 
 ---
 

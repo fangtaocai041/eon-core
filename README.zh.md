@@ -1,4 +1,7 @@
-﻿# ⚙️ 永世内核
+<div align="center">
+  <h1>⚙️ 永世内核</h1>
+  <p><em>协调中枢 — 复杂自适应系统 · MCP协议 · 事件溯源 · CQRS</em></p>
+</div>
 
 <p align="center">
   ![Python 3.12+](https://img.shields.io/badge/Python%203.12%2B-3776AB?style=flat-square)
@@ -11,13 +14,6 @@
   ![6 projects](https://img.shields.io/badge/6%20projects-EC4899?style=flat-square)
   ![EventBus](https://img.shields.io/badge/EventBus-F59E0B?style=flat-square)
 </p>
-
-
-> 🔄 协调中枢 — 复杂自适应系统，MCP协议，事件溯源，CQRS。
-🔄 协调中枢 — 复杂自适应系统，MCP协议，事件溯源，CQRS。
-> 三角之中，万物之轴。
-
-[English](README.md) · [中文](README.zh.md) · [更新日志](CHANGELOG.md)
 
 ---
 
