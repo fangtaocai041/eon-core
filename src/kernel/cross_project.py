@@ -126,8 +126,9 @@ class CrossProjectPipeline:
     _ROUTE_TEMPLATES: Dict[Route, List[Tuple[str, str, bool]]] = {
         Route.STANDARD: [
             ("fish", "search", True),
-            ("cognitive", "search", True),
+            ("cognitive", "verify", True),
             ("conflict", "arbitrate", False),
+            ("fish", "score", False),
         ],
         Route.FAST: [
             ("fish", "search", True),
@@ -325,18 +326,27 @@ class CrossProjectPipeline:
 
             try:
                 # Call adapter method
-                if method == "arbitrate":
-                    # conflict.arbitrate expects context with prior outputs
+                if method in ("arbitrate", "verify", "score"):
+                    # These methods benefit from prior stage outputs
                     prior_outputs = {
                         pid: s.data
                         for pid, s in result.stages.items()
                         if s.status == StageStatus.COMPLETED
                     }
-                    arb_ctx = dict(ctx)
-                    arb_ctx["prior_outputs"] = prior_outputs
-                    arb_ctx["species"] = _species
-                    arb_ctx["query"] = _query
-                    raw = adapter.arbitrate(context=arb_ctx) if hasattr(adapter, "arbitrate") else {}
+                    method_ctx = dict(ctx)
+                    method_ctx["prior_outputs"] = prior_outputs
+                    method_ctx["species"] = _species
+                    method_ctx["query"] = _query
+                    if hasattr(adapter, method):
+                        fn = getattr(adapter, method)
+                        if asyncio.iscoroutinefunction(fn):
+                            raw = await fn(_query, species=_species, **method_ctx)
+                        else:
+                            raw = fn(_query, species=_species, **method_ctx)
+                    elif hasattr(adapter, "search"):
+                        raw = adapter.search(_query, species=_species, **method_ctx)
+                    else:
+                        raw = {"status": "skipped", "reason": f"No '{method}' method"}
                 elif hasattr(adapter, method):
                     fn = getattr(adapter, method)
                     if asyncio.iscoroutinefunction(fn):
@@ -483,3 +493,18 @@ class CrossProjectPipeline:
     @property
     def loaded_projects(self) -> List[str]:
         return list(self._adapters.keys())
+
+
+# ═══════════════════════════════════════════════════════════════
+# CrossProjectResult helpers
+# ═══════════════════════════════════════════════════════════════
+
+# (extend via monkey-patch — avoids circular dependency)
+def _result_stages_completed(self: CrossProjectResult) -> int:
+    """Number of stages that completed successfully."""
+    return sum(
+        1 for s in self.stages.values()
+        if s.status == StageStatus.COMPLETED
+    )
+
+CrossProjectResult.stages_completed = property(_result_stages_completed)
