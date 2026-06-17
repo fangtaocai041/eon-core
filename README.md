@@ -1,6 +1,6 @@
 ﻿# ⚙️ eon-core
 
-![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-brightgreen?style=for-the-badge) ![Version](https://img.shields.io/badge/Version-v8.1-blueviolet?style=for-the-badge) ![CAS](https://img.shields.io/badge/CAS-Adaptive-success?style=for-the-badge) ![MCP](https://img.shields.io/badge/MCP-Protocol-important?style=for-the-badge) ![Event](https://img.shields.io/badge/Event-Sourcing-critical?style=for-the-badge) ![CQRS](https://img.shields.io/badge/CQRS-Read%2FWrite-informational?style=for-the-badge) ![Pub/Sub](https://img.shields.io/badge/Pub%2FSub-EventBus-ff69b4?style=for-the-badge) ![6 Projects](https://img.shields.io/badge/6%20Projects-Loaded-orange?style=for-the-badge) ![DAG](https://img.shields.io/badge/DAG-Topology-red?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-brightgreen?style=for-the-badge) ![Version](https://img.shields.io/badge/Version-v8.1-blueviolet?style=for-the-badge) ![CAS](https://img.shields.io/badge/CAS-Adaptive-success?style=for-the-badge) ![MCP](https://img.shields.io/badge/MCP-Protocol-important?style=for-the-badge) ![Event](https://img.shields.io/badge/Event-Sourcing-critical?style=for-the-badge) ![CQRS](https://img.shields.io/badge/CQRS-R%2FW%20Split-informational?style=for-the-badge) ![Pub/Sub](https://img.shields.io/badge/Pub%2FSub-EventBus-ff69b4?style=for-the-badge) ![Projects](https://img.shields.io/badge/Projects-6%20loaded-orange?style=for-the-badge) ![DAG](https://img.shields.io/badge/DAG-Config-red?style=for-the-badge)
 
 > 🔄 Coordination Hub — Complex Adaptive System with MCP protocol, Event Sourcing, and CQRS.
 > The center that holds the triangle together.
@@ -87,16 +87,17 @@ eon-core/
 
 ## ✨ Features
 
-| Feature | Description |
-|---------|-------------|
-| 🌀 CAS Architecture | Complex Adaptive System with agent discovery + adaptation |
-| 🔌 MCP Protocol | Model Context Protocol for cross-project tool communication |
-| 📜 Event Sourcing | Append-only event store with replay capability |
-| 📊 CQRS | Separate write (EventStore) and read (Projection) models |
-| 🚌 AsyncEventBus | In-process pub/sub with dead letter queue |
-| 🔗 Project Loader | Zero-conflict isolation import for 6 sibling projects |
-| 📡 Emergence Detection | Multi-agent consensus + coalition pattern detection |
-| 🎯 Adaptive Orchestration | Learned rules for agent selection based on task context |
+| Feature | Status | Description |
+|---------|:------:|-------------|
+| 🌀 CAS Core | ✅ | Agent discovery + adaptation rules |
+| 🔌 MCP Bridge | ✅ | JSON-RPC tool registry |
+| 📜 Event Store | ✅ | Append-only JSONL + replay |
+| 📊 CQRS | ✅ | Separate write/read models |
+| 🚌 AsyncEventBus | ✅ | In-process pub/sub + DLQ |
+| 🔗 Project Loader | ✅ | 6-project isolation import |
+| 📡 Emergence | ✅ | Consensus + coalition detection |
+| 🎯 Adaptive Routing | ✅ | Learned agent selection |
+| 🧪 Tests | ✅ | 15 passing |
 
 ---
 
