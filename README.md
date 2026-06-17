@@ -32,23 +32,23 @@ The world is dynamic, knowledge is temporary, emergence is the norm.
 
 ---
 
-## 🏛�?Philosophy
+## 🏛?Philosophy
 
 > The river flows, knowledge drifts, emergence patterns.
 
 This is not a slogan. It is the operating system running through every line of code, every search, every analysis.
 
-**eon-core** is the **Coord (Coordination Hub)** in the SanShengWanWu ecosystem. It is the central nervous system connecting all 6 projects �?not a controller, but a coordinator. It enables cross-project communication, event-driven workflows, adaptive routing, and emergence detection across the entire ecosystem.
+**eon-core** is the **Coord (Coordination Hub)** in the SanShengWanWu ecosystem. It is the central nervous system connecting all 6 projects ?not a controller, but a coordinator. It enables cross-project communication, event-driven workflows, adaptive routing, and emergence detection across the entire ecosystem.
 
 ### 📜 Three Tenets
 
-**🌊 The River Flows** �?Projects evolve independently. eon-core ensures they stay connected without coupling them. Loose coupling, high cohesion, event-driven.
+**🌊 The River Flows** ?Projects evolve independently. eon-core ensures they stay connected without coupling them. Loose coupling, high cohesion, event-driven.
 
-**🍂 Knowledge Drifts** �?Facts from one project flow to others through the EventBus. Verification crosses project boundaries. No knowledge silo survives.
+**🍂 Knowledge Drifts** ?Facts from one project flow to others through the EventBus. Verification crosses project boundaries. No knowledge silo survives.
 
-**🌟 Emergence Patterns** �?When multiple projects independently arrive at converging conclusions, the CAS core detects the coalition. This is cross-project emergence �?the whole ecosystem knowing more than any single agent.
+**🌟 Emergence Patterns** ?When multiple projects independently arrive at converging conclusions, the CAS core detects the coalition. This is cross-project emergence ?the whole ecosystem knowing more than any single agent.
 
-### ⚖️ Why This Matters
+### ⚖ Why This Matters
 
 | Scenario | Without eon-core | With eon-core |
 |:---------|:-----------------|:--------------|
@@ -58,26 +58,26 @@ This is not a slogan. It is the operating system running through every line of c
 | Emergence detection | Siloed missed signals | Coalition detection across all 6 projects |
 | Error recovery | Lost in limbo | Dead Letter Queue + replay |
 
-> 道生一，一生二，二生三，三生万物�?
+> 道生一，一生二，二生三，三生万物?
 From One comes Two, from Two comes Three, from Three come all things.
 
 ---
 
 ## 🧩 What This Is
 
-**eon-core** is the coordination kernel. It does not store species data (that's S/V0), does not search literature (that's V/V1), does not analyze porpoise acoustics (that's P�? �?it connects, routes, verifies, and evolves.
+**eon-core** is the coordination kernel. It does not store species data (that's S/V0), does not search literature (that's V/V1), does not analyze porpoise acoustics (that's P? ?it connects, routes, verifies, and evolves.
 
-### S-T-V-P�?P�?Architecture Mapping
+### S-T-V-P?P?Architecture Mapping
 
 ```
-eon-core (Coord) �?coordinates the entire ecosystem:
+eon-core (Coord) ?coordinates the entire ecosystem:
 
-  ┌─────────────── Triangle Core ───────────────�?  �?                                             �?  �? S/V0  fish-ecology-assistant                �?  �?        �?knowledge supply                   �?  �?        �?                                   �?  �? V/V1  cognitive-search-engine               �?  �?        �?search verification                �?  �?        �?                                   �?  �? Coord  eon-core  �?this project             �?  �?        �?coordination                       �?  �?                                             �?  ├─────────────── Derived Projects ─────────────�?  �?                                             �?  �? P�?   porpoise-agent    (porpoise expert)   �?  �? P�?   coilia-agent      (coilia expert)     �?  �? P�?   culter-agent      (culter expert)     �?  �? C     conflict-arbiter  (arbitration)       �?  �?                                             �?  └──────────────────────────────────────────────�?
+  ┌─────────────── Triangle Core ───────────────?  ?                                             ?  ? S/V0  fish-ecology-assistant                ?  ?        ?knowledge supply                   ?  ?        ?                                   ?  ? V/V1  cognitive-search-engine               ?  ?        ?search verification                ?  ?        ?                                   ?  ? Coord  eon-core  ?this project             ?  ?        ?coordination                       ?  ?                                             ?  ├─────────────── Derived Projects ─────────────?  ?                                             ?  ? P?   porpoise-agent    (porpoise expert)   ?  ? P?   coilia-agent      (coilia expert)     ?  ? P?   culter-agent      (culter expert)     ?  ? C     conflict-arbiter  (arbitration)       ?  ?                                             ?  └──────────────────────────────────────────────?
   All 6 projects load coordination.yaml as their
   single source of architectural truth.
 ```
 
-Key design principle: **Triangle is sealed (S, V, Coord) �?Derived is open (P�? P�? P�? C, ...)**. New derived projects can join without modifying the triangle core.
+Key design principle: **Triangle is sealed (S, V, Coord) ?Derived is open (P? P? P? C, ...)**. New derived projects can join without modifying the triangle core.
 
 ---
 
@@ -97,28 +97,28 @@ python -m eon_core bootstrap
 
 ---
 
-## 🏗�?Architecture
+## 🏗?Architecture
 
 ```
 eon-core/
-  src/kernel/          �?�?IMPLEMENTED (10 modules)
-  ├── origin.py              OriginKernel �?coordinator singleton
-  ├── event_bus.py           AsyncEventBus �?pub/sub + Dead Letter Queue
+  src/kernel/          ??IMPLEMENTED (10 modules)
+  ├── origin.py              OriginKernel ?coordinator singleton
+  ├── event_bus.py           AsyncEventBus ?pub/sub + Dead Letter Queue
   ├── lifecycle.py           5-stage state machine
   ├── cas_core.py            Complex Adaptive System coordinator
   ├── mcp_bridge.py          MCP protocol tool bridge
   ├── event_store.py         Event Sourcing + CQRS
   ├── pipeline.py            DAG topology + stage executor
   ├── wuxing_monitor.py      WuXing health monitor
-  └── cross_project.py       CrossProjectPipeline �?9 routing templates
-  proto/                �?�?IMPLEMENTED (6 proto files)
+  └── cross_project.py       CrossProjectPipeline ?9 routing templates
+  proto/                ??IMPLEMENTED (6 proto files)
   ├── event_bus.proto
   ├── sphere_gateway.proto
   ├── vertex_v0_supply.proto
   ├── vertex_v1_verify.proto
   ├── vertex_v2_domain_p1.proto
   └── vertex_v3_domain_p2.proto
-  config/               �?�?IMPLEMENTED (5 yaml files)
+  config/               ??IMPLEMENTED (5 yaml files)
   ├── taiji.yaml             DAG topology definition
   ├── samsara.yaml           Samsara ring config
   ├── tetrahedron_topology.yaml
@@ -128,51 +128,51 @@ eon-core/
 
 ---
 
-## �?Features
+## ?Features
 
 | Feature | Status | Description |
 |---------|:------:|-------------|
-| 🌀 CAS Core | �?| Agent discovery + adaptation rules + coalition detection |
-| 🔌 MCP Bridge | �?| JSON-RPC tool registry across all projects |
-| 📜 Event Store | �?| Append-only JSONL + full replay capability |
-| 📊 CQRS | �?| Separate write/read models for cross-project data |
-| 🚌 AsyncEventBus | �?| In-process pub/sub + Dead Letter Queue |
-| 🔗 Project Loader | �?| 6-project isolated import with dependency resolution |
-| 📡 Emergence Detection | �?| Consensus + coalition detection across projects |
-| 🎯 Adaptive Routing | �?| Learned agent selection via performance history |
-| 🔀 CrossProjectPipeline | �?| 9 routing modes (standard/fast/domain_p1-3/arbitrate/full/custom/dynamic) |
-| 🩺 WuXing Monitor | �?| 5-element health monitoring with generation/control cycles |
-| 🧪 E2E Pipeline | �?| Cross-project standard pipeline E2E 7/7 all passing |
-| 🧪 Test Suite | �?| 15+ tests passing across all modules |
+| 🌀 CAS Core | ?| Agent discovery + adaptation rules + coalition detection |
+| 🔌 MCP Bridge | ?| JSON-RPC tool registry across all projects |
+| 📜 Event Store | ?| Append-only JSONL + full replay capability |
+| 📊 CQRS | ?| Separate write/read models for cross-project data |
+| 🚌 AsyncEventBus | ?| In-process pub/sub + Dead Letter Queue |
+| 🔗 Project Loader | ?| 6-project isolated import with dependency resolution |
+| 📡 Emergence Detection | ?| Consensus + coalition detection across projects |
+| 🎯 Adaptive Routing | ?| Learned agent selection via performance history |
+| 🔀 CrossProjectPipeline | ?| 9 routing modes (standard/fast/domain_p1-3/arbitrate/full/custom/dynamic) |
+| 🩺 WuXing Monitor | ?| 5-element health monitoring with generation/control cycles |
+| 🧪 E2E Pipeline | ?| Cross-project standard pipeline E2E 7/7 all passing |
+| 🧪 Test Suite | ?| 15+ tests passing across all modules |
 
 ---
 
-## 🗺�?10-Layer Architecture Roadmap
+## 🗺?10-Layer Architecture Roadmap
 
 > Architecture defined in taiji.yaml; implementation progresses layer by layer.
 
 | Layer | Name | Status | Description |
 |:-----:|------|:------:|-------------|
-| L0 | ☯️ OriginKernel | �?IMPLEMENTED | EventBus + DI + DAG routing |
-| L1 | ☀️�?YinYang Poles | �?CONFIG | Type-safe separation in taiji.yaml |
-| L2 | �?5 Vertices | �?CONFIG | V0-V5 in tetrahedron topology |
+| L0 | ☯ OriginKernel | ?IMPLEMENTED | EventBus + DI + DAG routing |
+| L1 | ☀?YinYang Poles | ?CONFIG | Type-safe separation in taiji.yaml |
+| L2 | ?5 Vertices | ?CONFIG | V0-V5 in tetrahedron topology |
 | L3 | ☰☱☲☳☴☵☶☷ 8 Trigrams | 🟡 CONFIG | Defined as vertex.trigrams mappings |
-| L4 | △�?TetrahedronMesh | �?CONFIG | Spectral gap analysis config |
-| L5 | �?WuXing Flow | �?IMPLEMENTED | wuxing_monitor.py generation/restriction |
-| L6 | ☸️ Samsara Ring | 🟡 CONFIG | samsara.yaml karma engine config |
-| L7 | �?SphereGateway | 🟡 CONFIG | sphere_gateway.proto defined |
-| L8 | 〰️ Tendrils | 🟡 CONFIG | tendrils_registry.yaml (12 probes) |
+| L4 | △?TetrahedronMesh | ?CONFIG | Spectral gap analysis config |
+| L5 | ?WuXing Flow | ?IMPLEMENTED | wuxing_monitor.py generation/restriction |
+| L6 | ☸ Samsara Ring | 🟡 CONFIG | samsara.yaml karma engine config |
+| L7 | ?SphereGateway | 🟡 CONFIG | sphere_gateway.proto defined |
+| L8 | 〰 Tendrils | 🟡 CONFIG | tendrils_registry.yaml (12 probes) |
 | L9 | 🦋 Evolution | 🔮 PLANNED | Pareto optimizer + chaos engine |
 
 ---
 
-## ☸️ Core Innovation: Samsara (六道轮回)
+## ☸ Core Innovation: Samsara (六道轮回)
 
 | Realm | State | Token × | Rule |
 |-------|-------|:------:|------|
-| ☸️ DEVA | OPTIMAL | ×1.5 | Bad deed penalty ×3; max 10 cycles |
+| ☸ DEVA | OPTIMAL | ×1.5 | Bad deed penalty ×3; max 10 cycles |
 | 🧘 HUMAN | NORMAL | ×1.0 | Only realm allowing self_evolve() |
-| ⚔️ ASURA | COMPETITIVE | ×1.2 | Requires deconfliction pass |
+| ⚔ ASURA | COMPETITIVE | ×1.2 | Requires deconfliction pass |
 | 🐂 ANIMAL | DEGRADED | ×0.5 | LLM disabled; cache + rules only |
 | 👻 PRETA | STARVED | ×0.25 | Severely rate-limited |
 | 🔥 NARAKA | BROKEN | ×0.0 | Isolated; auto-rebirth after cooldown |
@@ -203,9 +203,9 @@ eon-core/
 ## 🪞 Self-Assessment
 
 ### Strengths
-- **True coordination**: Event-driven, loosely coupled �?projects can fail independently without cascading
+- **True coordination**: Event-driven, loosely coupled ?projects can fail independently without cascading
 - **Architecture as code**: `coordination.yaml` is the single source of truth for all 6 projects
-- **Event Sourcing**: Complete audit trail �?every cross-project action is recorded and replayable
+- **Event Sourcing**: Complete audit trail ?every cross-project action is recorded and replayable
 - **Adaptive routing**: Performance-history-based agent selection improves over time
 - **WuXing Monitor**: Proactive health checks with systemic generation/control feedback loops
 
@@ -228,16 +228,16 @@ eon-core/
 This project is the **Coordination Hub (Coord)** in the SanShengWanWu ecosystem.
 
 ```
-S-T-V-P�?P�?Architecture (coordinated by eon-core �?this project):
+S-T-V-P?P?Architecture (coordinated by eon-core ?this project):
 
-  S/V0  📦 fish-ecology-assistant    �?Knowledge Supply
-  V/V1  🔍 cognitive-search-engine   �?Search Verification
-  Coord ⚙️ eon-core                  �?Coordination Hub �?this project
+  S/V0  📦 fish-ecology-assistant    ?Knowledge Supply
+  V/V1  🔍 cognitive-search-engine   ?Search Verification
+  Coord ⚙ eon-core                  ?Coordination Hub ?this project
 
-  P�?   🐬 porpoise-agent           �?Porpoise Expert
-  P�?   🐟 coilia-agent             �?Coilia Expert
-  P�?   🐟 culter-agent             �?Culter Expert
-  C     🔥 conflict-arbiter         �?Conflict Arbitration
+  P?   🐬 porpoise-agent           ?Porpoise Expert
+  P?   🐟 coilia-agent             ?Coilia Expert
+  P?   🐟 culter-agent             ?Culter Expert
+  C     🔥 conflict-arbiter         ?Conflict Arbitration
 ```
 
 > 🔥 Together infinite power, apart top expert engines.
@@ -278,6 +278,6 @@ S-T-V-P�?P�?Architecture (coordinated by eon-core �?this project):
 >
 > We say: You cannot coordinate today's ecosystem with last month's architecture.
 
-This project is not a fixed toolset �?it is a **living system**. Every component has built-in expiration mechanisms, version tracking, and emergence awareness. As your research deepens, packages update, and new methods emerge, it evolves with you.
+This project is not a fixed toolset ?it is a **living system**. Every component has built-in expiration mechanisms, version tracking, and emergence awareness. As your research deepens, packages update, and new methods emerge, it evolves with you.
 
 *Last updated: 2026-06-17　|　Environment: Reasonix Code · DeepSeek Powered*
