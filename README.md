@@ -8,6 +8,7 @@
   ![6 projects](https://img.shields.io/badge/6%20projects-EC4899?style=flat-square)
   ![EventBus](https://img.shields.io/badge/EventBus-F59E0B?style=flat-square)
   ![E2E 7/7](https://img.shields.io/badge/E2E%207%2F7-6B7280?style=flat-square)
+  [![DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/fangtaocai041/eon-core)
 </p>
 
 [English](README.md) · [中文](README.zh.md)
@@ -143,6 +144,21 @@ eon-core/
   └── test_wuxing.py                    WuXing monitor tests
 ```
 
+### 🔮 10-Layer Concentric Architecture
+
+| Layer | Name | Role |
+|:-----:|------|------|
+| L0 | ☯️ OriginKernel | Event bus + DI + DAG routing |
+| L1 | ☀️🌙 YinYang Poles | Type-safe separation |
+| L2 | △ 4 Vertices | V0-V3 domain agents |
+| L3 | ☰☱☲☳☴☵☶☷ 8 Trigrams | Functional sub-modules |
+| L4 | △³ TetrahedronMesh | Spectral gap analysis |
+| L5 | ⬟ WuXing Flow | Generation/restriction monitoring |
+| L6 | ☸️ Samsara Ring | Karma engine + rebirth |
+| L7 | ○ SphereGateway | Unified API facade |
+| L8 | 〰️ Tendrils | 12 external probes |
+| L9 | 🦋 Evolution | Pareto optimizer + chaos |
+
 ---
 
 ## ✨ Features
@@ -161,6 +177,19 @@ eon-core/
 | 🩺 WuXing Monitor | ✅ | 5-element health monitoring with generation/control cycles |
 | 🧪 E2E Pipeline | ✅ | Cross-project standard pipeline E2E 7/7 all passing |
 | 🧪 Test Suite | ✅ | 15+ tests passing across all modules |
+
+---
+
+## ☸️ Core Innovation: Samsara (六道轮回)
+
+| Realm | State | Token × | Rule |
+|-------|-------|:------:|------|
+| ☸️ DEVA | OPTIMAL | ×1.5 | Bad deed penalty ×3; max 10 cycles |
+| 🧘 HUMAN | NORMAL | ×1.0 | Only realm allowing self_evolve() |
+| ⚔️ ASURA | COMPETITIVE | ×1.2 | Requires deconfliction pass |
+| 🐂 ANIMAL | DEGRADED | ×0.5 | LLM disabled; cache + rules only |
+| 👻 PRETA | STARVED | ×0.25 | Severely rate-limited |
+| 🔥 NARAKA | BROKEN | ×0.0 | Isolated; auto-rebirth after cooldown |
 
 ---
 
@@ -226,6 +255,34 @@ S-T-V-P₁-P₂ Architecture (coordinated by eon-core ← this project):
 ```
 
 > 🔥 Together infinite power, apart top expert engines.
+
+---
+
+## 📝 Changelog
+
+### v8.0 (2026-06-20)
+- Cross-project coalition detection with CAS core
+- Adaptive routing based on performance history
+- WuXing Monitor: 5-element health monitoring with generation/control cycles
+- CrossProjectPipeline: 9 routing modes for flexible orchestration
+- Event Sourcing + CQRS: append-only JSONL + full replay capability
+- AsyncEventBus with Dead Letter Queue for reliable messaging
+- MCP Bridge: JSON-RPC tool registry across all 6 projects
+- E2E Pipeline: 7/7 cross-project standard pipeline tests passing
+
+### v7.0 (2026-06-11)
+- Removed meso-cosmos-agent; consolidated coordination into eon-core
+- Introduced Event Sourcing pattern with append-only event store
+- Added CQRS: separate write/read models for cross-project data
+- Added Dead Letter Queue for failed event recovery and replay
+- Enhanced project loader with dependency resolution across 6 projects
+
+### v6.0 (2026-06-05)
+- MCP protocol tool bridge (JSON-RPC registry)
+- 6-project isolated import bridge
+- Initial DAG topology pipeline
+- Stage executor + lifecycle state machine
+- OriginKernel coordinator singleton
 
 ---
 

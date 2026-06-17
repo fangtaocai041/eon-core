@@ -8,6 +8,7 @@
   ![6 projects](https://img.shields.io/badge/6%20项目-EC4899?style=flat-square)
   ![EventBus](https://img.shields.io/badge/事件总线-F59E0B?style=flat-square)
   ![E2E 7/7](https://img.shields.io/badge/E2E%207%2F7-6B7280?style=flat-square)
+  [![DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/fangtaocai041/eon-core)
 </p>
 
 [English](README.md) · [中文](README.zh.md)
@@ -136,6 +137,21 @@ eon-core/
   └── test_wuxing.py                    五行监控测试
 ```
 
+### 🔮 十层同心架构
+
+| 层 | 名称 | 职责 |
+|:-----:|------|------|
+| L0 | ☯️ OriginKernel | 事件总线 + DI + DAG 路由 |
+| L1 | ☀️🌙 阴阳两极 | 类型安全分离 |
+| L2 | △ 四象 | V0-V3 领域智能体 |
+| L3 | ☰☱☲☳☴☵☶☷ 八卦 | 功能子模块 |
+| L4 | △³ 四面体网格 | 谱隙分析 |
+| L5 | ⬟ 五行流转 | 生成/克制监控 |
+| L6 | ☸️ 六道轮回 | 业力引擎 + 转生 |
+| L7 | ○ 球面网关 | 统一 API 门面 |
+| L8 | 〰️ 触须 | 12 外部探针 |
+| L9 | 🦋 演化 | 帕累托优化器 + 混沌 |
+
 ---
 
 ## ✨ 功能特性
@@ -154,6 +170,19 @@ eon-core/
 | 🩺 五行监控 | ✅ | 五元素健康监控 + 生成/克制循环 |
 | 🧪 E2E 管道 | ✅ | 跨项目标准管道端到端 7/7 全部通过 |
 | 🧪 测试套件 | ✅ | 15+ 测试全模块通过 |
+
+---
+
+## ☸️ 核心创新：六道轮回 (Samsara)
+
+| 道 | 状态 | Token × | 规则 |
+|----|------|:------:|------|
+| ☸️ 天道 | OPTIMAL | ×1.5 | 恶业惩罚 ×3；最多 10 轮 |
+| 🧘 人道 | NORMAL | ×1.0 | 唯一允许 self_evolve() 的道 |
+| ⚔️ 阿修罗道 | COMPETITIVE | ×1.2 | 需冲突消解通行证 |
+| 🐂 畜生道 | DEGRADED | ×0.5 | LLM 禁用；仅缓存 + 规则 |
+| 👻 饿鬼道 | STARVED | ×0.25 | 严重速率限制 |
+| 🔥 地狱道 | BROKEN | ×0.0 | 隔离；冷却后自动转生 |
 
 ---
 
@@ -219,6 +248,34 @@ S-T-V-P₁-P₂ 架构（由 eon-core 协调 ← 本项目）：
 ```
 
 > 🔥 和则无穷力量，分则顶尖专家引擎。
+
+---
+
+## 📝 变更日志
+
+### v8.0 (2026-06-20)
+- CAS 核心跨项目联盟检测
+- 基于历史表现的自适应路由
+- 五行监控：5 元素健康监控含生成/克制循环
+- CrossProjectPipeline：9 路由模式灵活编排
+- 事件溯源 + CQRS：只追加 JSONL + 完整回放
+- 异步事件总线含死信队列可靠消息传递
+- MCP 桥接：全部 6 项目 JSON-RPC 工具注册
+- E2E 管道：7/7 跨项目标准管道全通过
+
+### v7.0 (2026-06-11)
+- 移除 meso-cosmos-agent；协调功能整合入 eon-core
+- 引入事件溯源模式含只追加事件存储
+- 新增 CQRS：跨项目数据读写模型分离
+- 新增死信队列支持失败事件恢复与回放
+- 增强 6 项目依赖解析的项目加载器
+
+### v6.0 (2026-06-05)
+- MCP 协议工具桥（JSON-RPC 注册）
+- 6 项目隔离导入桥
+- 初始 DAG 拓扑管道
+- 阶段执行器 + 生命周期状态机
+- OriginKernel 协调器单例
 
 ---
 
