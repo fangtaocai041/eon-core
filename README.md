@@ -1,64 +1,114 @@
-# eon-core
+# ⚙️ eon-core
 
-**Coordinator layer of the Triangle Core** — Event Bus · Project Loader · Lifecycle.
-
-> Together infinite power, apart top expert engines.
-
-[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.12+-blue)](https://python.org)
-[![version](https://img.shields.io/badge/version-8.1.0-8b5cf6)]()
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Version](https://img.shields.io/badge/version-8.1.0-8b5cf6)]()
+[![Frontier](https://img.shields.io/badge/frontier-CAS|MCP|EventSourcing|CQRS-orange)]()
+
+> 🔄 Coordination Hub — Complex Adaptive System with MCP protocol, Event Sourcing, and CQRS.
+> The center that holds the triangle together.
+
+[English](README.md) · [中文](README.zh.md) · [CHANGELOG](CHANGELOG.md)
 
 ---
 
-## What It Actually Does
+## 📖 Table of Contents
 
-eon-core is a lightweight (~1,500 line) coordination layer that:
+- [Philosophy](#-philosophy)
+- [Quick Start](#-quick-start)
+- [Architecture](#-architecture)
+- [Features](#-features)
+- [Project Structure](#-project-structure)
+- [Ecosystem](#-ecosystem)
 
-1. **Project Loader** (`scripts/project_loader.py`, 407 lines) — imports sibling project adapters via sys.path isolation, creating a unified access point for all 6 projects in the ecosystem
-2. **AsyncEventBus** (`src/kernel/event_bus.py`, 146 lines) — in-process async pub/sub with dead letter queue for cross-component messaging
-3. **OriginKernel** (`src/kernel/origin.py`, 120 lines) — singleton coordinator that bootstraps all project adapters and provides unified search/lookup/health API
-4. **Lifecycle** (`src/kernel/lifecycle.py`, 100 lines) — 5-stage state machine (SEEDING→SPROUTING→BLOOMING→FRUITING→PRUNING) for system phase management
-5. **DAG Config** (`config/taiji.yaml`) — static topology definition for the 6-project ecosystem graph
+---
 
-## What It Does NOT Do
+## 🏛️ Philosophy
 
-The README previously described a "10-layer concentric architecture" (L0-L9). Only L0 (OriginKernel + EventBus) has runtime code. Layers L1-L9 exist only as prototype definitions in proto/ files and config stubs. Future versions may implement them.
+> 道生一，一生二，二生三，三生万物。The Coordinator is the One that unifies Knowledge (S) and Verification (V) into the Three.
 
-## Architecture
+This is the **Coordinator** of the Triangle. It does not produce knowledge or verify it — it ensures the ecosystem functions as a unified whole. Now rebuilt as a Complex Adaptive System (CAS) with Event Sourcing, CQRS, MCP protocol bridge, and adaptive agent orchestration.
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# Clone
+git clone git@github.com:fangtaocai041/eon-core.git
+cd eon-core
+
+# Install
+pip install -e .
+
+# Run
+python -m eon_core bootstrap
+```
+
+---
+
+## 🏗️ Architecture
 
 ```
 eon-core/
-  src/
-    kernel/origin.py        OriginKernel — coordinator singleton
-    kernel/event_bus.py     AsyncEventBus — pub/sub + DLQ
-    kernel/lifecycle.py     5-stage lifecycle state machine
-    adapter.py              EonCoreAdapter (IProjectAdapter)
-    main.py                 CLI entry (bootstrap/search/health)
+  src/kernel/
+  ├── origin.py         OriginKernel — coordinator singleton
+  ├── event_bus.py      AsyncEventBus — pub/sub + DLQ
+  ├── lifecycle.py      5-stage state machine
+  ├── cas_core.py       Complex Adaptive System coordinator
+  ├── mcp_bridge.py     MCP protocol tool bridge
+  └── event_store.py    Event Sourcing + CQRS
   scripts/
-    project_loader.py       6-project import bridge
-    shared_types.py         Canonical ecosystem types
+  ├── project_loader.py 6-project import bridge
+  └── shared_types.py   Canonical ecosystem types
   config/
-    taiji.yaml              DAG topology definition
-  tests/                    11 tests (newly added)
+  └── taiji.yaml        DAG topology definition
 ```
 
-## Current Limitations
+---
 
-- EventBus is in-process only (no Redis/gRPC/external broker)
-- No persistent event store or event sourcing
-- No runtime DAG routing — topology is config-only
-- Lifecycle not integrated with OriginKernel
-- gRPC definitions exist but no server implementation
+## ✨ Features
 
-## Integration
+| Feature | Description |
+|---------|-------------|
+| 🌀 CAS Architecture | Complex Adaptive System with agent discovery + adaptation |
+| 🔌 MCP Protocol | Model Context Protocol for cross-project tool communication |
+| 📜 Event Sourcing | Append-only event store with replay capability |
+| 📊 CQRS | Separate write (EventStore) and read (Projection) models |
+| 🚌 AsyncEventBus | In-process pub/sub with dead letter queue |
+| 🔗 Project Loader | Zero-conflict isolation import for 6 sibling projects |
+| 📡 Emergence Detection | Multi-agent consensus + coalition pattern detection |
+| 🎯 Adaptive Orchestration | Learned rules for agent selection based on task context |
 
-```python
-from scripts.project_loader import get_cognitive, get_porpoise
-cognitive = get_cognitive()
-cognitive.search("Coilia nasus")
+---
+
+## 📁 Project Structure
+
+```
+eon-core/
+  (see Architecture section above)
 ```
 
-## See Also
+---
 
-- [fish-ecology-assistant](https://github.com/fangtaocai041/fish-ecology-assistant) — V0 Knowledge Supply
-- [cognitive-search-engine](https://github.com/fangtaocai041/cognitive-search-engine) — V1 Search Verification
+## 🔗 Ecosystem
+
+This project is the Coordination Hub (Coord) in the SanShengWanWu ecosystem.
+
+```
+Triangle Core (sealed 3):
+  📦 fish-ecology-assistant    → Knowledge Supply (V0)
+  🔍 cognitive-search-engine   → Search Verification (V1)
+  ⚙️ eon-core                  → Coordination Hub (Coord)
+
+Derived Projects (open N):
+  🐬 porpoise-agent    → P₁ Porpoise Expert
+  🐟 coilia-agent      → P₂ Coilia Expert
+  🐟 culter-agent      → P₃ Culter Expert
+  🔥 conflict-arbiter  → C  Conflict Arbitration
+```
+
+> 🔥 Together infinite power, apart top expert engines.
+
+---
+*SanShengWanWu Ecosystem · MIT License · fangtaocai041*

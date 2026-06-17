@@ -1,29 +1,109 @@
-# eon-core ⚙️
+# ⚙️ 永世内核
 
-**三角核心 Coordinator 层** — 事件总线 · 项目加载器 · 生命周期。
+[![Python](https://img.shields.io/badge/python-3.12+-blue)](https://python.org)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Version](https://img.shields.io/badge/version-8.1.0-8b5cf6)]()
+[![Frontier](https://img.shields.io/badge/frontier-CAS|MCP|EventSourcing|CQRS-orange)]()
 
-> 和则无穷力量，分则顶尖专家引擎。
+> 🔄 协调中枢 — 复杂自适应系统，MCP协议，事件溯源，CQRS。
+> 三角之中，万物之轴。
+
+[English](README.md) · [中文](README.zh.md) · [更新日志](CHANGELOG.md)
 
 ---
 
-## 实际功能
+## 📖 目录
 
-eon-core 是一个轻量级 (~1,500行) 协调层：
+- [哲学](#-哲学)
+- [快速开始](#-快速开始)
+- [架构](#-架构)
+- [功能特性](#-功能特性)
+- [项目结构](#-项目结构)
+- [生态体系](#-生态体系)
 
-1. **Project Loader** (`scripts/project_loader.py`, 407行) — 通过 sys.path 隔离导入兄弟项目适配器，提供 6 项目统一访问入口
-2. **AsyncEventBus** (`src/kernel/event_bus.py`, 146行) — 进程内异步发布/订阅 + 死信队列
-3. **OriginKernel** (`src/kernel/origin.py`, 120行) — 单例协调器，启动所有项目适配器，提供统一 search/lookup/health API
-4. **Lifecycle** (`src/kernel/lifecycle.py`, 100行) — 5 阶段状态机 (SEEDING→SPROUTING→BLOOMING→FRUITING→PRUNING)
-5. **DAG 配置** (`config/taiji.yaml`) — 6 项目生态拓扑静态定义
+---
 
-## 尚未实现
+## 🏛️ 哲学
 
-README 此前描述的"十层同心架构" (L0-L9)，仅 L0 (OriginKernel + EventBus) 有运行时代码。L1-L9 仅存在 proto/ 原型定义和配置占位。未来版本可能逐步实现。
+> 道生一，一生二，二生三，三生万物。协调者是统一知识(S)和验证(V)的一。
 
-## 已知限制
+这是三角之 **Coordinator**。它不生产知识，不验证知识——确保生态作为统一整体运转。现已重建为复杂自适应系统(CAS)，含事件溯源、CQRS、MCP协议桥、自适应智能体编排。
 
-- EventBus 仅进程内 (无 Redis/gRPC 外部代理)
-- 无持久化事件存储或事件溯源
-- 无运行时 DAG 路由 — 拓扑仅为配置
-- Lifecycle 未与 OriginKernel 集成
-- gRPC 定义存在但无服务端实现
+---
+
+## 🚀 快速开始
+
+```bash
+git clone git@github.com:fangtaocai041/eon-core.git
+cd eon-core
+pip install -e .
+python -m eon_core bootstrap
+```
+
+---
+
+## 🏗️ 架构
+
+```
+eon-core/
+  src/kernel/
+  ├── origin.py         OriginKernel — 协调器单例
+  ├── event_bus.py      AsyncEventBus — 发布/订阅 + 死信队列
+  ├── lifecycle.py      5阶段状态机
+  ├── cas_core.py       复杂自适应系统协调器
+  ├── mcp_bridge.py     MCP 协议工具桥
+  └── event_store.py    事件溯源 + CQRS
+  scripts/
+  ├── project_loader.py 6项目导入桥
+  └── shared_types.py   规范生态类型
+  config/
+  └── taiji.yaml        DAG 拓扑定义
+```
+
+---
+
+## ✨ 功能特性
+
+| 功能 | 说明 |
+|------|------|
+| 🌀 CAS 架构 | 复杂自适应系统，智能体发现+自适应 |
+| 🔌 MCP 协议 | 跨项目工具通信标准化 |
+| 📜 事件溯源 | 只追加事件存储+回放 |
+| 📊 CQRS | 读写分离 (EventStore + Projection) |
+| 🚌 异步事件总线 | 进程内发布/订阅 + 死信队列 |
+| 🔗 项目加载器 | 6项目零冲突隔离导入 |
+| 📡 涌现检测 | 多智能体共识+联盟模式检测 |
+| 🎯 自适应编排 | 任务上下文驱动的智能体选择 |
+
+---
+
+## 📁 项目结构
+
+```
+eon-core/
+  (见上方架构图)
+```
+
+---
+
+## 🔗 生态体系
+
+本项目是「三生万物」生态的 协调中枢 (Coord)。
+
+```
+三角核心 (sealed 3):
+  📦 fish-ecology-assistant    → 知识供给 (V0)
+  🔍 cognitive-search-engine   → 搜索验证 (V1)
+  ⚙️ eon-core                  → 协调内核 (Coord)
+
+万物衍生 (open N):
+  🐬 porpoise-agent    → P₁ 江豚专研
+  🐟 coilia-agent      → P₂ 刀鲚专研
+  🐟 culter-agent      → P₃ 鲌类专研
+  🔥 conflict-arbiter  → C  冲突仲裁
+```
+
+> 🔥 和则无穷力量，分则顶尖专家引擎。
+
+---
+*SanShengWanWu Ecosystem · MIT License · fangtaocai041*
