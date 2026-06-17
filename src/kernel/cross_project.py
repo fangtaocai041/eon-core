@@ -1,13 +1,14 @@
 """CrossProjectPipeline — 跨项目管道编排器 (L0 协调核心).
 
 从 project_loader 加载所有项目适配器, 构建标准管道:
-  fish.search → cognitive.verify → [domain.assess] → conflict.arbitrate → fish.score
+  fish.search → cognitive.verify → conflict.arbitrate → fish.score
 
 支持:
-  - 标准管道 (standard): 全部 6 个项目参与
-  - 快速管道 (fast): 仅 S+V (fish + cognitive)
-  - 领域管道 (domain): S+V+P (fish + cognitive + 特定领域)
-  - 仲裁管道 (arbitrate): 全管道含冲突仲裁
+  - 标准管道 (standard): fish.search → cognitive.verify → conflict.arbitrate → fish.score
+  - 快速管道 (fast): fish.search → fish.score (跳过高成本阶段)
+  - 领域管道 (domain_p1/p2/p3): fish.search → 特定领域 → fish.score
+  - 仲裁管道 (arbitrate): 仅冲突仲裁
+  - 全栈管道 (full): fish.search → cognitive.verify → conflict.arbitrate → eon.analyze → fish.score
   - 自定义路由 (custom): 用户定义阶段顺序
   - 动态路由 (dynamic): 根据之前阶段结果决定下一阶段
 
@@ -43,15 +44,15 @@ logger = logging.getLogger(__name__)
 
 class Route(str, Enum):
     """预定义管道路由."""
-    STANDARD = "standard"       # fish → cognitive → 聚合
-    FAST = "fast"               # fish → cognitive (最小)
-    DOMAIN_P1 = "domain_p1"     # fish → cognitive → porpoise
-    DOMAIN_P2 = "domain_p2"     # fish → cognitive → coilia
-    DOMAIN_P3 = "domain_p3"     # fish → cognitive → culter
-    ARBITRATE = "arbitrate"    # fish → cognitive → domain → conflict
+    STANDARD = "standard"       # fish.search → cognitive.verify → conflict.arbitrate → fish.score
+    FAST = "fast"               # fish.search → fish.score (跳过高成本阶段)
+    DOMAIN_P1 = "domain_p1"     # fish.search → porpoise.search → fish.score
+    DOMAIN_P2 = "domain_p2"     # fish.search → coilia.search → fish.score
+    DOMAIN_P3 = "domain_p3"     # fish.search → culter.search → fish.score
+    ARBITRATE = "arbitrate"    # conflict.arbitrate (仅仲裁)
     CUSTOM = "custom"           # 用户定义
     DYNAMIC = "dynamic"         # 根据结果动态决定
-    FULL = "full"               # 所有阶段
+    FULL = "full"               # fish.search → cognitive.verify → conflict.arbitrate → eon.analyze → fish.score
 
 
 class StageStatus(str, Enum):
@@ -132,38 +133,32 @@ class CrossProjectPipeline:
         ],
         Route.FAST: [
             ("fish", "search", True),
-            ("cognitive", "search", True),
+            ("fish", "score", False),
         ],
         Route.DOMAIN_P1: [
             ("fish", "search", True),
-            ("cognitive", "search", True),
             ("porpoise", "search", False),
+            ("fish", "score", False),
         ],
         Route.DOMAIN_P2: [
             ("fish", "search", True),
-            ("cognitive", "search", True),
             ("coilia", "search", False),
+            ("fish", "score", False),
         ],
         Route.DOMAIN_P3: [
             ("fish", "search", True),
-            ("cognitive", "search", True),
             ("culter", "search", False),
+            ("fish", "score", False),
         ],
         Route.ARBITRATE: [
-            ("fish", "search", True),
-            ("cognitive", "search", True),
-            ("porpoise", "search", False),
-            ("coilia", "search", False),
-            ("culter", "search", False),
-            ("conflict", "arbitrate", False),
+            ("conflict", "arbitrate", True),
         ],
         Route.FULL: [
             ("fish", "search", True),
-            ("cognitive", "search", True),
-            ("porpoise", "search", False),
-            ("coilia", "search", False),
-            ("culter", "search", False),
+            ("cognitive", "verify", True),
             ("conflict", "arbitrate", False),
+            ("eon", "analyze", False),
+            ("fish", "score", False),
         ],
     }
 
@@ -182,11 +177,11 @@ class CrossProjectPipeline:
         """加载所有项目适配器。
 
         Args:
-            load_all: True=加载全部6个外部项目; False=仅加载 fish + cognitive
+            load_all: True=加载全部7个项目 (含eon-core); False=仅加载 fish + cognitive
         """
         from scripts.project_loader import (
             get_fish, get_cognitive, get_porpoise, get_coilia,
-            get_culter, get_conflict,
+            get_culter, get_conflict, get_eon,
         )
 
         loaders: Dict[str, Any] = {
@@ -200,6 +195,7 @@ class CrossProjectPipeline:
                 "coilia": get_coilia,
                 "culter": get_culter,
                 "conflict": get_conflict,
+                "eon": get_eon,
             })
 
         for name, loader_fn in loaders.items():
@@ -326,7 +322,7 @@ class CrossProjectPipeline:
 
             try:
                 # Call adapter method
-                if method in ("arbitrate", "verify", "score"):
+                if method in ("verify", "score", "analyze"):
                     # These methods benefit from prior stage outputs
                     prior_outputs = {
                         pid: s.data
@@ -336,17 +332,37 @@ class CrossProjectPipeline:
                     method_ctx = dict(ctx)
                     method_ctx["prior_outputs"] = prior_outputs
                     method_ctx["species"] = _species
-                    method_ctx["query"] = _query
+                    # Note: "query" NOT added — passed as first positional arg
                     if hasattr(adapter, method):
                         fn = getattr(adapter, method)
                         if asyncio.iscoroutinefunction(fn):
-                            raw = await fn(_query, species=_species, **method_ctx)
+                            raw = await fn(_query, **method_ctx)
                         else:
-                            raw = fn(_query, species=_species, **method_ctx)
+                            raw = fn(_query, **method_ctx)
                     elif hasattr(adapter, "search"):
-                        raw = adapter.search(_query, species=_species, **method_ctx)
+                        raw = adapter.search(_query, **method_ctx)
                     else:
                         raw = {"status": "skipped", "reason": f"No '{method}' method"}
+
+                elif method == "arbitrate":
+                    # arbitrate(context_dict) — needs full context as first arg
+                    prior_outputs = {
+                        pid: s.data
+                        for pid, s in result.stages.items()
+                        if s.status == StageStatus.COMPLETED
+                    }
+                    arb_ctx = dict(ctx)
+                    arb_ctx["prior_outputs"] = prior_outputs
+                    arb_ctx["species"] = _species
+                    arb_ctx["query"] = _query
+                    if hasattr(adapter, method):
+                        fn = getattr(adapter, method)
+                        raw = fn(arb_ctx)
+                    elif hasattr(adapter, "search"):
+                        raw = adapter.search(_query, **arb_ctx)
+                    else:
+                        raw = {"status": "skipped", "reason": f"No '{method}' method"}
+
                 elif hasattr(adapter, method):
                     fn = getattr(adapter, method)
                     if asyncio.iscoroutinefunction(fn):

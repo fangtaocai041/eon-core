@@ -82,12 +82,21 @@ eon-core/
   ├── lifecycle.py      5-stage state machine
   ├── cas_core.py       Complex Adaptive System coordinator
   ├── mcp_bridge.py     MCP protocol tool bridge
-  └── event_store.py    Event Sourcing + CQRS
+  ├── event_store.py    Event Sourcing + CQRS
+  ├── pipeline.py       DAG topology + stage executor
+  ├── wuxing_monitor.py  五元素健康监控 (去神秘化)
+  └── cross_project.py  CrossProjectPipeline — 9 路由模板
   scripts/
   ├── project_loader.py 6-project import bridge
   └── shared_types.py   Canonical ecosystem types
   config/
   └── taiji.yaml        DAG topology definition
+  tests/
+  ├── test_e2e_pipeline.py  跨项目标准管道端到端 (7/7)
+  ├── test_cross_project_integration.py  跨项目集成 (10 测试)
+  ├── test_core.py           核心组件测试
+  ├── test_pipeline.py       DAG 管道测试
+  └── test_wuxing.py         五元素监控测试
 ```
 
 ---
@@ -105,6 +114,9 @@ eon-core/
 | 📡 Emergence | ✅ | Consensus + coalition detection |
 | 🎯 Adaptive Routing | ✅ | Learned agent selection |
 | 🧪 Tests | ✅ | 15 passing |
+| 🔀 CrossProjectPipeline | ✅ | 9 路由模式 (standard/fast/domain_p1-3/arbitrate/full/custom/dynamic) |
+| 🩺 WuXing Monitor | ✅ | 五元素健康监控 + 生成/克制循环 |
+| 🧪 E2E Pipeline | ✅ | 跨项目标准管道端到端 7/7 全部通过 |
 
 ---
 

@@ -156,6 +156,64 @@ class _ProjectWrapper:
             logger.warning(f"{self._name}.search() failed: {exc}")
             return {"status": "error", "error": str(exc), "items": []}
 
+    def score(self, query: str, **kwargs) -> Dict[str, Any]:
+        """Execute direct scoring (fish adapter).
+
+        Skips verification and arbitration for fast/domain routes.
+        Delegates to search() with action='score' so the underlying
+        adapter can route to the appropriate scoring method.
+
+        Returns: {status, score, items, ...}
+        """
+        try:
+            result = self._search(query, action="score", **kwargs)
+            if isinstance(result, dict):
+                return result
+            if hasattr(result, "to_dict"):
+                return result.to_dict()
+            return {"status": "ok", "score": 0, "items": [], "raw": str(result)[:500]}
+        except Exception as exc:
+            logger.warning(f"{self._name}.score() failed: {exc}")
+            return {"status": "error", "error": str(exc), "score": 0, "items": []}
+
+    def verify(self, query: str, **kwargs) -> Dict[str, Any]:
+        """Execute literature verification (cognitive adapter).
+
+        Delegates to search() with action='verify' so the underlying
+        adapter can route to the appropriate verification method.
+
+        Returns: {status, verified, items, ...}
+        """
+        try:
+            result = self._search(query, action="verify", **kwargs)
+            if isinstance(result, dict):
+                return result
+            if hasattr(result, "to_dict"):
+                return result.to_dict()
+            return {"status": "ok", "verified": False, "items": [], "raw": str(result)[:500]}
+        except Exception as exc:
+            logger.warning(f"{self._name}.verify() failed: {exc}")
+            return {"status": "error", "error": str(exc), "verified": False, "items": []}
+
+    def analyze(self, query: str, **kwargs) -> Dict[str, Any]:
+        """Execute deep analysis (eon adapter).
+
+        Delegates to search() with action='analyze' so the underlying
+        adapter can route to the appropriate analysis method.
+
+        Returns: {status, analysis, ...}
+        """
+        try:
+            result = self._search(query, action="analyze", **kwargs)
+            if isinstance(result, dict):
+                return result
+            if hasattr(result, "to_dict"):
+                return result.to_dict()
+            return {"status": "ok", "analysis": {}, "raw": str(result)[:500]}
+        except Exception as exc:
+            logger.warning(f"{self._name}.analyze() failed: {exc}")
+            return {"status": "error", "error": str(exc), "analysis": {}}
+
     def arbitrate(self, context: Dict[str, Any] = None, **kwargs) -> Dict[str, Any]:
         """Execute conflict arbitration.
 
@@ -508,10 +566,44 @@ def get_conflict():
         return None
 
 
+# ── Eon Core Adapter (L0 — coordination kernel) ──
+
+_eon: Optional[Any] = None
+
+
+def get_eon():
+    """Get eon-core adapter for cross-project coordination.
+
+    This is the local EonCoreAdapter — it doesn't need import isolation
+    since it's part of the current project.
+
+    Uses EonCoreAdapter.search(query, action='analyze') for analysis.
+    """
+    global _eon
+    if _eon is not None:
+        return _eon
+
+    try:
+        from src.adapter import EonCoreAdapter
+
+        def _eon_search(query: str, **kwargs) -> Dict[str, Any]:
+            adapter = EonCoreAdapter()
+            action = kwargs.get("action", "search")
+            return adapter.search(query, action=action, **kwargs)
+
+        _eon = _ProjectWrapper("eon-core", _eon_search)
+        logger.info("eon-core adapter loaded (local)")
+        return _eon
+
+    except Exception as exc:
+        logger.warning(f"eon-core adapter unavailable: {exc}")
+        return None
+
+
 # ── Convenience ──
 
 def load_all() -> Dict[str, bool]:
-    """Pre-load all 6 projects. Returns status dict."""
+    """Pre-load all 7 projects (6 external + eon-core). Returns status dict."""
     return {
         "fish": get_fish() is not None,
         "cognitive": get_cognitive() is not None,
@@ -519,4 +611,5 @@ def load_all() -> Dict[str, bool]:
         "coilia": get_coilia() is not None,
         "culter": get_culter() is not None,
         "conflict": get_conflict() is not None,
+        "eon": get_eon() is not None,
     }
