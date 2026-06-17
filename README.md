@@ -11,7 +11,7 @@
 
 [English](README.md) · [中文](README.zh.md)
 
-Ecosystem coordination hub with event bus and adaptive orchestration.
+🌊 Everything flows.
 
 ---
 ## 📖 Table of Contents
