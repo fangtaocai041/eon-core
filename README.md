@@ -1,6 +1,17 @@
 ﻿# ⚙️ eon-core
 
-![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-brightgreen?style=for-the-badge) ![Version](https://img.shields.io/badge/Version-v8.1-blueviolet?style=for-the-badge) ![CAS](https://img.shields.io/badge/CAS-Adaptive-success?style=for-the-badge) ![MCP](https://img.shields.io/badge/MCP-Protocol-important?style=for-the-badge) ![Event](https://img.shields.io/badge/Event-Sourcing-critical?style=for-the-badge) ![CQRS](https://img.shields.io/badge/CQRS-R%2FW%20Split-informational?style=for-the-badge) ![Pub/Sub](https://img.shields.io/badge/Pub%2FSub-EventBus-ff69b4?style=for-the-badge) ![Projects](https://img.shields.io/badge/Projects-6%20loaded-orange?style=for-the-badge) ![DAG](https://img.shields.io/badge/DAG-Config-red?style=for-the-badge)
+<p align="center">
+  ![Python 3.12+](https://img.shields.io/badge/Python%203.12%2B-3776AB?style=flat-square)
+  ![MIT](https://img.shields.io/badge/MIT-34D058?style=flat-square)
+  ![v8.1](https://img.shields.io/badge/v8.1-8A4FCE?style=flat-square)
+  ![CAS](https://img.shields.io/badge/CAS-007EC6?style=flat-square)
+  ![MCP](https://img.shields.io/badge/MCP-FE7D37?style=flat-square)
+  ![Event Sourcing](https://img.shields.io/badge/Event%20Sourcing-D73A4A?style=flat-square)
+  ![CQRS](https://img.shields.io/badge/CQRS-0EA5E9?style=flat-square)
+  ![6 projects](https://img.shields.io/badge/6%20projects-EC4899?style=flat-square)
+  ![EventBus](https://img.shields.io/badge/EventBus-F59E0B?style=flat-square)
+</p>
+
 
 > 🔄 Coordination Hub — Complex Adaptive System with MCP protocol, Event Sourcing, and CQRS.
 > The center that holds the triangle together.

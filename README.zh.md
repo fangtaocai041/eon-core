@@ -1,6 +1,17 @@
 ﻿# ⚙️ 永世内核
 
-![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge) ![协议](https://img.shields.io/badge/%E5%8D%8F%E8%AE%AE-MIT-brightgreen?style=for-the-badge) ![版本](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-v8.1-blueviolet?style=for-the-badge) ![CAS](https://img.shields.io/badge/CAS-%E8%87%AA%E9%80%82%E5%BA%94-success?style=for-the-badge) ![MCP](https://img.shields.io/badge/MCP-%E5%8D%8F%E8%AE%AE-important?style=for-the-badge) ![事件](https://img.shields.io/badge/%E4%BA%8B%E4%BB%B6-%E6%BA%AF%E6%BA%90-critical?style=for-the-badge) ![CQRS](https://img.shields.io/badge/CQRS-%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB-informational?style=for-the-badge) ![发布](https://img.shields.io/badge/%E5%8F%91%E5%B8%83-%E6%80%BB%E7%BA%BF-ff69b4?style=for-the-badge) ![项目](https://img.shields.io/badge/%E9%A1%B9%E7%9B%AE-6%E4%B8%AA-orange?style=for-the-badge) ![DAG](https://img.shields.io/badge/DAG-%E6%8B%93%E6%89%91-red?style=for-the-badge)
+<p align="center">
+  ![Python 3.12+](https://img.shields.io/badge/Python%203.12%2B-3776AB?style=flat-square)
+  ![MIT](https://img.shields.io/badge/MIT-34D058?style=flat-square)
+  ![v8.1](https://img.shields.io/badge/v8.1-8A4FCE?style=flat-square)
+  ![CAS](https://img.shields.io/badge/CAS-007EC6?style=flat-square)
+  ![MCP](https://img.shields.io/badge/MCP-FE7D37?style=flat-square)
+  ![Event Sourcing](https://img.shields.io/badge/Event%20Sourcing-D73A4A?style=flat-square)
+  ![CQRS](https://img.shields.io/badge/CQRS-0EA5E9?style=flat-square)
+  ![6 projects](https://img.shields.io/badge/6%20projects-EC4899?style=flat-square)
+  ![EventBus](https://img.shields.io/badge/EventBus-F59E0B?style=flat-square)
+</p>
+
 
 > 🔄 协调中枢 — 复杂自适应系统，MCP协议，事件溯源，CQRS。
 🔄 协调中枢 — 复杂自适应系统，MCP协议，事件溯源，CQRS。
