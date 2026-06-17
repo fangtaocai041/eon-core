@@ -1,9 +1,6 @@
 # ⚙️ 永世内核
 
-[![Python](https://img.shields.io/badge/python-3.12+-blue)](https://python.org)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![Version](https://img.shields.io/badge/version-8.1.0-8b5cf6)]()
-[![Frontier](https://img.shields.io/badge/frontier-CAS|MCP|EventSourcing|CQRS-orange)]()
+![Python](https://img.shields.io/badge/Python-3.12%2B-blue?style=flat-square&logo=python) ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square) ![Version](https://img.shields.io/badge/Version-v8.1.0-blueviolet?style=flat-square) ![CAS](https://img.shields.io/badge/CAS-Adaptive-success?style=flat-square) ![MCP](https://img.shields.io/badge/MCP-Protocol-orange?style=flat-square) ![Event](https://img.shields.io/badge/Event-Sourcing-yellow?style=flat-square) ![CQRS](https://img.shields.io/badge/CQRS-Read%2FWrite-red?style=flat-square) ![Pub/Sub](https://img.shields.io/badge/Pub%2FSub-EventBus-9cf?style=flat-square) ![6 Projects](https://img.shields.io/badge/6%20Projects-Loaded-ff69b4?style=flat-square) ![DAG](https://img.shields.io/badge/DAG-Topology-important?style=flat-square)
 
 > 🔄 协调中枢 — 复杂自适应系统，MCP协议，事件溯源，CQRS。
 > 三角之中，万物之轴。
