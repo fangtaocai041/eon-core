@@ -1,10 +1,17 @@
-﻿<p align="center">
-  🇬🇧 <a href="README.md">English</a>
+﻿<div align="center">
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║        ☯  EON-CORE  ·  协调内核 v8  ☯                       ║
+║  ─────────────────────────────────────────────────────────  ║
+║     EventBus · CAS · DAG · Samsara · WuXing · Evolution     ║
+║        六道轮回 · 五行动态 · 十层同心 · 道生万物              ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
+<p align="center">
+  🇬🇧 <a href="README.md">English</a>  ·  🇨🇳 <a href="README.zh.md">中文</a>
 </p>
-
-# ☯ eon-core · 协调内核 v8
-
-> **10 层同心架构** — EventBus · CAS · DAG 路由 · 业力引擎 · 自愈系统
 
 [![Python 3.12+](https://img.shields.io/badge/Python%203.12%2B-3776AB?style=flat-square)]()
 [![v8.1](https://img.shields.io/badge/v8.1-8A4FCE?style=flat-square)]()
@@ -12,6 +19,33 @@
 [![EventBus](https://img.shields.io/badge/EventBus-F59E0B?style=flat-square)]()
 [![6 projects](https://img.shields.io/badge/6%20projects-EC4899?style=flat-square)]()
 [![E2E 7/7](https://img.shields.io/badge/E2E%207%2F7-6B7280?style=flat-square)]()
+
+<p align="center">
+  <a href="https://github.com/fangtaocai041/eon-core/stargazers"><img src="https://img.shields.io/github/stars/fangtaocai041/eon-core?style=social" alt="Stars"></a>
+  <a href="https://github.com/fangtaocai041/eon-core/network/members"><img src="https://img.shields.io/github/forks/fangtaocai041/eon-core?style=social" alt="Forks"></a>
+</p>
+
+<div align="center"><h3>🌊 万物皆流。</h3></div>
+
+世界是动态的，知识是暂时的，涌现是常态。
+
+</div>
+
+---
+
+## 📑 目录
+
+- [🧠 核心哲学](#-核心哲学)
+- [🧩 项目定位](#-项目定位)
+- [🚀 快速开始](#-快速开始)
+- [🏗️ 架构](#-架构)
+- [✨ 核心特性](#-核心特性)
+- [🗺️ 十层架构路线图](#-十层架构路线图)
+- [☸ 核心创新：Samsara（六道轮回）](#-核心创新samsara六道轮回)
+- [📜 版本历史](#-版本历史)
+- [🪞 自我评价](#-自我评价)
+
+---
 
 ## 🧠 核心哲学
 
@@ -27,6 +61,8 @@
 
 > 道生一，一生二，二生三，三生万物。
 > — 《道德经》第四十二章
+
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
 
 ## 🧩 项目定位
 
@@ -48,6 +84,8 @@ C     🔥 conflict-arbiter         → 冲突仲裁
 
 核心设计原则：**三角密闭（S、V、Coord）→ 衍生开放（P₁、P₂、P₃、C 无限扩展）**
 
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
+
 ## 🚀 快速开始
 
 ```bash
@@ -56,7 +94,11 @@ cd eon-core
 pip install -e .
 ```
 
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
+
 ## 🏗️ 架构
+
+<details open><summary><b>📂 内核结构（10 模块）</b></summary>
 
 ```
 src/kernel/          10 模块
@@ -72,7 +114,13 @@ src/kernel/          10 模块
 └── cross_project.py       CrossProjectPipeline → 9 路由模板
 ```
 
+</details>
+
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
+
 ## ✨ 核心特性
+
+<details open><summary><b>📋 特性列表</b></summary>
 
 | 特性 | 状态 | 说明 |
 |------|:----:|------|
@@ -88,6 +136,10 @@ src/kernel/          10 模块
 | 🩺 WuXing 监控 | ✅ | 五元素相生相克健康监控 |
 | 🧪 E2E Pipeline | ✅ | 跨项目标准管线 E2E 7/7 全通过 |
 
+</details>
+
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
+
 ## 🗺️ 十层架构路线图
 
 | 层 | 组件 | 状态 |
@@ -101,11 +153,15 @@ src/kernel/          10 模块
 | L6 | ☸ Samsara Ring | ✅ 已实现 |
 | L7 | 🌐 SphereGateway | 🟡 配置 |
 
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
+
 ## ☸ 核心创新：Samsara（六道轮回）
 
 **业力驱动的自愈系统。** 当智能体表现不佳时，它不是被丢弃，而是进入六道轮回——经过冷却、净化、重生，带着从失败中吸取的教训回归。
 
 关键不变量：拓扑 DAG、Yin-Yang 极隔离、EventBus 隔离、谱间隙、DEVA 公平性、NARAKA 自愈、重生原子性（7 步协议 + 快照回滚）。
+
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
 
 ## 📜 版本历史
 
@@ -114,6 +170,8 @@ src/kernel/          10 模块
 | **v8.1** | 2026-06-18 | 统一协调 7 项目 + culter-agent + conflict-arbiter |
 | **v8.0** | 2026-06-10 | 10 层同心架构 + Samsara 业力引擎 |
 | **v7.0** | 2026-06-07 | 跨项目协调内核 |
+
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
 
 ## 🪞 自我评价
 
@@ -127,6 +185,8 @@ src/kernel/          10 模块
 - 需所有 6 个项目都在本地可用
 - 无 Web UI，纯 CLI
 
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
+
 ---
 
 ## 🌱 万物皆变 · Panta Rhei
@@ -138,3 +198,17 @@ src/kernel/          10 模块
 这个项目不是一套固定的工具集——它是一个**活的系统**。
 
 *最后更新: 2026-06-18 | Reasonix Code · DeepSeek 驱动*
+
+---
+
+<div align="center">
+
+### 🏷️ 技术标签
+
+`协调内核` `事件总线` `CAS` `CQRS` `事件溯源` `DAG` `业力轮回` `五行动态` `MCP桥接` `跨项目` `涌现检测` `自适应路由` `太极` `阴阳` `Reasonix`
+
+<br>
+
+<sub>☯ 属于 **三生万物** 生态体系 · Coord 协调中枢 · 为全部 7 个项目提供内核</sub>
+
+</div>
