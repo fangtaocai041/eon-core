@@ -14,6 +14,8 @@ Layers:
 
 Shared Modules:
   unified_emergence  — 统一涌现检测引擎 (融合 p/f/c 三项目)
+
+from eon_core.shared import ThompsonBandit, PIDRateLimiter, generate_variants, EvolutionExecutor
 """
 
 __version__ = "7.4.0"
