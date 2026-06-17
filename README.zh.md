@@ -1,4 +1,4 @@
-<p align="center">
+﻿<p align="center">
   🇬🇧 <a href="README.md">English</a>
 </p>
 
@@ -111,7 +111,7 @@ src/kernel/          10 模块
 
 | 版本 | 日期 | 主题 |
 |------|------|------|
-| **v8.1** | 2026-06-20 | 统一协调 7 项目 + culter-agent + conflict-arbiter |
+| **v8.1** | 2026-06-18 | 统一协调 7 项目 + culter-agent + conflict-arbiter |
 | **v8.0** | 2026-06-10 | 10 层同心架构 + Samsara 业力引擎 |
 | **v7.0** | 2026-06-07 | 跨项目协调内核 |
 
@@ -137,4 +137,4 @@ src/kernel/          10 模块
 
 这个项目不是一套固定的工具集——它是一个**活的系统**。
 
-*最后更新: 2026-06-17 | Reasonix Code · DeepSeek 驱动*
+*最后更新: 2026-06-18 | Reasonix Code · DeepSeek 驱动*

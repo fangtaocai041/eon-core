@@ -1,4 +1,4 @@
-![Python 3.12+](https://img.shields.io/badge/Python%203.12%2B-3776AB?style=flat-square)
+﻿![Python 3.12+](https://img.shields.io/badge/Python%203.12%2B-3776AB?style=flat-square)
   ![MIT](https://img.shields.io/badge/MIT-34D058?style=flat-square)
   ![v8.1](https://img.shields.io/badge/v8.1-8A4FCE?style=flat-square)
   ![CAS](https://img.shields.io/badge/CAS-007EC6?style=flat-square)
@@ -246,7 +246,7 @@ S-T-V-P?P?Architecture (coordinated by eon-core ?this project):
 
 ## 📝 Changelog
 
-### v8.0 (2026-06-20)
+### v8.0 (2026-06-18)
 - Cross-project coalition detection with CAS core
 - Adaptive routing based on performance history
 - WuXing Monitor: 5-element health monitoring with generation/control cycles
@@ -280,4 +280,4 @@ S-T-V-P?P?Architecture (coordinated by eon-core ?this project):
 
 This project is not a fixed toolset ?it is a **living system**. Every component has built-in expiration mechanisms, version tracking, and emergence awareness. As your research deepens, packages update, and new methods emerge, it evolves with you.
 
-*Last updated: 2026-06-17　|　Environment: Reasonix Code · DeepSeek Powered*
+*Last updated: 2026-06-18　|　Environment: Reasonix Code · DeepSeek Powered*
