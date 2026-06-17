@@ -3,6 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue?style=for-the-badge&logo=python) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Version](https://img.shields.io/badge/Version-v8.1.0-blueviolet?style=for-the-badge) ![CAS](https://img.shields.io/badge/CAS-Adaptive-success?style=for-the-badge) ![MCP](https://img.shields.io/badge/MCP-Protocol-orange?style=for-the-badge) ![Event](https://img.shields.io/badge/Event-Sourcing-yellow?style=for-the-badge) ![CQRS](https://img.shields.io/badge/CQRS-Read%2FWrite-red?style=for-the-badge) ![Pub/Sub](https://img.shields.io/badge/Pub%2FSub-EventBus-9cf?style=for-the-badge) ![6 Projects](https://img.shields.io/badge/6%20Projects-Loaded-ff69b4?style=for-the-badge) ![DAG](https://img.shields.io/badge/DAG-Topology-important?style=for-the-badge)
 
 > 🔄 协调中枢 — 复杂自适应系统，MCP协议，事件溯源，CQRS。
+🔄 协调中枢 — 复杂自适应系统，MCP协议，事件溯源，CQRS。
 > 三角之中，万物之轴。
 
 [English](README.md) · [中文](README.zh.md) · [更新日志](CHANGELOG.md)
@@ -22,9 +23,33 @@
 
 ## 🏛️ 哲学
 
-> 🌍 世界是动态的。📖 知识是暂时的。🌟 涌现是常态。
+> 万象流转，真知若寄，涌现成章。
 
-### 📜 三大信条
+此非口号。乃贯穿每一行代码、每一次检索、每一份分析之操作系统。
+
+### 📜 三谛
+
+**🌊 万象流转** — R包迭代，物种迁徙，共识更迭，气候重塑生态。今日之确论，半载后或为陈迹。吾辈不视任何知识为永恒真理，而将其置于时间轴上，以动态眼光审之。
+
+**🍂 真知若寄** — 科学之基石，在于可证伪（波普尔）。无发现乃终极真理——唯有「当下最佳解释」。吾辈用校准之语：「证据提示」而非「证明」，「Smith (2022) 发现」而非「研究表明」。每一条输出，皆镌刻时间之锚。
+
+**🌟 涌现成章** — 生命、意识、生态、AI推理——莫非涌现。不可执一隅以窥全豹。当≥3个独立来源指向同一意外模式，系统不以其为噪声而弃之，乃标记为涌现信号而追踪之。
+
+### ⚖️ 何以重要
+
+| 事境 | 旧习 | 新观 |
+|:-----|:----|:----|
+| 引用 | 「研究证明」 | 「Smith(2022) 发现 X，Jones(2024) 补 Y」 |
+| 异常 | 视为噪声弃之 | ≥3 来源 → 涌现信号，持续追踪 |
+| 知识衰减 | 手册尘封不更 | 审查记录含「下次审查日期」 |
+| 方法选择 | 流水线一成不变 | 择法动态，信心动态 |
+
+> 道生一，一生二，二生三，三生万物。
+
+此为三角之根，载 430 种长江鱼类。
+
+
+## 📜 三大信条
 
 **🌍 世界是动态的** — R包在更新，物种分布变化，科学共识在演进。今天正确的结论，六个月后可能过时。
 
