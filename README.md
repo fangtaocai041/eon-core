@@ -1,10 +1,4 @@
-<div align="center">
-  <h1>⚙️ eon-core</h1>
-  <p><em>Coordination Hub — Complex Adaptive System · MCP Protocol · Event Sourcing · CQRS</em></p>
-</div>
-
-<p align="center">
-  ![Python 3.12+](https://img.shields.io/badge/Python%203.12%2B-3776AB?style=flat-square)
+![Python 3.12+](https://img.shields.io/badge/Python%203.12%2B-3776AB?style=flat-square)
   ![MIT](https://img.shields.io/badge/MIT-34D058?style=flat-square)
   ![v8.1](https://img.shields.io/badge/v8.1-8A4FCE?style=flat-square)
   ![CAS](https://img.shields.io/badge/CAS-007EC6?style=flat-square)
@@ -15,8 +9,11 @@
   ![EventBus](https://img.shields.io/badge/EventBus-F59E0B?style=flat-square)
 </p>
 
----
+[English](README.md) · [中文](README.zh.md)
 
+Ecosystem coordination hub with event bus and adaptive orchestration.
+
+---
 ## 📖 Table of Contents
 
 - [Philosophy](#-philosophy)
