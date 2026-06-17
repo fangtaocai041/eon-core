@@ -2,11 +2,12 @@
   ![MIT](https://img.shields.io/badge/MIT-34D058?style=flat-square)
   ![v8.1](https://img.shields.io/badge/v8.1-8A4FCE?style=flat-square)
   ![CAS](https://img.shields.io/badge/CAS-007EC6?style=flat-square)
-  ![MCP](https://img.shields.io/badge/MCP-FE7D37?style=flat-square)
-  ![Event Sourcing](https://img.shields.io/badge/Event%20Sourcing-D73A4A?style=flat-square)
+  ![MCP Bridge](https://img.shields.io/badge/MCP%20桥接-FE7D37?style=flat-square)
+  ![Event Sourcing](https://img.shields.io/badge/事件溯源-D73A4A?style=flat-square)
   ![CQRS](https://img.shields.io/badge/CQRS-0EA5E9?style=flat-square)
-  ![6 projects](https://img.shields.io/badge/6%20projects-EC4899?style=flat-square)
-  ![EventBus](https://img.shields.io/badge/EventBus-F59E0B?style=flat-square)
+  ![6 projects](https://img.shields.io/badge/6%20项目-EC4899?style=flat-square)
+  ![EventBus](https://img.shields.io/badge/事件总线-F59E0B?style=flat-square)
+  ![E2E 7/7](https://img.shields.io/badge/E2E%207%2F7-6B7280?style=flat-square)
 </p>
 
 [English](README.md) · [中文](README.zh.md)
@@ -16,6 +17,7 @@
 世界是动态的，知识是暂时的，涌现是常态。
 
 ---
+
 ## 📖 目录
 
 - [哲学](#-哲学)
@@ -23,6 +25,8 @@
 - [架构](#-架构)
 - [功能特性](#-功能特性)
 - [项目结构](#-项目结构)
+- [版本历史](#-版本历史)
+- [自我评估](#-自我评估)
 - [生态体系](#-生态体系)
 
 ---
@@ -33,28 +37,66 @@
 
 此非口号。乃贯穿每一行代码、每一次检索、每一份分析之操作系统。
 
+**eon-core** 是三生万物 S-T-V-P₁-P₂ 五体架构中的**协调中枢（Coord）**。它是连接全部 6 个项目的中央神经系统——不是控制器，而是协调器。它实现跨项目通信、事件驱动工作流、自适应路由和跨生态涌现检测。
+
 ### 📜 三谛
 
-**🌊 万象流转** — R包迭代，物种迁徙，共识更迭，气候重塑生态。今日之确论，半载后或为陈迹。吾辈不视任何知识为永恒真理，而将其置于时间轴上，以动态眼光审之。
+**🌊 万象流转** — 项目独立演化。eon-core 确保它们保持连接而不耦合。松耦合、高内聚、事件驱动。
 
-**🍂 真知若寄** — 科学之基石，在于可证伪（波普尔）。无发现乃终极真理——唯有「当下最佳解释」。吾辈用校准之语：「证据提示」而非「证明」，「Smith (2022) 发现」而非「研究表明」。每一条输出，皆镌刻时间之锚。
+**🍂 真知若寄** — 来自一个项目的事实通过 EventBus 流向其他项目。验证跨越项目边界。没有知识孤岛能够存活。
 
-**🌟 涌现成章** — 生命、意识、生态、AI推理——莫非涌现。不可执一隅以窥全豹。当≥3个独立来源指向同一意外模式，系统不以其为噪声而弃之，乃标记为涌现信号而追踪之。
+**🌟 涌现成章** — 当多个项目独立得出趋同结论时，CAS 核心检测联盟。这就是跨项目涌现——整个生态知道的比任何单个智能体更多。
 
 ### ⚖️ 何以重要
 
-| 事境 | 旧习 | 新观 |
-|:-----|:----|:----|
-| 引用 | 「研究证明」 | 「Smith(2022) 发现 X，Jones(2024) 补 Y」 |
-| 异常 | 视为噪声弃之 | ≥3 来源 → 涌现信号，持续追踪 |
-| 知识衰减 | 手册尘封不更 | 审查记录含「下次审查日期」 |
-| 方法选择 | 流水线一成不变 | 择法动态，信心动态 |
+| 事境 | 无 eon-core | 有 eon-core |
+|:-----|:-----------|:-----------|
+| 跨项目验证 | 手动复制粘贴 | EventBus 自动路由 + verify_claims() |
+| 知识同步 | 过时副本 | CAS 自适应传播 |
+| 流水线编排 | 临时脚本 | DAG 拓扑 + CrossProjectPipeline（9模式） |
+| 涌现检测 | 孤岛错过信号 | 全 6 项目联盟检测 |
+| 错误恢复 | 迷失 | 死信队列 + 回放 |
 
 > 道生一，一生二，二生三，三生万物。
 
-此为三角之根，载 430 种长江鱼类。
+---
 
+## 🧩 这个项目是什么
 
+**eon-core** 是协调内核。它不存储物种数据（那是 S/V0），不搜索文献（那是 V/V1），不分析江豚声学（那是 P₁）——它连接、路由、验证、进化。
+
+### S-T-V-P₁-P₂ 架构映射
+
+```
+eon-core (Coord) — 协调整个生态：
+
+  ┌─────────────── 三角核心 ───────────────────┐
+  │                                              │
+  │  S/V0  fish-ecology-assistant                │
+  │         ↑ 知识供给                           │
+  │         │                                    │
+  │  V/V1  cognitive-search-engine               │
+  │         ↑ 搜索验证                           │
+  │         │                                    │
+  │  Coord  eon-core  ← 本项目                   │
+  │         ↓ 协调                               │
+  │                                              │
+  ├─────────────── 万物衍生 ─────────────────────┤
+  │                                              │
+  │  P₁    porpoise-agent    (江豚专家)          │
+  │  P₂    coilia-agent      (刀鲚专家)          │
+  │  P₃    culter-agent      (鲌类专家)          │
+  │  C     conflict-arbiter  (冲突仲裁)          │
+  │                                              │
+  └──────────────────────────────────────────────┘
+
+  全部 6 个项目加载 coordination.yaml
+  作为唯一的架构事实来源。
+```
+
+核心设计原则：**三角封闭（S、V、Coord）——衍生开放（P₁、P₂、P₃、C...）**。新衍生项目可加入而不修改三角核心。
+
+---
 
 ## 🚀 快速开始
 
@@ -72,17 +114,26 @@ python -m eon_core bootstrap
 ```
 eon-core/
   src/kernel/
-  ├── origin.py         OriginKernel — 协调器单例
-  ├── event_bus.py      AsyncEventBus — 发布/订阅 + 死信队列
-  ├── lifecycle.py      5阶段状态机
-  ├── cas_core.py       复杂自适应系统协调器
-  ├── mcp_bridge.py     MCP 协议工具桥
-  └── event_store.py    事件溯源 + CQRS
+  ├── origin.py              OriginKernel — 协调器单例
+  ├── event_bus.py           AsyncEventBus — 发布/订阅 + 死信队列
+  ├── lifecycle.py           5阶段状态机（初始化→发现→路由→执行→进化）
+  ├── cas_core.py            复杂自适应系统协调器
+  ├── mcp_bridge.py          MCP 协议工具桥（JSON-RPC 注册）
+  ├── event_store.py         事件溯源 + CQRS（只追加 JSONL + 回放）
+  ├── pipeline.py            DAG 拓扑 + 阶段执行器
+  ├── wuxing_monitor.py      五行健康监控（生成/克制循环）
+  └── cross_project.py       CrossProjectPipeline — 9 路由模板
   scripts/
-  ├── project_loader.py 6项目导入桥
-  └── shared_types.py   规范生态类型
+  ├── project_loader.py      6项目隔离导入桥
+  └── shared_types.py        规范生态类型
   config/
-  └── taiji.yaml        DAG 拓扑定义
+  └── taiji.yaml             DAG 拓扑定义
+  tests/
+  ├── test_e2e_pipeline.py              跨项目标准管道端到端 (7/7)
+  ├── test_cross_project_integration.py 跨项目集成 (10 测试)
+  ├── test_core.py                      核心组件测试
+  ├── test_pipeline.py                  DAG 管道测试
+  └── test_wuxing.py                    五行监控测试
 ```
 
 ---
@@ -91,15 +142,18 @@ eon-core/
 
 | 功能 | 状态 | 说明 |
 |------|:--:|------|
-| 🌀 CAS 核心 | ✅ | 智能体发现 + 自适应规则 |
-| 🔌 MCP 桥 | ✅ | JSON-RPC 工具注册 |
-| 📜 事件存储 | ✅ | 只追加 JSONL + 回放 |
-| 📊 CQRS | ✅ | 读写模型分离 |
-| 🚌 异步事件总线 | ✅ | 进程内发布/订阅 + 死信 |
-| 🔗 项目加载器 | ✅ | 6 项目隔离导入 |
-| 📡 涌现检测 | ✅ | 共识 + 联盟检测 |
-| 🎯 自适应路由 | ✅ | 学习型智能体选择 |
-| 🧪 测试 | ✅ | 15 项通过 |
+| 🌀 CAS 核心 | ✅ | 智能体发现 + 自适应规则 + 联盟检测 |
+| 🔌 MCP 桥接 | ✅ | 跨项目 JSON-RPC 工具注册 |
+| 📜 事件存储 | ✅ | 只追加 JSONL + 完整回放 |
+| 📊 CQRS | ✅ | 跨项目数据读写模型分离 |
+| 🚌 异步事件总线 | ✅ | 进程内发布/订阅 + 死信队列 |
+| 🔗 项目加载器 | ✅ | 6 项目隔离导入 + 依赖解析 |
+| 📡 涌现检测 | ✅ | 跨项目共识 + 联盟检测 |
+| 🎯 自适应路由 | ✅ | 基于历史表现的学习型智能体选择 |
+| 🔀 跨项目管道 | ✅ | 9 路由模式 (standard/fast/domain_p1-3/arbitrate/full/custom/dynamic) |
+| 🩺 五行监控 | ✅ | 五元素健康监控 + 生成/克制循环 |
+| 🧪 E2E 管道 | ✅ | 跨项目标准管道端到端 7/7 全部通过 |
+| 🧪 测试套件 | ✅ | 15+ 测试全模块通过 |
 
 ---
 
@@ -107,26 +161,61 @@ eon-core/
 
 ```
 eon-core/
-  (见上方架构图)
+  （见上方架构图）
 ```
+
+---
+
+## 📜 版本历史
+
+| 版本 | 日期 | 重要更新 |
+|------|------|----------|
+| **v8.1** | 2026-06-17 | CrossProjectPipeline 9 路由模式，五行监控，E2E 7/7 |
+| v8.0 | 2026-06-12 | CAS 核心联盟检测，自适应路由 |
+| v7.1 | 2026-06-07 | 移除 meso-cosmos-agent；协调功能整合入 eon-core |
+| v7.0 | 2026-06-05 | 事件溯源 + CQRS，EventBus 含死信队列 |
+| v6.0 | 2026-06-01 | MCP 桥接，项目加载器，初始 DAG 管道 |
+
+---
+
+## 🪞 自我评估
+
+### 优势
+- **真正协调**：事件驱动、松耦合——项目可独立故障而不级联
+- **架构即代码**：`coordination.yaml` 是所有 6 个项目的唯一事实来源
+- **事件溯源**：完整审计追踪——每个跨项目动作可记录和回放
+- **自适应路由**：基于历史表现的学习型智能体选择持续改进
+- **五行监控**：主动健康检查含系统性生成/克制反馈循环
+
+### 当前局限
+- 单进程事件总线（尚无分布式部署）
+- CAS 自适应规则基于规则而非 ML 学习
+- 跨项目延迟尚未针对实时场景优化
+- 无外部监控仪表板（五行日志输出到控制台/文件）
+
+### 路线图
+- [ ] 分布式 EventBus（Redis/Kafka 后端）
+- [ ] ML 驱动的 CAS 自适应规则学习
+- [ ] 实时跨项目仪表板
+- [ ] gRPC 跨进程通信支持多机部署
 
 ---
 
 ## 🔗 生态体系
 
-本项目是「三生万物」生态的 协调中枢 (Coord)。
+本项目是「三生万物」生态的 **协调中枢（Coord）**。
 
 ```
-三角核心 (sealed 3):
-  📦 fish-ecology-assistant    → 知识供给 (V0)
-  🔍 cognitive-search-engine   → 搜索验证 (V1)
-  ⚙️ eon-core                  → 协调内核 (Coord)
+S-T-V-P₁-P₂ 架构（由 eon-core 协调 ← 本项目）：
 
-万物衍生 (open N):
-  🐬 porpoise-agent    → P₁ 江豚专研
-  🐟 coilia-agent      → P₂ 刀鲚专研
-  🐟 culter-agent      → P₃ 鲌类专研
-  🔥 conflict-arbiter  → C  冲突仲裁
+  S/V0  📦 fish-ecology-assistant    → 知识供给
+  V/V1  🔍 cognitive-search-engine   → 搜索验证
+  Coord ⚙️ eon-core                  → 协调内核 ← 本项目
+
+  P₁    🐬 porpoise-agent           → 江豚专家
+  P₂    🐟 coilia-agent             → 刀鲚专家
+  P₃    🐟 culter-agent             → 鲌类专家
+  C     🔥 conflict-arbiter         → 冲突仲裁
 ```
 
 > 🔥 和则无穷力量，分则顶尖专家引擎。
@@ -137,9 +226,8 @@ eon-core/
 
 > 赫拉克利特说：人不能两次踏进同一条河流。
 >
-> 我们说：你也不能用上个月的代码分析今天的生态数据。
+> 我们说：你也不能用上个月的架构协调今天的生态。
 
 这个项目不是一套固定的工具集——它是一个**活的系统**。每个组件都内置了过期机制、版本追踪和涌现感知。随着你的研究深入、R包更新、新方法涌现，它会和你一起进化。
 
-*最后更新：2026-06-17　|　适用环境：Reasonix Code · DeepSeek 驱动*
-
+*最后更新：2026-06-20　|　适用环境：Reasonix Code · DeepSeek 驱动*
