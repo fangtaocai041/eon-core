@@ -1,4 +1,4 @@
-﻿"""Tests for eon-core — Coordination Hub (Coord)."""
+"""Tests for eon-core — Coordination Hub (Coord)."""
 import sys
 from pathlib import Path
 
