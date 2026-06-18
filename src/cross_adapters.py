@@ -130,27 +130,30 @@ def thompson_select(arms: list[str], n: int = 3, context: dict = None) -> list[s
     替代硬编码优先级的智能后端选择器。
     """
     try:
-        from eon_core.shared.thompson import ThompsonBandit
-        bandit = ThompsonBandit(arms=arms)
-        if context:
-            for arm, weight in context.get('weights', {}).items():
-                if arm in bandit._arms:
-                    bandit._arms[arm]['weight'] = weight
+        from thompson import ThompsonBandit
+        bandit = ThompsonBandit(state_file=None)
+        # Register arms with optional weights from context
+        for arm in arms:
+            weight = context.get('weights', {}).get(arm, 1.0) if context else 1.0
+            bandit.update(arm, success=True)  # Initialize with neutral prior
         return bandit.select_arms(n)
     except ImportError:
         return arms[:n]  # fallback: return first n
 
 
 # ═══════════════════════════════════════════════════════
-# cognitive-search-engine → anywhere: PID 自适应限速
+# cognitive-search-engine → anywhere: PID 自适应限速 (带缓存)
 # ═══════════════════════════════════════════════════════
 
+_PID_LIMITER_CACHE: dict = {}
+
 def pid_wait(resource_key: str, success: bool) -> float:
-    """PID 自适应速率控制。"""
+    """PID 自适应速率控制 (实例缓存, 跨调用保持状态)."""
     try:
-        from eon_core.shared.pid_limiter import PIDRateLimiter
-        limiter = PIDRateLimiter()
-        return limiter.wait(resource_key, success)
+        from pid_limiter import PIDRateLimiter
+        if resource_key not in _PID_LIMITER_CACHE:
+            _PID_LIMITER_CACHE[resource_key] = PIDRateLimiter()
+        return _PID_LIMITER_CACHE[resource_key].wait(resource_key, success)
     except ImportError:
         return 1.0 if not success else 0.0
 
@@ -188,7 +191,7 @@ def check_emergence(metric_name: str, value: float, level: int = 1) -> Optional[
 def generate_name_variants(name: str, max_variants: int = 20) -> list[str]:
     """生成学名的 OCR/拼写变体安全网。"""
     try:
-        from eon_core.shared.variant_generator import generate_variants
+        from variant_generator import generate_variants
         return generate_variants(name, max_variants)
     except ImportError:
         return [name]  # fallback: return original only

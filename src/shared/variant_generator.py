@@ -179,4 +179,30 @@ def generate_variants(name: str, max_variants: int = 20) -> List[str]:
         result.remove(orig_norm)
     result.insert(0, orig_norm)
 
-    return result[:max_variants]
+    return result
+
+
+def generate_full_species_variants(genus: str, species: str) -> List[str]:
+    """Generate all variant combinations for a full binomial name.
+
+    Generates the Cartesian product of genus variants × species variants,
+    plus common abbreviation patterns (genus shortened to first letter).
+
+    Parameters:
+        genus: Genus name (e.g. "Ochetobius").
+        species: Species epithet (e.g. "elongatus").
+
+    Returns:
+        A sorted, deduplicated list of full binomial variants.
+    """
+    genus_variants = generate_variants(genus, max_variants=20)
+    species_variants = generate_variants(species, max_variants=20)
+
+    result: Set[str] = set()
+    for gv in genus_variants:
+        for sv in species_variants:
+            result.add(f"{gv} {sv}")
+            result.add(f"{gv}. {sv}")
+            result.add(f"{gv[0]}. {sv}")
+
+    return sorted(result)

@@ -100,6 +100,21 @@ def _import_from_project(project_name: str, module_path: str, attr_name: str) ->
         _new_path.append(p)
     sys.path = _new_path
 
+    # Re-load scripts.adapter_protocol from workspace root AFTER setting
+    # sys.path, because coilia-agent/ has its own scripts/__init__.py that
+    # shadows the workspace-level scripts/ package.
+    try:
+        _ap_path = os.path.join(_WORKSPACE, "scripts", "adapter_protocol.py")
+        if os.path.isfile(_ap_path):
+            import importlib.util as _iu2
+            _spec2 = _iu2.spec_from_file_location("scripts.adapter_protocol", _ap_path)
+            if _spec2 and _spec2.loader and "scripts.adapter_protocol" not in sys.modules:
+                _mod2 = _iu2.module_from_spec(_spec2)
+                sys.modules["scripts.adapter_protocol"] = _mod2
+                _spec2.loader.exec_module(_mod2)
+    except Exception:
+        pass
+
     try:
         mod = __import__(module_path, fromlist=[attr_name])
         result = getattr(mod, attr_name)
@@ -604,6 +619,12 @@ def get_eon():
 
 def load_all() -> Dict[str, bool]:
     """Pre-load all 7 projects (6 external + eon-core). Returns status dict."""
+    # Ensure eon-core root is in sys.path for the local src.* import
+    _eon_root = os.path.join(_WORKSPACE, "eon-core")
+    if _eon_root not in sys.path:
+        sys.path.insert(0, _eon_root)
+    import src.kernel  # noqa: F401
+
     return {
         "fish": get_fish() is not None,
         "cognitive": get_cognitive() is not None,
