@@ -1,7 +1,0 @@
-2026-06-10 04:05:30,582 [WARNING] scripts.project_loader: porpoise-agent unavailable: type object 'ContradictionType' has no attribute 'NON_ANTAGONISTIC'
-2026-06-10 04:05:30,582 [INFO] scripts.project_loader: coilia-agent loaded via DirectLoader
-2026-06-10 04:07:40,714 [INFO] scripts.project_loader: porpoise-agent loaded via DirectLoader
-2026-06-10 04:07:40,715 [INFO] scripts.project_loader: coilia-agent loaded via DirectLoader
-2026-06-10 08:54:31,301 [INFO] scripts.project_loader: porpoise-agent loaded via DirectLoader
-2026-06-10 08:54:31,302 [INFO] scripts.project_loader: coilia-agent loaded via DirectLoader
-2026-06-10 08:54:31,303 [INFO] scripts.project_loader: culter-agent loaded via DirectLoader
