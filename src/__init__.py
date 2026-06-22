@@ -14,9 +14,19 @@ Layers:
 
 Shared Modules:
   unified_emergence  — 统一涌现检测引擎 (融合 p/f/c 三项目)
+  rcca_core          — 便携 RCCA 核心 5 模块 (RecursiveThinker / SelfModel / Emotion / Transposition / ReflectionLoop)
+  review_synthesizer — 综述合成引擎 (论文列表 → 结构化综述 Markdown)
 
 from eon_core.shared import ThompsonBandit, PIDRateLimiter, generate_variants, EvolutionExecutor
 """
+
+import sys as _sys
+from pathlib import Path as _Path
+
+# ── Ensure self-imports resolve correctly when imported cross-project ──
+_PROJECT_ROOT = str(_Path(__file__).resolve().parent.parent)
+if _PROJECT_ROOT not in _sys.path:
+    _sys.path.insert(0, _PROJECT_ROOT)
 
 __version__ = "7.4.0"
 __code__ = "TaijiTetrahedron-Samsara-v7.4"
