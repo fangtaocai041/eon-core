@@ -1,7 +1,6 @@
 """EventStore — Event Sourcing + CQRS for eon-core EventBus.
 
-Replaces transient in-memory events with persistent event log.
-All state changes = append-only events. Rebuild state by replaying events.
+Append-only event store with SQLite persistence and replay capability.
 CQRS: separate write (EventStore) from read (Projection) models.
 
 Usage:
@@ -11,7 +10,7 @@ Usage:
     state = store.project(lambda e: e['type'] == 'task_completed')
 """
 
-import json, os, time
+import json, os, sqlite3, time
 from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional
@@ -27,15 +26,37 @@ class StoredEvent:
 
 
 class EventStore:
-    """Append-only event store with replay capability."""
+    """Append-only event store with SQLite persistence."""
 
     def __init__(self, db_path: str = None):
         self._events: List[StoredEvent] = []
         self._next_id = 1
         self._db_path = db_path or os.path.join(
-            os.path.dirname(__file__), '..', '..', 'data', 'event_store.jsonl')
+            os.path.dirname(__file__), '..', '..', 'data', 'event_store.db')
         self._subscribers: Dict[str, List[Callable]] = defaultdict(list)
         self._projections: Dict[str, Any] = {}
+        self._init_db()
+        self.load_from_disk()
+
+    def _init_db(self):
+        """Create SQLite schema if not exists."""
+        try:
+            os.makedirs(os.path.dirname(self._db_path), exist_ok=True)
+            conn = sqlite3.connect(self._db_path)
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS events (
+                    id INTEGER PRIMARY KEY,
+                    type TEXT NOT NULL,
+                    data TEXT NOT NULL,
+                    timestamp REAL NOT NULL
+                )
+            """)
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_type ON events(type)")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_ts ON events(timestamp)")
+            conn.commit()
+            conn.close()
+        except Exception:
+            pass  # SQLite unavailable — operate in memory-only mode
 
     def append(self, event_type: str, data: Dict[str, Any]) -> StoredEvent:
         event = StoredEvent(event_id=self._next_id, event_type=event_type, data=data)
@@ -69,32 +90,68 @@ class EventStore:
                 state.update(event.data)
         return state
 
+    def query(self, event_type: str = None, since_ts: float = 0,
+              limit: int = 100) -> List[StoredEvent]:
+        """SQL-powered query — much faster than Python filter for large event logs."""
+        try:
+            conn = sqlite3.connect(self._db_path)
+            sql = "SELECT id, type, data, timestamp FROM events WHERE 1=1"
+            params = []
+            if event_type:
+                sql += " AND type = ?"
+                params.append(event_type)
+            if since_ts > 0:
+                sql += " AND timestamp > ?"
+                params.append(since_ts)
+            sql += " ORDER BY id DESC LIMIT ?"
+            params.append(limit)
+            rows = conn.execute(sql, params).fetchall()
+            conn.close()
+            return [StoredEvent(event_id=r[0], event_type=r[1],
+                                data=json.loads(r[2]), timestamp=r[3])
+                    for r in rows]
+        except Exception:
+            return []
+
+    @property
+    def count(self) -> int:
+        return len(self._events)
+
+    # ── Internal ──
+
     def _notify(self, event_type: str, event: StoredEvent):
         for handler in self._subscribers.get(event_type, []):
-            try: handler(event)
+            try:
+                handler(event)
             except Exception:
                 pass  # 单个订阅者失败不影响其他订阅者
 
     def _persist(self, event: StoredEvent):
+        """Write event to SQLite."""
         try:
-            os.makedirs(os.path.dirname(self._db_path), exist_ok=True)
-            with open(self._db_path, 'a', encoding='utf-8') as f:
-                f.write(json.dumps({
-                    'id': event.event_id, 'type': event.event_type,
-                    'data': event.data, 'ts': event.timestamp
-                }, ensure_ascii=False) + '\n')
+            conn = sqlite3.connect(self._db_path)
+            conn.execute(
+                "INSERT INTO events (id, type, data, timestamp) VALUES (?, ?, ?, ?)",
+                (event.event_id, event.event_type,
+                 json.dumps(event.data, ensure_ascii=False), event.timestamp)
+            )
+            conn.commit()
+            conn.close()
         except Exception:
-            pass  # 事件持久化失败不影响运行时（事件仍保留在内存）(self):
+            pass  # 持久化失败不影响运行时（事件保留在内存）
+
+    def load_from_disk(self):
+        """Load events from SQLite on startup."""
         try:
-            if os.path.exists(self._db_path):
-                with open(self._db_path, encoding='utf-8') as f:
-                    for line in f:
-                        d = json.loads(line.strip())
-                        self._events.append(StoredEvent(
-                            event_id=d['id'], event_type=d['type'],
-                            data=d['data'], timestamp=d.get('ts', 0)))
-                        self._next_id = max(self._next_id, d['id'] + 1)
+            conn = sqlite3.connect(self._db_path)
+            rows = conn.execute(
+                "SELECT id, type, data, timestamp FROM events ORDER BY id"
+            ).fetchall()
+            conn.close()
+            for r in rows:
+                self._events.append(StoredEvent(
+                    event_id=r[0], event_type=r[1],
+                    data=json.loads(r[2]), timestamp=r[3]))
+                self._next_id = max(self._next_id, r[0] + 1)
         except Exception:
-            pass  # 磁盘文件不存在或损坏时使用空事件列表
-    def count(self) -> int:
-        return len(self._events)
+            pass  # 数据库不存在或损坏时使用空事件列表
