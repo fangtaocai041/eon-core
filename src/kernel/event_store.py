@@ -72,7 +72,8 @@ class EventStore:
     def _notify(self, event_type: str, event: StoredEvent):
         for handler in self._subscribers.get(event_type, []):
             try: handler(event)
-            except: pass
+            except Exception:
+                pass  # 单个订阅者失败不影响其他订阅者
 
     def _persist(self, event: StoredEvent):
         try:
@@ -82,9 +83,8 @@ class EventStore:
                     'id': event.event_id, 'type': event.event_type,
                     'data': event.data, 'ts': event.timestamp
                 }, ensure_ascii=False) + '\n')
-        except: pass
-
-    def load_from_disk(self):
+        except Exception:
+            pass  # 事件持久化失败不影响运行时（事件仍保留在内存）(self):
         try:
             if os.path.exists(self._db_path):
                 with open(self._db_path, encoding='utf-8') as f:
@@ -94,8 +94,7 @@ class EventStore:
                             event_id=d['id'], event_type=d['type'],
                             data=d['data'], timestamp=d.get('ts', 0)))
                         self._next_id = max(self._next_id, d['id'] + 1)
-        except: pass
-
-    @property
+        except Exception:
+            pass  # 磁盘文件不存在或损坏时使用空事件列表
     def count(self) -> int:
         return len(self._events)
