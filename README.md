@@ -46,7 +46,6 @@ The world is dynamic, knowledge is temporary, emergence is the norm.
 - [🏗️ Architecture](#-architecture)
 - [✨ Features](#-features)
 - [🗺️ 10-Layer Architecture Roadmap](#-10-layer-architecture-roadmap)
-- [☸ Core Innovation: Samsara (六道轮回)](#-core-innovation-samsara-六道轮回)
 - [📁 Project Structure](#-project-structure)
 - [📜 Version History](#-version-history)
 - [🪞 Self-Assessment](#-self-assessment)
@@ -261,20 +260,6 @@ results = engine.scan(data={"years": [2018,...,2025], "biomass": [100,...,260]})
 
 ---
 
-## ☸ Core Innovation: Samsara (六道轮回)
-
-| Realm | State | Token × | Rule |
-|-------|-------|:------:|------|
-| ☸ DEVA | OPTIMAL | ×1.5 | Bad deed penalty ×3; max 10 cycles |
-| 🧘 HUMAN | NORMAL | ×1.0 | Only realm allowing self_evolve() |
-| ⚔ ASURA | COMPETITIVE | ×1.2 | Requires deconfliction pass |
-| 🐂 ANIMAL | DEGRADED | ×0.5 | LLM disabled; cache + rules only |
-| 👻 PRETA | STARVED | ×0.25 | Severely rate-limited |
-| 🔥 NARAKA | BROKEN | ×0.0 | Isolated; auto-rebirth after cooldown |
-
-<p align="right"><a href="#-table-of-contents">↑ Back to top</a></p>
-
----
 
 ## 📁 Project Structure
 
@@ -396,7 +381,7 @@ This project is not a fixed toolset — it is a **living system**. Every compone
 
 ### 🏷️ Tech & Topics
 
-`coordination` `event-bus` `cas` `cqrs` `event-sourcing` `dag` `samsara` `wuxing` `mcp-bridge` `cross-project` `emergence-detection` `adaptive-routing` `taiji` `yinyang` `reasonix`
+`coordination` `event-bus` `cas` `cqrs` `event-sourcing` `dag` `wuxing` `mcp-bridge` `cross-project` `emergence-detection` `adaptive-routing` `taiji` `yinyang` `reasonix` `shared-engine`
 
 <br>
 
