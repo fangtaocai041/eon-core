@@ -123,10 +123,12 @@ class ThoughtTreeSearch:
         expand_fn: Callable[[ThoughtNode], list[ThoughtNode]],
         evaluate_fn: Callable[[ThoughtNode], float],
         config: Optional[SearchConfig] = None,
+        seed: int = 42,
     ):
         self.expand_fn = expand_fn
         self.evaluate_fn = evaluate_fn
         self.config = config or SearchConfig()
+        self._rng = random.Random(seed)  # deterministic MCTS
 
         self._node_counter = 0
         self._nodes: dict[str, ThoughtNode] = {}
@@ -308,7 +310,7 @@ class ThoughtTreeSearch:
             if node.visits > 0 and node.depth < config.max_depth:
                 children = self._expand_and_evaluate(node)
                 if children:
-                    node = random.choice(children)
+                    node = self._rng.choice(children)
 
             # Simulation (rollout)
             value = self._mcts_simulate(node)
@@ -371,9 +373,9 @@ class ThoughtTreeSearch:
         depth = node.depth
         value = current.score
 
-        while depth < self.config.max_depth and random.random() < 0.5:
+        while depth < self.config.max_depth and self._rng.random() < 0.5:
             # 模拟生成子节点 (不实际注册)
-            value = value * 0.9 + random.random() * 0.1  # 模拟衰减
+            value = value * 0.9 + self._rng.random() * 0.1  # 模拟衰减
             depth += 1
 
         return max(0.0, min(1.0, value))

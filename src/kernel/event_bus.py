@@ -218,15 +218,20 @@ class AsyncEventBus:
         event.topic = topic
         try:
             loop = asyncio.get_running_loop()
+            _owns_loop = False
         except RuntimeError:
             loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
+            _owns_loop = True
 
-        if loop.is_running():
-            # Schedule on running loop
-            future = asyncio.run_coroutine_threadsafe(
-                self.publish(event, topic), loop
-            )
-            return future.result(timeout=10)
-        else:
-            return loop.run_until_complete(self.publish(event, topic))
+        try:
+            if loop.is_running():
+                # Schedule on running loop
+                future = asyncio.run_coroutine_threadsafe(
+                    self.publish(event, topic), loop
+                )
+                return future.result(timeout=10)
+            else:
+                return loop.run_until_complete(self.publish(event, topic))
+        finally:
+            if _owns_loop:
+                loop.close()

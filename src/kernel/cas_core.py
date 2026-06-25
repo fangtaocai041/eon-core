@@ -74,10 +74,35 @@ class AdaptationRule:
         self.successes = 0
 
     def apply(self, context: Dict) -> Optional[str]:
-        if eval(self.condition, {"__builtins__": {}}, context):
+        if self._safe_eval_condition(self.condition, context):
             self.applications += 1
             return self.action
         return None
+
+    @staticmethod
+    def _safe_eval_condition(condition: str, context: Dict) -> bool:
+        """Safely evaluate a CAS condition with AST whitelist."""
+        import ast
+        try:
+            tree = ast.parse(condition.strip(), mode="eval")
+        except SyntaxError:
+            return False
+
+        def _check(node):
+            if isinstance(node, (ast.Expression, ast.Constant, ast.Name)): return True
+            if isinstance(node, ast.BoolOp): return all(_check(v) for v in node.values)
+            if isinstance(node, ast.Compare): return _check(node.left) and all(_check(c) for c in node.comparators)
+            if isinstance(node, ast.UnaryOp): return isinstance(node.op, ast.Not) and _check(node.operand)
+            if isinstance(node, ast.BinOp): return isinstance(node.op, (ast.Add, ast.Sub)) and _check(node.left) and _check(node.right)
+            if isinstance(node, ast.Subscript): return True
+            return False
+
+        if not _check(tree):
+            return False
+        try:
+            return bool(eval(condition, {"__builtins__": {}}, context))
+        except Exception:
+            return False
 
     def feedback(self, success: bool):
         if success:

@@ -77,10 +77,12 @@ class ThompsonBandit:
         self,
         state_file: Optional[str] = None,
         default_weight: float = 1.0,
+        seed: int = 42,
     ):
         self._arms: Dict[str, ArmStats] = {}
         self._default_weight = default_weight
         self._state_file = state_file
+        self._rng = random.Random(seed)  # deterministic Thompson sampling
         if self._state_file:
             self._load_state()
 
@@ -127,7 +129,7 @@ class ThompsonBandit:
 
         samples: List[tuple[str, float]] = []
         for name, stats in self._arms.items():
-            theta = random.betavariate(stats.alpha, stats.beta)
+            theta = self._rng.betavariate(stats.alpha, stats.beta)
             theta *= stats.weight
             theta += exploration_bonus
             samples.append((name, theta))

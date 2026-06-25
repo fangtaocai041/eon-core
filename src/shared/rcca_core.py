@@ -216,7 +216,7 @@ class TranspositionLayer:
         "infer": {"verify": 0.8, "search": 0.6},
     }
 
-    def __init__(self, base_activity: float = 0.3, domestication_threshold: int = 3):
+    def __init__(self, base_activity: float = 0.3, domestication_threshold: int = 3, seed: int = 42):
         self.name = "transposition"
         self._base_activity = base_activity
         self._stress_boost = 0.0
@@ -224,6 +224,7 @@ class TranspositionLayer:
         self._events = []
         self._domesticated = {}
         self._failed = {}
+        self._rng = random.Random(seed)  # deterministic transposition
 
     def set_stress_level(self, uncertainty: float = 0.0, confusion: float = 0.0):
         self._stress_boost = (uncertainty * 0.5 + confusion * 0.5) * 0.5
@@ -245,11 +246,10 @@ class TranspositionLayer:
         bias = self.DEFAULT_BIAS.get(source, {}).get(target, 0.0)
         if bias <= 0 or self.current_activity < 0.1:
             return {"success": False, "source": source, "target": target}
-        import random
         conf = pattern.get("confidence", 0.5)
-        success = random.random() < (bias * self.current_activity * conf)
+        success = self._rng.random() < (bias * self.current_activity * conf)
         event = {"source": source, "target": target, "success": success, 
-                 "fitness": round(random.random() * 0.3 + 0.1, 3) if success else 0}
+                 "fitness": round(self._rng.random() * 0.3 + 0.1, 3) if success else 0}
         self._events.append(event)
         if success:
             key = f"{source}->{target}"

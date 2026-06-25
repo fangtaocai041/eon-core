@@ -45,6 +45,7 @@ class OriginKernel:
         self._workspace = None
         self._started_at: Optional[float] = None
         self._healthy = False
+        self._shutdown = asyncio.Event()  # graceful shutdown signal
 
     async def bootstrap(self):
         """启动内核: 加载配置 + 项目适配器 + 启动健康检查."""
@@ -111,10 +112,20 @@ class OriginKernel:
         return result
 
     async def health_pulse(self):
-        """每5秒健康心跳."""
-        while True:
+        """每5秒健康心跳，响应 shutdown 信号优雅退出."""
+        while not self._shutdown.is_set():
             try:
                 self.health()
             except Exception:
+                logger.warning("Health pulse check failed", exc_info=True)
                 self._healthy = False
-            await asyncio.sleep(5)
+            try:
+                await asyncio.wait_for(self._shutdown.wait(), timeout=5)
+                break  # shutdown signaled during wait
+            except asyncio.TimeoutError:
+                pass  # normal: 5s elapsed, continue loop
+
+    async def shutdown(self):
+        """触发优雅关闭."""
+        self._shutdown.set()
+        logger.info("OriginKernel shutdown initiated")

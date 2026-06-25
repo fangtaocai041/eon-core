@@ -56,7 +56,7 @@ class EventStore:
             conn.commit()
             conn.close()
         except Exception:
-            pass  # SQLite unavailable — operate in memory-only mode
+            logger.debug("SQLite unavailable — operating in memory-only mode", exc_info=True)
 
     def append(self, event_type: str, data: Dict[str, Any]) -> StoredEvent:
         event = StoredEvent(event_id=self._next_id, event_type=event_type, data=data)
@@ -111,6 +111,7 @@ class EventStore:
                                 data=json.loads(r[2]), timestamp=r[3])
                     for r in rows]
         except Exception:
+            logger.debug("Event query failed, returning empty", exc_info=True)
             return []
 
     @property
@@ -124,7 +125,7 @@ class EventStore:
             try:
                 handler(event)
             except Exception:
-                pass  # 单个订阅者失败不影响其他订阅者
+                logger.debug("Subscriber handler failed for %s", event_type, exc_info=True)
 
     def _persist(self, event: StoredEvent):
         """Write event to SQLite."""
@@ -138,7 +139,7 @@ class EventStore:
             conn.commit()
             conn.close()
         except Exception:
-            pass  # 持久化失败不影响运行时（事件保留在内存）
+            logger.debug("Event persist failed (in-memory retained)", exc_info=True)
 
     def load_from_disk(self):
         """Load events from SQLite on startup."""
