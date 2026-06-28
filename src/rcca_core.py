@@ -16,8 +16,8 @@ Includes:
 import sys
 from pathlib import Path
 
-# Ensure eon-core/src/shared is on sys.path
-_SHARED = Path(__file__).resolve().parent.parent.parent / "eon-core" / "src" / "shared"
+# Ensure eon-core/src/shared is on sys.path (relative to this file)
+_SHARED = Path(__file__).resolve().parent / "shared"
 if str(_SHARED) not in sys.path:
     sys.path.insert(0, str(_SHARED))
 

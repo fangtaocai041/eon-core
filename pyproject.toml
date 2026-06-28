@@ -4,7 +4,7 @@ build-backend = "setuptools.backends._legacy:_Backend"
 
 [project]
 name = "eon-core"
-version = "8.1.0"
+version = "8.1.1"
 description = "三角核心协调器 — EventBus · DAG 路由 · 健康监控 · 6 顶点适配器"
 readme = "README.md"
 license = { text = "MIT" }
@@ -20,6 +20,9 @@ dependencies = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.mypy]
 python_version = "3.12"

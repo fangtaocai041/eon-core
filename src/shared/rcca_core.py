@@ -12,6 +12,7 @@ rcca_core.py — 便携 RCCA 核心 (Recursive Convergence Cognitive Architectur
 """
 
 from __future__ import annotations
+import random
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 from datetime import datetime
