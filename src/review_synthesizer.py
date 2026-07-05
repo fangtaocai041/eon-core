@@ -37,13 +37,13 @@ except ImportError:
         SelfModelEngine, EmotionEngine, TranspositionLayer,
     )
 
-# ── 涌现引擎 (可选, 来自 infrastructure) ──
+# ── 涌现引擎 (可选, 来自 eon-core/src) ──
 HAS_EMERGENCE = False
 EmergenceEngine = None
 try:
-    _infra_path = os.path.join(os.path.dirname(__file__), '..', '..', 'infrastructure')
-    if os.path.isdir(_infra_path) and _infra_path not in sys.path:
-        sys.path.insert(0, _infra_path)
+    _eon_src_path = os.path.join(os.path.dirname(__file__), '..', 'src')
+    if os.path.isdir(_eon_src_path) and _eon_src_path not in sys.path:
+        sys.path.insert(0, _eon_src_path)
     from unified_emergence import EmergenceEngine as _EE
     EmergenceEngine = _EE
     HAS_EMERGENCE = True

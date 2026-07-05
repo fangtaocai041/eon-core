@@ -212,21 +212,21 @@ class EmergenceBridge:
             os.path.join(os.path.dirname(__file__), '..', '..', '..',
                          'eon-core', 'src', 'shared')
         )
-        infra_root = os.path.normpath(
+        eon_src = os.path.normpath(
             os.path.join(os.path.dirname(__file__), '..', '..', '..',
-                         'infrastructure')
+                         'eon-core', 'src')
         )
-        infra_src = os.path.normpath(
+        cog_src = os.path.normpath(
             os.path.join(os.path.dirname(__file__), '..', '..', '..',
-                         'infrastructure', 'src')
+                         'cognitive-search-engine', 'src')
         )
 
-        for p in [eon_shared, infra_root, infra_src]:
+        for p in [eon_shared, eon_src, cog_src]:
             import sys as _s
             if p not in _s.path:
                 _s.path.insert(0, p)
 
-        # Perception bridge
+        # Perception bridge (from cognitive-search-engine)
         try:
             from perception_bridge import PerceptionBridge
             self._perception = PerceptionBridge(

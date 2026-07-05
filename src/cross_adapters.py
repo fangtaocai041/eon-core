@@ -165,8 +165,8 @@ def pid_wait(resource_key: str, success: bool) -> float:
 def check_emergence(metric_name: str, value: float, level: int = 1) -> Optional[dict]:
     """统一涌现检测 — 检查当前观测是否构成涌现信号。"""
     try:
-        INFRA_ROOT = os.path.join(os.path.dirname(__file__), '..', '..', 'infrastructure')
-        sys.path.insert(0, INFRA_ROOT)
+        EON_SRC = os.path.join(os.path.dirname(__file__), '..', 'src')
+        sys.path.insert(0, EON_SRC)
         from unified_emergence import EmergenceMonitor, DimensionalLevel
 
         monitor = EmergenceMonitor(emergence_threshold_sigma=3.0, min_sources=3)
