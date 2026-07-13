@@ -1,4 +1,5 @@
-"""TaijiTetrahedron-Samsara v7.4 — 十层同心动态活体架构.
+"""
+TaijiTetrahedron-Samsara v7.4 — 十层同心动态活体架构.
 
 Layers:
   L0: 太极起源点 (OriginKernel + EventBus)

@@ -16,6 +16,9 @@
 [![Python 3.12+](https://img.shields.io/badge/Python%203.12%2B-3776AB?style=flat-square)]()
 [![v8.1](https://img.shields.io/badge/v8.1-8A4FCE?style=flat-square)]()
 [![CAS](https://img.shields.io/badge/CAS-007EC6?style=flat-square)]()
+[![MCP Bridge](https://img.shields.io/badge/MCP%20Bridge-FE7D37?style=flat-square)]()
+[![Event Sourcing](https://img.shields.io/badge/Event%20Sourcing-D73A4A?style=flat-square)]()
+[![CQRS](https://img.shields.io/badge/CQRS-0EA5E9?style=flat-square)]()
 [![EventBus](https://img.shields.io/badge/EventBus-F59E0B?style=flat-square)]()
 [![6 projects](https://img.shields.io/badge/6%20projects-EC4899?style=flat-square)]()
 [![E2E 7/7](https://img.shields.io/badge/E2E%207%2F7-6B7280?style=flat-square)]()
@@ -40,8 +43,11 @@
 - [🚀 快速开始](#-快速开始)
 - [🏗️ 架构](#-架构)
 - [✨ 核心特性](#-核心特性)
+- [📁 项目结构](#-项目结构)
 - [🗺️ 十层架构路线图](#-十层架构路线图)
 - [☸ 核心创新：Samsara（六道轮回）](#-核心创新samsara六道轮回)
+- [🔗 生态体系](#-生态体系)
+- [🧬 RCCA 核心集成](#-rcca-核心集成)
 - [📜 版本历史](#-版本历史)
 - [🪞 自我评价](#-自我评价)
 
@@ -94,6 +100,13 @@ cd eon-core
 pip install -e .
 ```
 
+或作为 Python 库使用：
+```python
+from eon_core.kernel.event_bus import AsyncEventBus
+from eon_core.kernel.cas_core import CASCore
+from eon_core.shared import ThompsonBandit, PIDRateLimiter
+```
+
 <p align="right"><a href="#-目录">↑ 返回目录</a></p>
 
 ## 🏗️ 架构
@@ -112,6 +125,23 @@ src/kernel/          10 模块
 ├── tetrahedron.py         TetrahedronMesh → 谱间隙分析
 ├── sphere_gateway.py      SphereGateway → 多项目网关
 └── cross_project.py       CrossProjectPipeline → 9 路由模板
+```
+
+</details>
+
+<details><summary><b>📂 共享模块（8+ 模块）</b></summary>
+
+```
+src/shared/              共享能力
+├── rcca_core.py          RCCA 便携核心 5 模块
+├── thompson.py           Thompson 采样多臂老虎机
+├── pid_limiter.py        PID 自适应 API 限速器
+├── emergence_bridge.py   涌现检测桥接
+├── cognitive/            BDI/ReAct/Reflexion/Decomposer 认知循环
+├── checkpoint.py         检查点持久化
+├── circuit_breaker.py    跨项目熔断器
+├── evolution.py          进化引擎
+└── self_healing.py       自愈系统
 ```
 
 </details>
@@ -135,23 +165,80 @@ src/kernel/          10 模块
 | 🔀 CrossProjectPipeline | ✅ | 9 路由模式 |
 | 🩺 WuXing 监控 | ✅ | 五元素相生相克健康监控 |
 | 🧪 E2E Pipeline | ✅ | 跨项目标准管线 E2E 7/7 全通过 |
+| 🧬 RCCA 核心 | ✅ | 自模型/情绪/转座/反思/递归思考 5 模块 |
 
 </details>
 
 <p align="right"><a href="#-目录">↑ 返回目录</a></p>
 
+## 📁 项目结构
+
+```
+eon-core/
+├── README.md                  📄 English
+├── README.zh.md               📄 中文
+├── LICENSE
+├── VERSION.yaml               📋 版本单一数据源
+├── src/                       源文件
+│   ├── __init__.py            📦 包入口
+│   ├── main.py                🚀 CLI 入口
+│   ├── adapter.py             🔌 IProjectAdapter 实现
+│   ├── cross_adapters.py      🔗 跨项目适配器
+│   ├── orchestrator_base.py   🎼 编排基类
+│   ├── rcca_core.py           🧬 RCCA 便携核心（重导出）
+│   ├── review_synthesizer.py  📝 综述合成引擎
+│   ├── sphere_gateway.py      🌐 多项目网关
+│   ├── unified_emergence.py   📡 统一涌现检测引擎
+│   ├── kernel/                ⚙️ 内核 10 模块
+│   │   ├── origin.py          ☯ OriginKernel
+│   │   ├── event_bus.py       🚌 AsyncEventBus
+│   │   ├── cas_core.py        🌀 CAS Core
+│   │   ├── cross_project.py   🔀 CrossProjectPipeline
+│   │   ├── event_store.py     📜 Event Store
+│   │   ├── lifecycle.py       🔄 生命周期管理
+│   │   ├── mcp_bridge.py      🔌 MCP 桥接
+│   │   ├── pipeline.py        📋 管线定义
+│   │   └── wuxing_monitor.py  🩺 WuXing 监控
+│   └── shared/                📦 共享能力模块
+│       ├── rcca_core.py       🧬 RCCA 核心
+│       ├── thompson.py        🎰 Thompson 采样
+│       ├── pid_limiter.py     📊 PID 限速器
+│       ├── emergence_bridge.py 📡 涌现桥接
+│       ├── checkpoint.py      📍 检查点
+│       ├── circuit_breaker.py 🔌 熔断器
+│       ├── evolution.py       🔄 进化引擎
+│       ├── self_healing.py    💊 自愈
+│       └── cognitive/         🧠 认知循环
+├── config/
+│   ├── agent.yaml             🎯 Agent 配置
+│   ├── taiji.yaml             ☯ 太极拓扑 DAG
+│   └── evolution.yaml         🔄 进化配置
+├── tests/                     🧪 测试
+│   ├── test_core.py
+│   ├── test_cross_project_integration.py
+│   ├── test_e2e_pipeline.py
+│   ├── test_wuxing.py
+│   └── conftest.py
+└── docs/
+    └── ARCHITECTURE.md        🏗️ 架构文档
+```
+
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
+
 ## 🗺️ 十层架构路线图
 
-| 层 | 组件 | 状态 |
-|:--|------|:----:|
-| L0 | ☯ OriginKernel | ✅ 已实现 |
-| L1 | ☀️ YinYang Poles | 🔧 配置 |
-| L2 | 🔺 5 Vertices (V0-V4) | 🔧 配置 |
-| L3 | ☯ 8 Trigrams | 📋 设计中 |
-| L4 | △ TetrahedronMesh | 🔧 配置 |
-| L5 | 🔥 WuXing Flow | ✅ 已实现 |
-| L6 | ☸ Samsara Ring | ✅ 已实现 |
-| L7 | 🌐 SphereGateway | 🟡 配置 |
+| 层 | 组件 | 状态 | 说明 |
+|:--|------|:----:|------|
+| L0 | ☯ OriginKernel | ✅ 已实现 | 协调器单例 + 事件溯源根 |
+| L1 | ☀️ YinYang Poles | 🔧 配置 | 类型安全极分离（S/V 隔离） |
+| L2 | 🔺 5 Vertices (V0-V4) | 🔧 配置 | 五顶点服务拓扑 |
+| L3 | ☯ 8 Trigrams | 📋 设计中 | 八卦子模块映射 |
+| L4 | △ TetrahedronMesh | 🔧 配置 | 谱间隙分析 |
+| L5 | 🔥 WuXing Flow | ✅ 已实现 | 五元素相生相克监控 |
+| L6 | ☸ Samsara Ring | ✅ 已实现 | 六道业力轮回 + 自愈 |
+| L7 | 🌐 SphereGateway | 🟡 配置 | 多项目 API 网关 |
+| L8 | 🕸️ Tendrils | 📋 设计中 | 12 外部探针 |
+| L9 | 🔄 Evolution | 📋 设计中 | 进化引擎 + 可观测性 |
 
 <p align="right"><a href="#-目录">↑ 返回目录</a></p>
 
@@ -160,6 +247,40 @@ src/kernel/          10 模块
 **业力驱动的自愈系统。** 当智能体表现不佳时，它不是被丢弃，而是进入六道轮回——经过冷却、净化、重生，带着从失败中吸取的教训回归。
 
 关键不变量：拓扑 DAG、Yin-Yang 极隔离、EventBus 隔离、谱间隙、DEVA 公平性、NARAKA 自愈、重生原子性（7 步协议 + 快照回滚）。
+
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
+
+## 🔗 生态体系
+
+| 项目 | 角色 | 说明 |
+|:----|:----:|------|
+| [fish-ecology-assistant](https://github.com/fangtaocai041/fish-ecology-assistant) | S/V0 | 知识供给 — 430 种长江鱼类知识库 |
+| [cognitive-search-engine](https://github.com/fangtaocai041/cognitive-search-engine) | V/V1 | 搜索验证 — 7+ 引擎 BDI+ReAct 搜索 |
+| **eon-core**（本项目） | **Coord** | **协调中枢 — EventBus · CAS · DAG** |
+| [porpoise-agent](https://github.com/fangtaocai041/porpoise-agent) | P₁ | 江豚专研 — NBHF 声学 |
+| [coilia-agent](https://github.com/fangtaocai041/coilia-agent) | P₂ | 刀鲚专研 — 耳石微化学 |
+| [culter-agent](https://github.com/fangtaocai041/culter-agent) | P₃ | 鲌类专研 — 基因组学 |
+| [conflict-arbiter](https://github.com/fangtaocai041/conflict-arbiter) | C | 冲突仲裁 — 多源保护级别检测 |
+
+<p align="right"><a href="#-目录">↑ 返回目录</a></p>
+
+## 🧬 RCCA 核心集成
+
+本项目的 `src/shared/rcca_core.py` 提供便携 RCCA 核心（源于三生万物硅基生命体架构），被所有其他项目重用：
+
+| 模块 | 类名 | 用途 |
+|:-----|:-----|:-----|
+| 阻尼自我模型 | `SelfModelEngine` | 预测误差滑动窗口 → 稳定性检测 |
+| 资源分配策略 | `EmotionEngine` | 事件驱动策略选择 → 行为倾向 |
+| 概念转座层 | `TranspositionLayer` | 跳跃基因逻辑: 跨域推理模式迁移 |
+| 反思循环 | `ReflectionLoop` | 递归思考→转座→自我适应闭环 |
+
+```python
+from eon_core.src.shared.rcca_core import SelfModelEngine, EmotionEngine
+
+sm = SelfModelEngine()
+state = sm.reflect()  # 稳定性自检
+```
 
 <p align="right"><a href="#-目录">↑ 返回目录</a></p>
 
@@ -179,6 +300,8 @@ src/kernel/          10 模块
 - **事件溯源**：完整审计追踪——每个跨项目操作都被记录，带时间戳
 - **真正协调**：事件驱动、松耦合——项目可以独立失败而不互相拖累
 - **自愈**：Samsara 业力系统自动检测、隔离、重生失效组件
+- **RCCA 核心**：5 个便携认知模块被所有项目重用
+- **E2E 管线**：7/7 端到端跨项目管线全通过
 
 ### 局限
 - 专为 Reasonix 生态设计，非通用协调框架
@@ -208,7 +331,7 @@ src/kernel/          10 模块
 
 ### 🏷️ 技术标签
 
-`协调内核` `事件总线` `CAS` `CQRS` `事件溯源` `DAG` `业力轮回` `五行动态` `MCP桥接` `跨项目` `涌现检测` `自适应路由` `太极` `阴阳` `Reasonix`
+`协调内核` `事件总线` `CAS` `CQRS` `事件溯源` `DAG` `业力轮回` `五行动态` `MCP桥接` `跨项目` `涌现检测` `自适应路由` `太极` `阴阳` `RCCA` `Reasonix`
 
 <br>
 
