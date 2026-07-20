@@ -270,6 +270,17 @@ eon-core/
 
 ---
 
+## 🧠 Bayesian Capabilities
+
+| Method | Description | Engine |
+|:-------|:------------|:-------|
+| `health()` | Health check with `bayesian_coordination_confidence` | BaseAdapter hook |
+| `bayesian_trend_analysis(data)` | Coordination trend analysis | TrendModel (via BaseAdapter) |
+
+> 🎯 All Bayesian methods inherit from `fangtao_fishlab.BaseAdapter` with default `seed=42`.
+
+---
+
 ## 📜 Version History
 
 | Version | Date | Highlights |
