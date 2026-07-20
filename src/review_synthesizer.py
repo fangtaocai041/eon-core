@@ -25,6 +25,15 @@ import urllib.request
 import urllib.error
 import concurrent.futures
 
+# 可选: Panshi 增强 (CAS 磐石 2.0 科学大模型)
+try:
+    from core.panshi_adapter import panshi_enhance_review, PanshiAdapter
+    _PANSHI_AVAILABLE = True
+except ImportError:
+    panshi_enhance_review = None
+    PanshiAdapter = None
+    _PANSHI_AVAILABLE = False
+
 # ── RCCA 核心 (同目录) ──
 try:
     from src.rcca_core import (
@@ -117,6 +126,10 @@ class ReviewResult:
     citation_integration_rate: float = 0.0  # 引文集成率
     markdown: str = ""                 # 最终输出
     generated_at: str = field(default_factory=lambda: datetime.now().isoformat())
+    # ── Panshi 增强 (可选) ──
+    panshi_enhanced: bool = False
+    panshi_note: str = ""
+    panshi_data: Dict[str, Any] = field(default_factory=dict)
 
 
 # ═══════════════════════════════════════════════════════════
@@ -237,7 +250,10 @@ class ReviewSynthesizer:
 
     # ── 主入口 ─────────────────────────────────────────────
 
-    def synthesize(self, papers: List[Paper], species: str = "") -> ReviewResult:
+    def synthesize(
+        self, papers: List[Paper], species: str = "",
+        panshi: Optional[PanshiAdapter] = None,
+    ) -> ReviewResult:
         """执行完整综述合成管线。
 
         Args:
@@ -318,6 +334,20 @@ class ReviewSynthesizer:
         self._self_model.update_with_experience(
             {"truth_seeking": confidence, "curiosity": 0.7 if gaps else 0.3},
             prediction_error=1.0 - confidence)
+
+        # Panshi 增强 (可选) — 文献罗盘二次验证
+        if panshi is not None:
+            try:
+                panshi_out = panshi_enhance_review(
+                    synopsis=result.markdown[:500], panshi=panshi,
+                )
+                result.panshi_enhanced = panshi_out.get("enhanced", False)
+                result.panshi_note = panshi_out.get("note", "")
+                if panshi_out.get("panshi_review"):
+                    result.panshi_data = panshi_out["panshi_review"]
+            except Exception:
+                result.panshi_enhanced = False
+                result.panshi_note = "enhancement failed"
 
         return result
 

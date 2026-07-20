@@ -1,1 +1,2 @@
-"""eon-core scripts — canonical shared types for the SanShengWanWu ecosystem."""
+"""eon-core scripts package."""
+__all__ = []

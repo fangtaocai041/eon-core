@@ -16,6 +16,28 @@ class EonCoreAdapter(BaseAdapter):
     role = "coordinator"
     version = "v7.3.0"
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._group_meeting: Any = None
+        self._init_group_meeting()
+
+    def _init_group_meeting(self):
+        """P2: Init GroupMeeting (sub-PHD advisor-student loop)."""
+        try:
+            from .group_meeting import get_group_meeting
+            self._group_meeting = get_group_meeting()
+        except ImportError:
+            try:
+                # fallback: direct import when __package__ not set
+                import sys as _sys
+                _gp = str(Path(__file__).resolve().parent)
+                if _gp not in _sys.path:
+                    _sys.path.insert(0, _gp)
+                from group_meeting import get_group_meeting as _ggm
+                self._group_meeting = _ggm()
+            except Exception as exc:
+                logger.warning(f"GroupMeeting init failed: {exc}")
+
     def _init_engine(self, **kwargs):
         try:
             # pip 安装后: from kernel.origin import OriginKernel
@@ -61,26 +83,13 @@ class EonCoreAdapter(BaseAdapter):
             "topology": self._topology_snapshot(),
         }
 
-    def health(self) -> Dict[str, Any]:
-        base = {
-            "project": self.project_name, "version": self.version,
-            "role": self.role, "architecture": "OriginKernel + EventBus + DAG",
+    def _extend_health(self) -> Dict[str, Any]:
+        return {
+            "version": self.version,
+            "role": self.role,
+            "architecture": "OriginKernel + EventBus + DAG",
+            "note": "kernel instance exists" if self._kernel else "kernel not bootstrapped",
         }
-        if self._kernel:
-            base["status"] = "HEALTHY"
-            base["note"] = "kernel instance exists"
-        else:
-            base["status"] = "STANDBY"
-            base["note"] = "kernel not bootstrapped"
-        try:
-            from _bayesian import BetaBelief
-            b = BetaBelief(alpha=10, beta=3)
-            if base["status"] == "HEALTHY":
-                b.update(successes=1, trials=1)
-            base["bayesian_coordination_confidence"] = round(b.mean(), 4)
-        except ImportError:
-            pass
-        return base
 
     def fast_search(self, query: str) -> Dict[str, Any]:
         try:
@@ -113,6 +122,79 @@ class EonCoreAdapter(BaseAdapter):
                 "P4": "any -> V5(conflict)",
             },
         }
+
+    def info(self) -> Dict[str, Any]:
+        """P2: Version + capabilities + group_meeting."""
+        caps = [
+            "orchestration", "event_routing", "cross_project_pipeline",
+            "emergence_detection", "topology_management",
+        ]
+        gm_ok = bool(self._group_meeting)
+        if gm_ok:
+            caps.append("group_meeting")
+        return {
+            "project": self.project_name,
+            "version": self.version,
+            "role": self.role,
+            "capabilities": caps,
+            "group_meeting_available": gm_ok,
+            "architecture": "OriginKernel + EventBus + DAG",
+        }
+
+    # ── P2: GroupMeeting proxy methods ──
+
+    def gm_start_session(self, topic: str) -> Dict[str, Any]:
+        """开始一个组会会话（导师设定研究主题）. AI 博士生开始工作."""
+        if not self._group_meeting:
+            return {"status": "unavailable", "note": "GroupMeeting not loaded"}
+        sid = self._group_meeting.start_session(topic)
+        return {"status": "ok", "session_id": sid, "topic": topic,
+                "message": f"组会开始，主题：{topic}"}
+
+    def gm_next_round(self, session_id: str, advisor_guidance: str) -> Dict[str, Any]:
+        """新一轮组会 — 导师给出指导."""
+        if not self._group_meeting:
+            return {"status": "unavailable"}
+        record = self._group_meeting.next_round(session_id, advisor_guidance)
+        return {"status": "ok", "record": record}
+
+    def gm_report_back(self, session_id: str, result: dict,
+                        decisions: list = None) -> Dict[str, Any]:
+        """AI 博士生汇报实验结果."""
+        if not self._group_meeting:
+            return {"status": "unavailable"}
+        record = self._group_meeting.report_back(session_id, result, decisions=decisions)
+        return {"status": "ok", "record": record}
+
+    def gm_bayesian_summary(self, session_id: str) -> Dict[str, Any]:
+        """贝叶斯总结 — 学习轨迹和置信度演变."""
+        if not self._group_meeting:
+            return {"status": "unavailable"}
+        return self._group_meeting.bayesian_summary(session_id)
+
+    def gm_list_sessions(self) -> Dict[str, Any]:
+        """列出所有组会会话."""
+        if not self._group_meeting:
+            return {"status": "unavailable"}
+        return {"status": "ok", "sessions": self._group_meeting.list_sessions()}
+
+    def gm_close_session(self, session_id: str) -> Dict[str, Any]:
+        """结束组会会话."""
+        if not self._group_meeting:
+            return {"status": "unavailable"}
+        return self._group_meeting.close_session(session_id)
+
+    def gm_confidence_trend(self, session_id: str) -> Dict[str, Any]:
+        """返回置信度趋势."""
+        if not self._group_meeting:
+            return {"status": "unavailable"}
+        return {"status": "ok", "trend": self._group_meeting.confidence_trend(session_id)}
+
+    def gm_health(self) -> Dict[str, Any]:
+        """组会系统健康."""
+        if not self._group_meeting:
+            return {"name": "group-meeting", "available": False}
+        return self._group_meeting.health()
 
 
 def get_adapter(**kwargs):

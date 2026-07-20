@@ -1,1 +1,2 @@
-"""L0: 太极起源点 — OriginKernel Singleton + EventBus."""
+"""eon-core kernel module."""
+__all__ = []
